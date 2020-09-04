@@ -1,6 +1,6 @@
 {
   "name": "ffi-generate",
-  "version": "0.0.8",
+  "version": "v1.0.0-alpha.1",
   "description": "Generate FFI Bindings from header file",
   "keywords": [
     "libclang",
