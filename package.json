@@ -20,14 +20,14 @@
     "optimist": ""
   },
   "devDependencies": {
-    "ffi-napi": "^2.4.6",
+    "ffi-napi": "^3.0.1",
     "ref-array-di": "^1.2.1",
     "ref-napi": "^1.4.3",
     "ref-struct-di": "^1.1.0",
     "ref-union-di": "^1.0.1"
   },
   "peerDependencies": {
-    "ffi-napi": "^2.4.6",
+    "ffi-napi": "^3.0.1",
     "ref-array-di": "^1.2.1",
     "ref-napi": "^1.4.3",
     "ref-struct-di": "^1.1.0",
