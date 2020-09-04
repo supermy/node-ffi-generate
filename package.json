@@ -16,7 +16,7 @@
   "dependencies": {
     "hogan.js": ">= 2.0.0",
     "js-beautify": "",
-    "libclang": "joelpurra/node-libclang#ffi-napi",
+    "libclang": "github:joelpurra/node-libclang#v1",
     "optimist": ""
   },
   "devDependencies": {
