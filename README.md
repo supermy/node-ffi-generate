@@ -1,10 +1,13 @@
-# Forked version of `ffi-generate`
+<p align="center">
+  <a href="https://github.com/node-ffi-packager"><img src="https://raw.githubusercontent.com/node-ffi-packager/resources/master/logotype/node-ffi-packager.svg?sanitize=true" alt="node-ffi-packager logotype, impossible cubes in green" width="256" border="0" /></a>
+</p>
 
-Requires changes in [`libclang`](https://github.com/tjfontaine/node-libclang) to work properly.
+# [Forked version of `node-ffi-generate`](https://github.com/node-ffi-packager/node-ffi-generate)
 
-- https://github.com/joelpurra/node-libclang/tree/ffi-napi
-
-Use this version by [referencing the repository/branch in `package.json`](https://docs.npmjs.com/configuring-npm/package-json.html#github-urls) instead of the [official version published on npm](https://www.npmjs.com/package/ffi-generate).
+- Used by [node-ffi-packager](https://github.com/node-ffi-packager) to generate [node-ffi-libraries](https://github.com/node-ffi-libraries).
+- Depends on a similarly forked [node-libclang](https://github.com/node-ffi-packager/node-libclang).
+- Use this version by [referencing the repository/branch in `package.json`](https://docs.npmjs.com/configuring-npm/package-json.html#github-urls) instead of the [official version published on npm](https://www.npmjs.com/package/ffi-generate).
+- Based on [`node-ffi-generate`](https://github.com/tjfontaine/node-ffi-generate) ([5ad34dc](https://github.com/tjfontaine/node-ffi-generate/commit/5ad34dc69befbd59601c507c90571b1662e0e66d), [v0.0.8](https://github.com/tjfontaine/node-ffi-generate/releases/tag/v0.0.8)) by [Timothy J Fontaine](https://github.com/tjfontaine).
 
 ---
 
