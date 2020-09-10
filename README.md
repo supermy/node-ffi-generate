@@ -94,3 +94,6 @@ map a type to ffi type.
    * name - the name of the function that failed
    * decl - the signature of the function that failed
 
+---
+
+`node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), 2020 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
