@@ -1,1 +1,3 @@
-node_modules
+dynamic-clang.js
+lib/newclang.js
+node_modules/

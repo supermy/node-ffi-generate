@@ -21,88 +21,124 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE
 
-var jsb = require('js-beautify');
-var argv = require('optimist')
-  .usage('Generate node-ffi bindings for a given header file\nUsage: $0')
-  .demand('f').alias('f', 'file').describe('f', 'The header file to parse')
-  .demand('l').alias('l', 'library').describe('l', 'The name of the library to dlopen')
-  .alias('m', 'module').describe('m', 'The name of module the bindings will be exported as')
-  .boolean('x').alias('x', 'file_only').describe('x', 'Only export functions found in this file')
-  .alias('p', 'prefix').describe('p', 'Only import functions whose name start with prefix')
-  .boolean('s').alias('s', 'strict').describe('s', 'Use StrictType (experimental)')
-  .alias('L', 'libclang').describe('L', 'Path to directory where libclang.{so,dylib} is located')
-  .argv
+const {
+	join,
+} = require("path");
+const {
+	exec, spawn,
+} = require("child_process");
+
+const engineCheck = require("engine-check");
+const optimist = require("optimist");
+
+engineCheck({
+	searchRoot: join(__dirname, ".."),
+});
+
+const generateffi = require("../lib/generateffi");
+
+const {
+	argv,
+} = optimist
+	.usage("Generate node-ffi bindings for a given header file\nUsage: $0")
+	.demand("f").alias("f", "file").describe("f", "The header file to parse")
+	.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
+	.alias("m", "module").describe("m", "The name of module the bindings will be exported as")
+	.boolean("x").alias("x", "file_only").describe("x", "Only export functions found in this file")
+	.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix")
+	.boolean("s").alias("s", "strict").describe("s", "Use StrictType (experimental)")
+	.alias("L", "libclang").describe("L", "Path to directory where libclang.{so,dylib} is located");
 
 function tryClang(cb) {
-  var libclang;
+	let libclang;
 
-  try {
-    libclang = require('libclang');
-  } catch (e) {
-    libclang = false;
-  }
+	try {
+		libclang = require("libclang");
+	} catch {
+		libclang = false;
+	}
 
-  if (libclang) return cb(true);
+	if (libclang) {
+		return cb(true);
+	}
 
-  if (process.env.FFI_GENERATE_CHILD) return cb(false);
+	if (process.env.FFI_GENERATE_CHILD) {
+		return cb(false);
+	}
 
-  require('child_process').exec('llvm-config --libdir', function (err, stdout, stderr) {
-    if (stdout.trim()) {
-      cb(stdout.trim());
-    } else {
-      cb(err.code);
-    }
-  });
+	exec("llvm-config --libdir", (err, stdout, _stderr) => {
+		if (stdout.trim()) {
+			cb(stdout.trim());
+		} else {
+			cb(err.code);
+		}
+	});
 }
 
 function generate() {
-  var generate = require('../lib/generateffi').generate;
+	const {
+		generate,
+	} = generateffi;
 
-  var ret = generate({
-    filename: argv.f,
-    library: argv.l,
-    module: argv.m,
-    prefix: argv.p,
-    compiler_args: argv._,
-    strict_type: argv.s,
-    single_file: argv.x,
-  });
+	const returnValue = generate({
+	// eslint-disable-next-line camelcase
+		compiler_args: argv._,
+		filename: argv.f,
+		library: argv.l,
+		module: argv.m,
+		prefix: argv.p,
+		// eslint-disable-next-line camelcase
+		single_file: argv.x,
+		// eslint-disable-next-line camelcase
+		strict_type: argv.s,
+	});
 
-  //console.log(jsb.js_beautify(ret.serialized));
-  console.log(ret.serialized);
+	// eslint-disable-next-line no-console
+	console.log(returnValue.serialized);
 
-  if (generate.unmapped) {
-    process.stderr.write("-------Unmapped-------\r\n");
-    process.stderr.write(generate.unmapped + '\r\n');
-  }
+	if (generate.unmapped) {
+		process.stderr.write("-------Unmapped-------\r\n");
+		process.stderr.write(generate.unmapped + "\r\n");
+	}
 }
 
-tryClang(function (ret) {
-  var library;
+tryClang((returnValue) => {
+	let library;
 
-  if (isNaN(ret)) library = ret;
-  if (argv.L) library = argv.L;
+	if (Number.isNaN(returnValue)) {
+		library = returnValue;
+	}
 
-  if (ret === true) {
-    generate();
-  } else if (library && ret !== false) {
-    var env = process.env;
-    env.FFI_GENERATE_CHILD = '1';
-    switch (process.platform) {
-      case 'darwin':
-        env.DYLD_LIBRARY_PATH = library + ':' + (env.DYLD_LIBRARY_PATH || '');
-        break;
-      default:
-        env.LD_LIBRARY_PATH = library + ':' + (env.LD_LIBRARY_PATH || '');
-        break;
-    }
-    var c = require('child_process').spawn(process.execPath, process.argv.slice(1), {env:env});
-    c.stdout.pipe(process.stdout);
-    c.stderr.pipe(process.stderr);
-    c.on('exit', function (code) {
-      process.exit(code);
-    });
-  } else {
-    console.error('Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path');
-  }
+	if (argv.L) {
+		library = argv.L;
+	}
+
+	if (returnValue === true) {
+		generate();
+	} else if (library && returnValue !== false) {
+		const {
+			env,
+		} = process;
+		env.FFI_GENERATE_CHILD = "1";
+		switch (process.platform) {
+			case "darwin":
+				env.DYLD_LIBRARY_PATH = library + ":" + (env.DYLD_LIBRARY_PATH || "");
+				break;
+			default:
+				env.LD_LIBRARY_PATH = library + ":" + (env.LD_LIBRARY_PATH || "");
+				break;
+		}
+
+		const c = spawn(process.execPath, process.argv.slice(1), {
+			env,
+		});
+		c.stdout.pipe(process.stdout);
+		c.stderr.pipe(process.stderr);
+		c.on("exit", (code) => {
+			process.exit(code);
+		});
+	} else {
+		// eslint-disable-next-line no-console
+		console.error("Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path");
+	}
 });
