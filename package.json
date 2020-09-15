@@ -1,17 +1,43 @@
 {
   "name": "ffi-generate",
-  "version": "0.0.7",
+  "version": "v1.0.0",
   "description": "Generate FFI Bindings from header file",
-  "keywords": ["libclang", "ffi", "bindings"],
+  "keywords": [
+    "libclang",
+    "ffi",
+    "bindings"
+  ],
   "author": "Timothy J Fontaine <tjfontaine@gmail.com>",
+  "contributors": [
+    {
+      "name": "Joel Purra",
+      "email": "code+npm@joelpurra.com",
+      "url": "https://joelpurra.com/"
+    }
+  ],
   "main": "lib/generateffi.js",
+  "license": "MIT",
   "bin": {
     "ffi-generate": "bin/ffi-generate.js"
   },
   "dependencies": {
     "hogan.js": ">= 2.0.0",
     "js-beautify": "",
-    "libclang": ">= 0.0.10",
+    "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
     "optimist": ""
+  },
+  "devDependencies": {
+    "ffi-napi": "^3.0.1",
+    "ref-array-di": "^1.2.2",
+    "ref-napi": "^2.1.2",
+    "ref-struct-di": "^1.1.1",
+    "ref-union-di": "^1.0.1"
+  },
+  "peerDependencies": {
+    "ffi-napi": "^3.0.1",
+    "ref-array-di": "^1.2.2",
+    "ref-napi": "^2.1.2",
+    "ref-struct-di": "^1.1.1",
+    "ref-union-di": "^1.0.1"
   }
 }
