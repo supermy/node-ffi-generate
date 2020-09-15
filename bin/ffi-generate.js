@@ -21,6 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE
 
+var { join } = require('path');
+var engineCheck = require('engine-check');
+
+engineCheck({
+  searchRoot: join(__dirname, '..'),
+});
+
 var jsb = require('js-beautify');
 var argv = require('optimist')
   .usage('Generate node-ffi bindings for a given header file\nUsage: $0')

@@ -17,10 +17,14 @@
   ],
   "main": "lib/generateffi.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "bin": {
     "ffi-generate": "bin/ffi-generate.js"
   },
   "dependencies": {
+    "engine-check": "^1.0.1",
     "hogan.js": ">= 2.0.0",
     "js-beautify": "",
     "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
