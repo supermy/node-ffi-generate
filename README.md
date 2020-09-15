@@ -15,9 +15,9 @@
 
 ---
 
-# node-libclang
+# node-ffi-generate
 
-Generate FFI Bindings from header file
+A tool to generate [Node.js](https://nodejs.org/en/) [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) bindings for a given C/C++ header file. Based on [node-libclang](https://github.com/node-ffi-packager/node-libclang).
 
 ## Installation
 
@@ -25,22 +25,24 @@ For command line usage.
 
 ```shell
 # NOTE: global installation is not necessary, but convenient for command line usage.
-npm install --global github:node-ffi-packager/node-ffi-generate#v1
+npm install --global github:node-ffi-packager/node-ffi-generate#semver:^v1.0.0
 ```
 
 For programmatic usage.
 
 ```shell
-npm install --save github:node-ffi-packager/node-ffi-generate#v1
+npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v1.0.0
 ```
 
-## Generate FFI Bindings
+## CLI usage
+
+Parse the given header file and print the rendered javascript to standard. Fast and simple to use.
 
 ```shell
-ffi-generate --file /path/to/myLibrary/header.h --library libmyLibrary
+ffi-generate --file '/path/to/myLibrary/header.h' --library 'libmyLibrary'
 ```
 
-Will parse the given filename and print to standard out the resulting javascript suitable for use as a module.
+### Usage
 
 ```text
 Generate node-ffi-napi javascript bindings for a given C/C++ header file
@@ -68,36 +70,14 @@ Setting `LD_LIBRARY_PATH` (or perhaps `DYLD_LIBRARY_PATH`) might be necessary fo
 LD_LIBRARY_PATH="$(llvm-config --libdir)" node ./bin/ffi-generate.js --file "$(llvm-config --includedir)/clang-c/Index.h" --library "libclang"
 ```
 
-## Generate FFI Bindings Programatically
+## Programmatic usage
 
-See [`example.js`](./example.js).
+- See [`lib/generateffi.js`](./lib/generateffi.js) for options to pass.
+- See [`example.js`](./example.js) for how to generate bindings for the [`libclang` Indexing Public C Interface](https://clang.llvm.org/doxygen/Index_8h_source.html).
 
 ```shell
 LD_LIBRARY_PATH="$(llvm-config --libdir)" C_INCLUDE_PATH="$(llvm-config --includedir)" node example.js
 ```
-
-Input to the generate method
-
-- opts.filename -- required -- the full path to the header source file to parse
-- opts.library -- required -- the library ffi should use to dlopen
-- opts.prefix -- optional -- restrict imported functions to a given prefix(es)
-- opts.includes -- optional -- a set of directory paths to aid type expansion
-- opts.compiler_args -- optional -- a set of clang command line options passed to the parser
-- opts.single_file -- optional -- restricts functions to only those defined in the header file
-  - this does not restrict dependent types
-
-The result from generate is an object that has two properties
-
-- serialized - a string representation of the bindings suitable for writing to file
-- unmapped - a set of functions that failed to map -- most likely from failure to
-  map a type to ffi type.
-
-* each element is an object with following properties
-
-- position - -1 means the return type, otherwise the argument
-- arg - name of the type that failed to map
-- name - the name of the function that failed
-- decl - the signature of the function that failed
 
 ---
 

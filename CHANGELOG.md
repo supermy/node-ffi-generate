@@ -6,7 +6,7 @@
   <a href="https://github.com/node-ffi-packager/node-ffi-generate">README</a> &middot; <a href="./CHANGELOG.md">Changelog</a>
 </p>
 
-# [Forked version of `node-ffi-generate`](https://github.com/node-ffi-packager/node-node-ffi-generate) changelog
+# [Forked version of `node-ffi-generate`](https://github.com/node-ffi-packager/node-ffi-generate) changelog
 
 Change summaries and notable excerpts from the commit log.
 
@@ -52,4 +52,4 @@ See commit log.
 
 ---
 
-`node-libclang` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), 2020 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
+`node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), 2020 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).

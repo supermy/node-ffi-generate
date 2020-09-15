@@ -1,7 +1,7 @@
 {
   "name": "ffi-generate",
   "version": "v1.0.0",
-  "description": "Generate FFI Bindings from header file",
+  "description": "A tool to generate Node.js Foreign Function Interface (FFI) bindings for a given C/C++ header file. Based on node-libclang.",
   "keywords": [
     "libclang",
     "ffi",
