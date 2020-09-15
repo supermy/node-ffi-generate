@@ -24,60 +24,22 @@
 const {
 	join,
 } = require("path");
-const {
-	exec, spawn,
-} = require("child_process");
-
 const engineCheck = require("engine-check");
 const optimist = require("optimist");
 
-engineCheck({
-	searchRoot: join(__dirname, ".."),
-});
-
-const generateffi = require("../lib/generateffi");
-
 const {
-	argv,
-} = optimist
-	.usage("Generate node-ffi bindings for a given header file\nUsage: $0")
-	.demand("f").alias("f", "file").describe("f", "The header file to parse")
-	.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
-	.boolean("x").alias("x", "file_only").describe("x", "Only export functions found in this file")
-	.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix")
-	.boolean("s").alias("s", "strict").describe("s", "Use StrictType (experimental)")
-	.alias("L", "libclang").describe("L", "Path to directory where libclang.{so,dylib} is located");
+	generate,
+} = require("../lib/generateffi");
 
-function tryClang(cb) {
-	let libclang;
-
-	try {
-		libclang = require("libclang");
-	} catch {
-		libclang = false;
-	}
-
-	if (libclang) {
-		return cb(true);
-	}
-
-	if (process.env.FFI_GENERATE_CHILD) {
-		return cb(false);
-	}
-
-	exec("llvm-config --libdir", (err, stdout, _stderr) => {
-		if (stdout.trim()) {
-			cb(stdout.trim());
-		} else {
-			cb(err.code);
-		}
-	});
-}
-
-function generate() {
+const runGenerator = async () => {
 	const {
-		generate,
-	} = generateffi;
+		argv,
+	} = optimist
+		.usage("Generate node-ffi-napi javascript bindings for a given C/C++ header file")
+		.demand("f").alias("f", "file").describe("f", "The header file to parse")
+		.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
+		.boolean("x").alias("x", "single-file").describe("x", "Only export functions found in this file")
+		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
 
 	const returnValue = generate({
 	// eslint-disable-next-line camelcase
@@ -87,8 +49,6 @@ function generate() {
 		prefix: argv.p,
 		// eslint-disable-next-line camelcase
 		single_file: argv.x,
-		// eslint-disable-next-line camelcase
-		strict_type: argv.s,
 	});
 
 	// eslint-disable-next-line no-console
@@ -98,45 +58,34 @@ function generate() {
 		process.stderr.write("-------Unmapped-------\r\n");
 		process.stderr.write(generate.unmapped + "\r\n");
 	}
-}
+};
 
-tryClang((returnValue) => {
-	let library;
-
-	if (Number.isNaN(returnValue)) {
-		library = returnValue;
-	}
-
-	if (argv.L) {
-		library = argv.L;
-	}
-
-	if (returnValue === true) {
-		generate();
-	} else if (library && returnValue !== false) {
-		const {
-			env,
-		} = process;
-		env.FFI_GENERATE_CHILD = "1";
-		switch (process.platform) {
-			case "darwin":
-				env.DYLD_LIBRARY_PATH = library + ":" + (env.DYLD_LIBRARY_PATH || "");
-				break;
-			default:
-				env.LD_LIBRARY_PATH = library + ":" + (env.LD_LIBRARY_PATH || "");
-				break;
-		}
-
-		const c = spawn(process.execPath, process.argv.slice(1), {
-			env,
-		});
-		c.stdout.pipe(process.stdout);
-		c.stderr.pipe(process.stderr);
-		c.on("exit", (code) => {
-			process.exit(code);
-		});
-	} else {
+const mainAsync = async () => {
+	try {
+		await runGenerator();
+	} catch (error) {
+		// NOTE: root error handler for asynchronous errors.
 		// eslint-disable-next-line no-console
-		console.error("Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path");
+		console.error(error);
+
+		process.exitCode = 1;
 	}
-});
+};
+
+const main = () => {
+	try {
+		engineCheck({
+			searchRoot: join(__dirname, ".."),
+		});
+
+		mainAsync();
+	} catch (error) {
+		// NOTE: root error handler for synchronous errors.
+		// eslint-disable-next-line no-console
+		console.error(error);
+
+		process.exitCode = 1;
+	}
+};
+
+main();

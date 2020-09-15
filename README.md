@@ -36,28 +36,37 @@ npm install --save github:node-ffi-packager/node-ffi-generate#v1
 
 ## Generate FFI Bindings
 
-`ffi-generate -f /path/to/myLibrary/header.h -l libmyLibrary`
+```shell
+ffi-generate --file /path/to/myLibrary/header.h --library libmyLibrary
+```
 
-Will parse the given filename and print to standard out the resulting javascript
-suitable for use as a module.
+Will parse the given filename and print to standard out the resulting javascript suitable for use as a module.
 
-- f -- required -- The header file you wish to parse
-- l -- required -- The library FFI will use to dlopen
-- p -- optional -- Only include functions whose name starts with the provided prefix
+```text
+Generate node-ffi-napi javascript bindings for a given C/C++ header file
 
-* you can specify multiple `-p` on the command line to get multiple prefixes
+Options:
+  -f, --file         The header file to parse                                                              [required]
+  -l, --library      The name of the library to dlopen                                                     [required]
+  -x, --single-file  Only export functions found in this file
+  -p, --prefix       Only import functions whose name start with prefix. Can be specified multiple times.
+```
 
-- x -- optional -- Restrict to only functions declared in the given header file
-- s -- optional -- Use StrictType type wrapper (experimental)
-- L -- optional -- If libclang.{so,dylib} is in a non-standard path use this
-  which will rerun the process with `[DY]LD_LIBRARY_PATH` set
+### Extra `libclang` arguments
 
-It may be necessary to pass additional flags to libclang so it can better parse
-the header (i.e. include paths). To pass options directly to libclang use `--`
-so ffi-generate-node knows to stop parsing arguments, the rest will be passed
-to libclang without modification.
+It may be necessary to pass additional flags/arguments to libclang so it can better parse the header (for example include paths). To pass options directly to libclang use `--` so ffi-generate knows to stop parsing arguments. The rest will be passed to libclang without modification.
 
-`ffi-generate -f /usr/include/ImageMagick/wand/MagickWand.h -l libMagickWand -p Magick -- $(Magick-config --cflags)`
+```shell
+ffi-generate --file '/usr/include/ImageMagick/wand/MagickWand.h' --library 'libMagickWand' --prefix 'Magick' -- $(Magick-config --cflags)
+```
+
+### Location of `libclang`
+
+Setting `LD_LIBRARY_PATH` (or perhaps `DYLD_LIBRARY_PATH`) might be necessary for `ffi-generate` to find `libclang`.
+
+```shell
+LD_LIBRARY_PATH="$(llvm-config --libdir)" node ./bin/ffi-generate.js --file "$(llvm-config --includedir)/clang-c/Index.h" --library "libclang"
+```
 
 ## Generate FFI Bindings Programatically
 
@@ -71,7 +80,7 @@ Input to the generate method
 
 - opts.filename -- required -- the full path to the header source file to parse
 - opts.library -- required -- the library ffi should use to dlopen
-- opts.prefix -- optional -- restrict imported functions to a given prefix
+- opts.prefix -- optional -- restrict imported functions to a given prefix(es)
 - opts.includes -- optional -- a set of directory paths to aid type expansion
 - opts.compiler_args -- optional -- a set of clang command line options passed to the parser
 - opts.single_file -- optional -- restricts functions to only those defined in the header file

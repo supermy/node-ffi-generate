@@ -1,4 +1,5 @@
 // Example: generate javascript for the libclang header file.
+const assert = require("assert");
 const {
 	exec,
 } = require("child_process");
@@ -7,16 +8,22 @@ const {
 } = require("path");
 const {
 	writeFileSync,
+	readFileSync,
 } = require("fs");
-const prettier = require("prettier");
 const {
 	generate,
 } = require("./lib/generateffi");
 
-// NOTE: using path to the LLVM header directory from the environment.
-const includedir = process.env.C_INCLUDE_PATH;
+assert.strictEqual(typeof process.env.C_INCLUDE_PATH, "string");
+
+// NOTE: using path(s) to the LLVM header directory from the environment; assuming LLVM is in the first path.
+const includedir = process.env.C_INCLUDE_PATH.split(":")[0];
+const headerFilePath = join(includedir, "clang-c", "Index.h");
+
+assert.doesNotThrow(() => readFileSync(headerFilePath))
+
 const result = generate({
-	filename: join(includedir, "clang-c", "Index.h"),
+	filename: headerFilePath,
 	includes: [
 		includedir,
 	],
@@ -25,17 +32,15 @@ const result = generate({
 });
 
 if (result.unmapped.length > 0) {
-	console.log("----- UNMAPPED FUNCTIONS -----");
-	console.log(result.unmapped);
-	console.log("----- UNMAPPED FUNCTIONS -----");
+	console.warn("----- UNMAPPED FUNCTIONS -----");
+	console.warn(result.unmapped);
+	console.warn("----- UNMAPPED FUNCTIONS -----");
 }
 
-// NOTE: write formatted javascript output.
+// NOTE: write javascript output to disk.
 writeFileSync(
 	join(process.cwd(), "dynamic-clang.js"),
-	prettier.format(result.serialized, {
-		parser: "babel",
-	}),
+	result.serialized,
 );
 
 // NOTE: attempt to load and use generated code for verification.
