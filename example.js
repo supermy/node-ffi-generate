@@ -40,6 +40,6 @@ writeFileSync(
 
 // NOTE: attempt to load and use generated code for verification.
 const dynamicClang = require(join(process.cwd(), "./dynamic-clang.js"));
-const ver = dynamicClang.libclang.clang_getClangVersion();
-console.log(dynamicClang.libclang.clang_getCString(ver));
-dynamicClang.libclang.clang_disposeString(ver);
+const ver = dynamicClang.functions.clang_getClangVersion();
+console.log(dynamicClang.functions.clang_getCString(ver));
+dynamicClang.functions.clang_disposeString(ver);

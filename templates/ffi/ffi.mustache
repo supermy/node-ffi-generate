@@ -1,12 +1,12 @@
-var FFI = require('ffi-napi'),
-    ref = require('ref-napi'),
-    ArrayType = require('ref-array-di')(ref),
-    Struct = require('ref-struct-di')(ref),
-    Union = require('ref-union-di')(ref);
+const FFI = require('ffi-napi');
+const ref = require('ref-napi');
+const ArrayType = require('ref-array-di')(ref);
+const Struct = require('ref-struct-di')(ref);
+const Union = require('ref-union-di')(ref);
 
-var voidPtr = ref.refType(ref.types.void);
+const voidPtr = ref.refType(ref.types.void);
 
-exports.CONSTANTS = {
+const constants = {
 {{#enums}}
   '{{name}}': {
     {{#values}}
@@ -19,12 +19,20 @@ exports.CONSTANTS = {
 {{/enums}}
 };
 
+// NOTE: defining individual types as "global" constants to be able to reference them without any prefix.
 {{#types}}
-var {{name}} = exports.{{name}} = {{type}};
-var {{name}}Ptr = exports.{{name}}Ptr = ref.refType({{name}});
+const {{name}} = {{type}};
+const {{name}}Ptr = ref.refType({{name}});
 {{/types}}
 
-exports.{{module}} = new FFI.Library('{{library}}', {
+const types = {
+{{#types}}
+  {{name}},
+  {{name}}Ptr,
+{{/types}}
+};
+
+const functions = new FFI.Library('{{library}}', {
 {{#functions}}
   {{name}}: [{{result}}, [
   {{#args}}
@@ -33,3 +41,9 @@ exports.{{module}} = new FFI.Library('{{library}}', {
   ]],
 {{/functions}}
 });
+
+module.exports = {
+  constants,
+  types,
+  functions,
+};

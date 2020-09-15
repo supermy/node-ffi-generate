@@ -43,7 +43,6 @@ suitable for use as a module.
 
 - f -- required -- The header file you wish to parse
 - l -- required -- The library FFI will use to dlopen
-- m -- optional -- The module name underwhich functions will be stored (uses library name otherwise)
 - p -- optional -- Only include functions whose name starts with the provided prefix
 
 * you can specify multiple `-p` on the command line to get multiple prefixes
@@ -58,7 +57,7 @@ the header (i.e. include paths). To pass options directly to libclang use `--`
 so ffi-generate-node knows to stop parsing arguments, the rest will be passed
 to libclang without modification.
 
-`ffi-generate -f /usr/include/ImageMagick/wand/MagickWand.h -l libMagickWand -m wand -p Magick -- $(Magick-config --cflags)`
+`ffi-generate -f /usr/include/ImageMagick/wand/MagickWand.h -l libMagickWand -p Magick -- $(Magick-config --cflags)`
 
 ## Generate FFI Bindings Programatically
 
@@ -72,7 +71,6 @@ Input to the generate method
 
 - opts.filename -- required -- the full path to the header source file to parse
 - opts.library -- required -- the library ffi should use to dlopen
-- opts.module -- optional -- the name of the module that will be exported (otherwise uses library name)
 - opts.prefix -- optional -- restrict imported functions to a given prefix
 - opts.includes -- optional -- a set of directory paths to aid type expansion
 - opts.compiler_args -- optional -- a set of clang command line options passed to the parser

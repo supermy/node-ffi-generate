@@ -43,7 +43,6 @@ const {
 	.usage("Generate node-ffi bindings for a given header file\nUsage: $0")
 	.demand("f").alias("f", "file").describe("f", "The header file to parse")
 	.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
-	.alias("m", "module").describe("m", "The name of module the bindings will be exported as")
 	.boolean("x").alias("x", "file_only").describe("x", "Only export functions found in this file")
 	.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix")
 	.boolean("s").alias("s", "strict").describe("s", "Use StrictType (experimental)")
@@ -85,7 +84,6 @@ function generate() {
 		compiler_args: argv._,
 		filename: argv.f,
 		library: argv.l,
-		module: argv.m,
 		prefix: argv.p,
 		// eslint-disable-next-line camelcase
 		single_file: argv.x,
