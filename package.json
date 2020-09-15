@@ -8,11 +8,13 @@
     "bindings"
   ],
   "author": "Timothy J Fontaine <tjfontaine@gmail.com>",
-  "contributors": [{
-    "name": "Joel Purra",
-    "email": "code+npm@joelpurra.com",
-    "url": "https://joelpurra.com/"
-  }],
+  "contributors": [
+    {
+      "name": "Joel Purra",
+      "email": "code+npm@joelpurra.com",
+      "url": "https://joelpurra.com/"
+    }
+  ],
   "main": "lib/generateffi.js",
   "license": "MIT",
   "bin": {
@@ -21,7 +23,7 @@
   "dependencies": {
     "hogan.js": ">= 2.0.0",
     "js-beautify": "",
-    "libclang": "github:node-ffi-packager/node-libclang#v1",
+    "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
     "optimist": ""
   },
   "devDependencies": {
