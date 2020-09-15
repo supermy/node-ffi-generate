@@ -73,11 +73,7 @@ LD_LIBRARY_PATH="$(llvm-config --libdir)" node ./bin/ffi-generate.js --file "$(l
 ## Programmatic usage
 
 - See [`lib/generateffi.js`](./lib/generateffi.js) for options to pass.
-- See [`example.js`](./example.js) for how to generate bindings for the [`libclang` Indexing Public C Interface](https://clang.llvm.org/doxygen/Index_8h_source.html).
-
-```shell
-LD_LIBRARY_PATH="$(llvm-config --libdir)" C_INCLUDE_PATH="$(llvm-config --includedir)" node example.js
-```
+- See [`examples/`](./examples/).
 
 ---
 

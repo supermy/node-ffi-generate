@@ -1,8 +1,6 @@
 // Example: generate javascript for the libclang header file.
+/* eslint-disable no-console */
 const assert = require("assert");
-const {
-	exec,
-} = require("child_process");
 const {
 	join,
 } = require("path");
@@ -12,21 +10,18 @@ const {
 } = require("fs");
 const {
 	generate,
-} = require("./lib/generateffi");
+} = require("../../../lib/generateffi");
 
 assert.strictEqual(typeof process.env.C_INCLUDE_PATH, "string");
 
 // NOTE: using path(s) to the LLVM header directory from the environment; assuming LLVM is in the first path.
-const includedir = process.env.C_INCLUDE_PATH.split(":")[0];
-const headerFilePath = join(includedir, "clang-c", "Index.h");
+const llvmIncludeDir = process.env.C_INCLUDE_PATH.split(":")[0];
+const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
-assert.doesNotThrow(() => readFileSync(headerFilePath))
+assert.doesNotThrow(() => readFileSync(headerFilePath));
 
 const result = generate({
 	filename: headerFilePath,
-	includes: [
-		includedir,
-	],
 	library: "libclang",
 	prefix: "clang_",
 });
