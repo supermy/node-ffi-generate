@@ -24,15 +24,22 @@
 const {
 	join,
 } = require("path");
+const {
+	exec, spawn,
+} = require("child_process");
+
 const engineCheck = require("engine-check");
+const optimist = require("optimist");
 
 engineCheck({
 	searchRoot: join(__dirname, ".."),
 });
 
+const generateffi = require("../lib/generateffi");
+
 const {
 	argv,
-} = require("optimist")
+} = optimist
 	.usage("Generate node-ffi bindings for a given header file\nUsage: $0")
 	.demand("f").alias("f", "file").describe("f", "The header file to parse")
 	.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
@@ -59,7 +66,7 @@ function tryClang(cb) {
 		return cb(false);
 	}
 
-	require("child_process").exec("llvm-config --libdir", (err, stdout, _stderr) => {
+	exec("llvm-config --libdir", (err, stdout, _stderr) => {
 		if (stdout.trim()) {
 			cb(stdout.trim());
 		} else {
@@ -71,7 +78,7 @@ function tryClang(cb) {
 function generate() {
 	const {
 		generate,
-	} = require("../lib/generateffi");
+	} = generateffi;
 
 	const returnValue = generate({
 	// eslint-disable-next-line camelcase
@@ -122,7 +129,7 @@ tryClang((returnValue) => {
 				break;
 		}
 
-		const c = require("child_process").spawn(process.execPath, process.argv.slice(1), {
+		const c = spawn(process.execPath, process.argv.slice(1), {
 			env,
 		});
 		c.stdout.pipe(process.stdout);
@@ -131,7 +138,7 @@ tryClang((returnValue) => {
 			process.exit(code);
 		});
 	} else {
-	// eslint-disable-next-line no-console
+		// eslint-disable-next-line no-console
 		console.error("Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path");
 	}
 });
