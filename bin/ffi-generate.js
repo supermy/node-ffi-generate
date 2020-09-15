@@ -30,7 +30,6 @@ engineCheck({
 	searchRoot: join(__dirname, ".."),
 });
 
-const jsb = require("js-beautify");
 const {
 	argv,
 } = require("optimist")
@@ -60,7 +59,7 @@ function tryClang(cb) {
 		return cb(false);
 	}
 
-	require("child_process").exec("llvm-config --libdir", (err, stdout, stderr) => {
+	require("child_process").exec("llvm-config --libdir", (err, stdout, _stderr) => {
 		if (stdout.trim()) {
 			cb(stdout.trim());
 		} else {
@@ -75,16 +74,19 @@ function generate() {
 	} = require("../lib/generateffi");
 
 	const returnValue = generate({
+	// eslint-disable-next-line camelcase
+		compiler_args: argv._,
 		filename: argv.f,
 		library: argv.l,
 		module: argv.m,
 		prefix: argv.p,
-		compiler_args: argv._,
-		strict_type: argv.s,
+		// eslint-disable-next-line camelcase
 		single_file: argv.x,
+		// eslint-disable-next-line camelcase
+		strict_type: argv.s,
 	});
 
-	//console.log(jsb.js_beautify(ret.serialized));
+	// eslint-disable-next-line no-console
 	console.log(returnValue.serialized);
 
 	if (generate.unmapped) {
@@ -96,7 +98,7 @@ function generate() {
 tryClang((returnValue) => {
 	let library;
 
-	if (isNaN(returnValue)) {
+	if (Number.isNaN(returnValue)) {
 		library = returnValue;
 	}
 
@@ -129,6 +131,7 @@ tryClang((returnValue) => {
 			process.exit(code);
 		});
 	} else {
+	// eslint-disable-next-line no-console
 		console.error("Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path");
 	}
 });
