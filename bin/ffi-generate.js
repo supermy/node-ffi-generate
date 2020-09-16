@@ -42,13 +42,11 @@ const runGenerator = async () => {
 		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
 
 	const returnValue = generate({
-	// eslint-disable-next-line camelcase
-		compiler_args: argv._,
+		compilerArgs: argv._,
 		filename: argv.f,
 		library: argv.l,
 		prefix: argv.p,
-		// eslint-disable-next-line camelcase
-		single_file: argv.x,
+		singleFile: argv.x,
 	});
 
 	// eslint-disable-next-line no-console
