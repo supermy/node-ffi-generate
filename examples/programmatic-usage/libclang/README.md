@@ -21,7 +21,7 @@ LD_LIBRARY_PATH="$(llvm-config --libdir)" C_INCLUDE_PATH="$(llvm-config --includ
 This version has additional compiler flags, so it is probably giving a different output.
 
 ```shell
-LD_LIBRARY_PATH="$(llvm-config --libdir)" ffi-generate --prefix 'clang' --file "$(llvm-config --includedir)/clang-c/Index.h" --library 'libclang' -- $(llvm-config --cflags) > 'dynamic-clang.js'
+LD_LIBRARY_PATH="$(llvm-config --libdir)" ffi-generate --prefix 'clang' --prefix 'CX' --file "$(llvm-config --includedir)/clang-c/Index.h" --library 'libclang' -- $(llvm-config --cflags) > 'dynamic-clang.js'
 ```
 
 ---
