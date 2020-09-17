@@ -28,7 +28,7 @@
     "execa": "^4.0.3",
     "hogan.js": ">= 2.0.0",
     "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
-    "optimist": ""
+    "optimist": "^0.6.1"
   },
   "devDependencies": {
     "ava": "^3.12.1",
