@@ -24,11 +24,11 @@
     "ffi-generate": "bin/ffi-generate.js"
   },
   "dependencies": {
+    "@ffi-packager/libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
     "bluebird": "^3.7.2",
     "engine-check": "^1.0.1",
     "execa": "^4.0.3",
     "hogan.js": ">= 2.0.0",
-    "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
     "lodash": "^4.17.20",
     "optimist": "^0.6.1",
     "prettier": "^2.0.5"

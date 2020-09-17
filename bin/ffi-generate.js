@@ -35,7 +35,7 @@ const tryRetryLoadLibclang = async () => {
 	try {
 		// NOTE: if this succeeds, the libclang library could be loaded by dlopen().
 		// eslint-disable-next-line import/no-unassigned-import
-		require("libclang");
+		require("@ffi-packager/libclang");
 	} catch (libclangLoadError) {
 		if (libclangLoadError.code === "ENOENT") {
 			const libraryPathEnvironmentVariableName = process.platform === "darwin" ? "DYLD_LIBRARY_PATH" : "LD_LIBRARY_PATH";
