@@ -32,7 +32,7 @@ const types = {
 {{/types}}
 };
 
-const functions = new FFI.Library('{{library}}', {
+const functions = new FFI.Library({{{library}}}, {
 {{#functions}}
   {{name}}: [{{result}}, [
   {{#args}}

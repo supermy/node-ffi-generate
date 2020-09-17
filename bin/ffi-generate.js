@@ -37,7 +37,7 @@ const runGenerator = async () => {
 	} = optimist
 		.usage("Generate node-ffi-napi javascript bindings for a given C/C++ header file")
 		.demand("f").alias("f", "file").describe("f", "The header file to parse")
-		.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen")
+		.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen. Set to null to use functions in the current process.")
 		.boolean("x").alias("x", "single-file").describe("x", "Only export functions found in this file")
 		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
 
