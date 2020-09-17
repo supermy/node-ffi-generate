@@ -1,4 +1,4 @@
-// Example: generate javascript for the libclang header file.
+// Example: generate javascript for a simple header file.
 /* eslint-disable no-console */
 const {
 	join,
