@@ -33,13 +33,15 @@ if (result.unmapped.length > 0) {
 }
 
 // NOTE: write javascript output to disk.
+const dynamicClangPath = join(process.cwd(), "dynamic-clang.js");
+
 writeFileSync(
-	join(process.cwd(), "dynamic-clang.js"),
+	dynamicClangPath,
 	result.serialized,
 );
 
 // NOTE: attempt to load and use generated code for verification.
-const dynamicClang = require(join(process.cwd(), "./dynamic-clang.js"));
+const dynamicClang = require(dynamicClangPath);
 const ver = dynamicClang.functions.clang_getClangVersion();
 console.log(dynamicClang.functions.clang_getCString(ver));
 dynamicClang.functions.clang_disposeString(ver);

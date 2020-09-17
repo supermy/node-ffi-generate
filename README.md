@@ -34,6 +34,16 @@ For programmatic usage.
 npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0-alpha.1
 ```
 
+## Requirements
+
+- Selected parts of the [The LLVM Compiler Infrastructure](https://llvm.org/).
+  - The [`llvm-config`](https://llvm.org/) tool.
+    - Used to automatically look up the location of `libclang`, but it can be manually configured.
+    - Try symlinking versioned executables (such as `llvm-config-9`) to `llvm-config` in your `PATH`.
+  - The [`libclang`](https://clang.llvm.org/) library.
+    - Indirectly required by [node-libclang](https://github.com/node-ffi-packager/node-libclang).
+  - Installing using a package manager is strongly recommended.
+
 ## CLI usage
 
 Parse the given header file and print the rendered javascript to standard. Fast and simple to use.
@@ -62,18 +72,18 @@ It may be necessary to pass additional flags/arguments to libclang so it can bet
 ffi-generate --file '/usr/include/ImageMagick/wand/MagickWand.h' --library 'libMagickWand' --prefix 'Magick' -- $(Magick-config --cflags)
 ```
 
-### Location of `libclang`
-
-Setting `LD_LIBRARY_PATH` (or perhaps `DYLD_LIBRARY_PATH`) might be necessary for `ffi-generate` to find `libclang`.
-
-```shell
-LD_LIBRARY_PATH="$(llvm-config --libdir)" node ./bin/ffi-generate.js --file "$(llvm-config --includedir)/clang-c/Index.h" --library "libclang"
-```
-
 ## Programmatic usage
 
 - See [`lib/generateffi.js`](./lib/generateffi.js) for options to pass.
 - See [`examples/`](./examples/).
+
+## Location of `libclang`
+
+Setting `LD_LIBRARY_PATH` (or `DYLD_LIBRARY_PATH` on macOS) might be necessary for `ffi-generate` to find the `libclang` dynamic library. For the `ffi-generate` command, this is performed internally by calling [`llvm-config`](https://llvm.org/docs/CommandGuide/llvm-config.html). For programmatic use try setting it manually as an environment variable.
+
+```shell
+LD_LIBRARY_PATH="$(llvm-config --libdir)" node my-generator-code.js
+```
 
 ---
 

@@ -25,13 +25,94 @@ const {
 	join,
 } = require("path");
 const engineCheck = require("engine-check");
+const execa = require("execa");
+const {
+	pick,
+} = require("lodash");
 const optimist = require("optimist");
 
-const {
-	generate,
-} = require("..");
+const tryRetryLoadLibclang = async () => {
+	try {
+		// NOTE: if this succeeds, the libclang library could be loaded by dlopen().
+		// eslint-disable-next-line import/no-unassigned-import
+		require("libclang");
+	} catch (libclangLoadError) {
+		if (libclangLoadError.code === "ENOENT") {
+			const libraryPathEnvironmentVariableName = process.platform === "darwin" ? "DYLD_LIBRARY_PATH" : "LD_LIBRARY_PATH";
+
+			if (process.env.FFI_GENERATE_RETRY) {
+				throw new Error(`Could not load the libclang library (check ${libraryPathEnvironmentVariableName}). ${JSON.stringify(pick(
+					process.env,
+					[
+						libraryPathEnvironmentVariableName,
+					],
+				))}`);
+			}
+
+			let llvmConfigLibDir;
+
+			try {
+				llvmConfigLibDir = await execa("llvm-config", [
+					"--libdir",
+				]);
+			} catch (llvmConfigExecaError) {
+				// https://github.com/sindresorhus/execa/blob/1ac56eac5f6e993fd2a2a3ad308fd5c18deb25a9/test/test.js#L10
+				const ENOENT_REGEXP = process.platform === "win32" ? /failed with exit code 1/ : /spawn.* ENOENT/;
+
+				if (ENOENT_REGEXP.test(llvmConfigExecaError)) {
+					throw new Error(`Could not find llvm-config (check PATH). ${JSON.stringify(pick(
+						process.env,
+						[
+							"PATH",
+						],
+					))}`);
+				}
+
+				throw llvmConfigExecaError;
+			}
+
+			try {
+				// NOTE: re-execute this javascript file with added environment variables.
+				const reexecute = execa.node(
+					__filename,
+					process.argv.slice(2),
+					{
+						env: {
+							...process.env,
+							FFI_GENERATE_RETRY: process.pid,
+							[libraryPathEnvironmentVariableName]: [
+								llvmConfigLibDir.stdout,
+							].concat((process.env[libraryPathEnvironmentVariableName] || "").split(":")).join(":"),
+						},
+					},
+				);
+				reexecute.stdout.pipe(process.stdout);
+				reexecute.stderr.pipe(process.stderr);
+
+				await reexecute;
+			} catch (reexecuteError) {
+				const ffiGenerateMissingArguments = /Missing required arguments/;
+
+				// NOTE: ignore output with missing arguments message from own code -- that's a "good" result.
+				if (!ffiGenerateMissingArguments.test(reexecuteError)) {
+					throw reexecuteError;
+				}
+			}
+
+			return false;
+		}
+
+		throw libclangLoadError;
+	}
+
+	return true;
+};
 
 const runGenerator = async () => {
+	const {
+		generate,
+	} = require("..");
+
 	const {
 		argv,
 	} = optimist
@@ -53,14 +134,24 @@ const runGenerator = async () => {
 	console.log(returnValue.serialized);
 
 	if (generate.unmapped) {
-		process.stderr.write("-------Unmapped-------\r\n");
-		process.stderr.write(generate.unmapped + "\r\n");
+		// eslint-disable-next-line no-console
+		console.error("-------Unmapped-------");
+		// eslint-disable-next-line no-console
+		console.error(generate.unmapped);
+	}
+};
+
+const loadAndGenerate = async () => {
+	const succeeded = await tryRetryLoadLibclang();
+
+	if (succeeded) {
+		await runGenerator();
 	}
 };
 
 const mainAsync = async () => {
 	try {
-		await runGenerator();
+		await loadAndGenerate();
 	} catch (error) {
 		// NOTE: root error handler for asynchronous errors.
 		// eslint-disable-next-line no-console
