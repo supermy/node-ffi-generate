@@ -28,14 +28,14 @@
     "execa": "^4.0.3",
     "hogan.js": ">= 2.0.0",
     "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
-    "optimist": "^0.6.1"
+    "optimist": "^0.6.1",
+    "prettier": "^2.0.5"
   },
   "devDependencies": {
     "ava": "^3.12.1",
     "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^1.0.0",
     "ffi-napi": "^3.0.1",
     "husky": "^4.3.0",
-    "prettier": "^2.0.5",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^2.1.2",
     "ref-struct-di": "^1.1.1",
