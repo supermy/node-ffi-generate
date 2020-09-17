@@ -24,6 +24,7 @@
     "ffi-generate": "bin/ffi-generate.js"
   },
   "dependencies": {
+    "bluebird": "^3.7.2",
     "engine-check": "^1.0.1",
     "execa": "^4.0.3",
     "hogan.js": ">= 2.0.0",

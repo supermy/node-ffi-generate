@@ -122,7 +122,7 @@ const runGenerator = async () => {
 		.boolean("x").alias("x", "single-file").describe("x", "Only export functions found in this file")
 		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
 
-	const returnValue = generate({
+	const returnValue = await generate({
 		compilerArgs: argv._,
 		filename: argv.f,
 		library: argv.l,
@@ -135,9 +135,7 @@ const runGenerator = async () => {
 
 	if (generate.unmapped) {
 		// eslint-disable-next-line no-console
-		console.error("-------Unmapped-------");
-		// eslint-disable-next-line no-console
-		console.error(generate.unmapped);
+		console.warn("----- UNMAPPED FUNCTIONS -----", generate.unmapped);
 	}
 };
 

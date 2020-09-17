@@ -7,12 +7,16 @@ const {
 	generate,
 } = require("../../..");
 
-const headerFilePath = join(__dirname, "mylibrary.h");
+const main = async () => {
+	const headerFilePath = join(__dirname, "mylibrary.h");
 
-const result = generate({
-	filename: headerFilePath,
-	library: "mylibrary",
-});
+	const result = await generate({
+		filename: headerFilePath,
+		library: "mylibrary",
+	});
 
-// NOTE: write javascript output to stdout.
-console.log(result.serialized);
+	// NOTE: write javascript output to stdout.
+	console.log(result.serialized);
+};
+
+main();

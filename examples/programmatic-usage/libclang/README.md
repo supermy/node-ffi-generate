@@ -13,9 +13,8 @@ This example shows how to generate bindings for the [`libclang`](https://clang.l
   - Example output: `clang version 9.0.1-12`
 
 ```shell
-# NOTE: setting LD_LIBRARY_PATH might be required to find libclang.
-# NOTE: setting C_INCLUDE_PATH externally for convenience, since the header file location can vary by system and version.
-LD_LIBRARY_PATH="$(llvm-config --libdir)" C_INCLUDE_PATH="$(llvm-config --includedir)" node example.js
+# NOTE: setting LD_LIBRARY_PATH is required to find libclang on some systems.
+LD_LIBRARY_PATH="$(llvm-config --libdir)" node example.js
 ```
 
 ## CLI version

@@ -1,47 +1,47 @@
 // Example: generate javascript for the libclang header file.
 /* eslint-disable no-console */
-const assert = require("assert");
+const childProcess = require("child_process");
+const fs = require("fs");
 const {
 	join,
 } = require("path");
 const {
-	writeFileSync,
-	readFileSync,
-} = require("fs");
+	promisify,
+} = require("util");
 const {
 	generate,
 } = require("../../..");
 
-assert.strictEqual(typeof process.env.C_INCLUDE_PATH, "string");
+const exec = promisify(childProcess.exec);
+const writeFile = promisify(fs.writeFile);
 
-// NOTE: using path(s) to the LLVM header directory from the environment; assuming LLVM is in the first path.
-const llvmIncludeDir = process.env.C_INCLUDE_PATH.split(":")[0];
-const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
+const main = async () => {
+	// NOTE: dynamically detecting LLVM's include directory.
+	const llvmIncludeDir = (await exec("llvm-config --includedir", {})).stdout.trim();
+	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
-assert.doesNotThrow(() => readFileSync(headerFilePath));
+	const result = await generate({
+		filename: headerFilePath,
+		includes: [
+			llvmIncludeDir,
+		],
+		library: "libclang",
+		prefix: "clang_",
+	});
 
-const result = generate({
-	filename: headerFilePath,
-	library: "libclang",
-	prefix: "clang_",
-});
+	if (result.unmapped.length > 0) {
+		console.warn("----- UNMAPPED FUNCTIONS -----", result.unmapped);
+	}
 
-if (result.unmapped.length > 0) {
-	console.warn("----- UNMAPPED FUNCTIONS -----");
-	console.warn(result.unmapped);
-	console.warn("----- UNMAPPED FUNCTIONS -----");
-}
+	// NOTE: write javascript output to disk.
+	const dynamicClangPath = join(process.cwd(), "dynamic-clang.js");
+	await writeFile(dynamicClangPath, result.serialized);
 
-// NOTE: write javascript output to disk.
-const dynamicClangPath = join(process.cwd(), "dynamic-clang.js");
+	// NOTE: attempt to load and use generated code for verification.
+	const dynamicClang = require(dynamicClangPath);
+	const ver = dynamicClang.functions.clang_getClangVersion();
+	console.log(dynamicClang.functions.clang_getCString(ver));
+	dynamicClang.functions.clang_disposeString(ver);
+};
 
-writeFileSync(
-	dynamicClangPath,
-	result.serialized,
-);
-
-// NOTE: attempt to load and use generated code for verification.
-const dynamicClang = require(dynamicClangPath);
-const ver = dynamicClang.functions.clang_getClangVersion();
-console.log(dynamicClang.functions.clang_getCString(ver));
-dynamicClang.functions.clang_disposeString(ver);
+main();
