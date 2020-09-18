@@ -27,5 +27,5 @@ engineCheck({
 });
 
 module.exports = {
-	generate: require("./lib/generateffi"),
+	generate: require("./lib/generate"),
 };
