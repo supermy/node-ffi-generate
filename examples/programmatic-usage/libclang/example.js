@@ -21,7 +21,7 @@ const main = async () => {
 	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const result = await generate({
-		filename: headerFilePath,
+		filepath: headerFilePath,
 		includes: [
 			llvmIncludeDir,
 		],

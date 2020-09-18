@@ -125,7 +125,7 @@ const runGenerator = async () => {
 
 	const returnValue = await generate({
 		compilerArgs: argv._,
-		filename: argv.f,
+		filepath: argv.f,
 		library: argv.l,
 		prefix: argv.p,
 		singleFile: argv.x,

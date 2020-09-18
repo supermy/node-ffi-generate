@@ -25,7 +25,7 @@ test("lines", async (t) => {
 			"--include-directory",
 			llvmIncludeDir,
 		],
-		filename: headerFilePath,
+		filepath: headerFilePath,
 		library: "libclang",
 		prefix: [
 			"clang_",

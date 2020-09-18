@@ -11,7 +11,7 @@ const main = async () => {
 	const headerFilePath = join(__dirname, "mylibrary.h");
 
 	const result = await generate({
-		filename: headerFilePath,
+		filepath: headerFilePath,
 		library: "mylibrary",
 	});
 
