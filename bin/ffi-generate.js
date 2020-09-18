@@ -30,6 +30,7 @@ const {
 	pick,
 } = require("lodash");
 const optimist = require("optimist");
+const SegfaultHandler = require("segfault-handler");
 
 const tryRetryLoadLibclang = async () => {
 	try {
@@ -164,6 +165,9 @@ const main = () => {
 		engineCheck({
 			searchRoot: join(__dirname, ".."),
 		});
+
+		const segfaultHandlerLogName = `ffi-generate.segfault.${new Date().toISOString().replace(/:/g, "").toLowerCase()}.${process.pid}.log`;
+		SegfaultHandler.registerHandler(segfaultHandlerLogName);
 
 		mainAsync();
 	} catch (error) {
