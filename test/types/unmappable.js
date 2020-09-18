@@ -11,7 +11,7 @@ const writeFile = promisify(fs.writeFile);
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../../lib/generateffi");
+	} = require("../..");
 
 	const generated = await generate({
 		filename: `${__filename}.h`,

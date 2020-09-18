@@ -21,13 +21,10 @@ test("lines", async (t) => {
 	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const generated = await generate({
-		// eslint-disable-next-line camelcase
-		compiler_args: [
+		compilerArgs: [
 			"--include-directory",
 			llvmIncludeDir,
 		],
-		// eslint-disable-next-line camelcase
-		file_only: true,
 		filename: headerFilePath,
 		library: "libclang",
 		prefix: [
