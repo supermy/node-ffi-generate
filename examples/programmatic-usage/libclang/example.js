@@ -34,7 +34,7 @@ const main = async () => {
 	}
 
 	// NOTE: write javascript output to disk.
-	const dynamicClangPath = join(process.cwd(), "dynamic-clang.js");
+	const dynamicClangPath = "./dynamic-clang.js";
 	await writeFile(dynamicClangPath, result.serialized);
 
 	// NOTE: attempt to load and use generated code for verification.

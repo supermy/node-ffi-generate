@@ -1,14 +1,11 @@
 // Example: generate javascript for a simple header file.
 /* eslint-disable no-console */
 const {
-	join,
-} = require("path");
-const {
 	generate,
 } = require("../../..");
 
 const main = async () => {
-	const headerFilePath = join(__dirname, "mylibrary.h");
+	const headerFilePath = "mylibrary.h";
 
 	const result = await generate({
 		filepath: headerFilePath,
