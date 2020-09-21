@@ -1539,7 +1539,7 @@ const CXCompletionString = voidPtr;
 const CXCompletionStringPtr = ref.refType(CXCompletionString);
 const CXCompletionResult = Struct({
   CursorKind: ref.types.uint32,
-  CompletionString: CXCompletionString,
+  CompletionString: voidPtr,
 });
 const CXCompletionResultPtr = ref.refType(CXCompletionResult);
 const CXCodeCompleteResults = Struct({
