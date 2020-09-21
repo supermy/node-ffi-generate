@@ -20,7 +20,7 @@ const main = async () => {
 	const llvmIncludeDir = (await exec("llvm-config --includedir", {})).stdout.trim();
 	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
-	const result = await generate({
+	const generated = await generate({
 		filepath: headerFilePath,
 		includes: [
 			llvmIncludeDir,
@@ -29,13 +29,13 @@ const main = async () => {
 		prefix: "clang_",
 	});
 
-	if (result.unmapped.length > 0) {
-		console.warn("----- UNMAPPED -----", result.unmapped);
+	if (generated.unmapped.length > 0) {
+		console.warn("----- UNMAPPED -----", JSON.stringify(generated.unmapped, null, 2));
 	}
 
 	// NOTE: write javascript output to disk.
 	const dynamicClangPath = "./dynamic-clang.js";
-	await writeFile(dynamicClangPath, result.serialized);
+	await writeFile(dynamicClangPath, generated.serialized);
 
 	// NOTE: attempt to load and use generated code for verification.
 	const dynamicClang = require(dynamicClangPath);

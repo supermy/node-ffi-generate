@@ -123,7 +123,7 @@ const runGenerator = async () => {
 		.boolean("x").alias("x", "single-file").describe("x", "Only export functions found in this file")
 		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
 
-	const returnValue = await generate({
+	const generated = await generate({
 		compilerArgs: argv._,
 		filepath: argv.f,
 		library: argv.l,
@@ -132,11 +132,11 @@ const runGenerator = async () => {
 	});
 
 	// eslint-disable-next-line no-console
-	console.log(returnValue.serialized);
+	console.log(generated.serialized);
 
-	if (generate.unmapped) {
+	if (generated.unmapped.length > 0) {
 		// eslint-disable-next-line no-console
-		console.warn("----- UNMAPPED -----", generate.unmapped);
+		console.warn("----- UNMAPPED -----", JSON.stringify(generated.unmapped, null, 2));
 	}
 };
 
