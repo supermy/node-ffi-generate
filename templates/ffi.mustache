@@ -53,7 +53,7 @@ const types = {
 
 const functions = new FFI.Library({{{library}}}, {
 {{#sorted.functions}}
-  {{name}}: [{{result}}, [
+  {{name}}: [{{returnType}}, [
   {{#args}}
     {{name}},
   {{/args}}
