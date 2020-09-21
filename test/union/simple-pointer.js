@@ -24,16 +24,12 @@ test("lines", async (t) => {
 
 	// TODO: structs in the output? Fix unions.
 	// TODO: fix typedef aliasing generating a pointer to the original type.
-	const expectedTypes = `const my_union = Struct({
+	const expectedTypes = `const my_union = Union({
 		first: ref.types.int32,
 		second: ref.types.int32,
 	  });
 	  const my_unionPtr = ref.refType(my_union);
 	  const my_union_t = Struct({
-		my_union: Union({
-		  first: ref.types.int32,
-		  second: ref.types.int32,
-		}),
 		my_union: my_union,
 	  });
 	  const my_union_tPtr = ref.refType(my_union_t);`;

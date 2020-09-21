@@ -22,8 +22,7 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
-	const expectedTypes = `const my_union = Struct({
+	const expectedTypes = `const my_union = Union({
 		first: ref.types.int32,
 		second: ref.types.int32,
 	  });

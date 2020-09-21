@@ -20,28 +20,17 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	// NOTE: unmapped function arguments.
-	t.deepEqual(generated.unmapped, [
-		{
-			arg: "Typedef",
-			displayname: "__int128_t",
-			name: "do_stuff__int128_t",
-			position: 0,
-		},
-		{
-			arg: "Typedef",
-			displayname: "__uint128_t",
-			name: "do_stuff__uint128_t",
-			position: 0,
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
-	const expectedTypes = "const types = {};";
+	const expectedTypes = `const __int128_t = voidPtr;
+	const __int128_tPtr = ref.refType(__int128_t);
+	const __uint128_t = voidPtr;
+	const __uint128_tPtr = ref.refType(__uint128_t);`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "const functions = new FFI.Library(\"does-not-matter\", {});";
+	const expectedFunctions = `do_stuff__int128_t: [ref.types.void, [__int128_t]],
+	do_stuff__uint128_t: [ref.types.void, [__uint128_t]],`;
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

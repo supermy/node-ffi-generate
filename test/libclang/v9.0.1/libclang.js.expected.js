@@ -2213,7 +2213,7 @@ const functions = new FFI.Library("libclang", {
   clang_getFile: [CXFile, [CXTranslationUnit, ref.types.CString]],
   clang_getFileContents: [
     ref.types.CString,
-    [CXTranslationUnit, CXFile, size_t],
+    [CXTranslationUnit, CXFile, size_tPtr],
   ],
   clang_getFileLocation: [
     ref.types.void,
@@ -2317,7 +2317,7 @@ const functions = new FFI.Library("libclang", {
     ref.types.void,
     [
       CXIdxLoc,
-      CXIdxClientFile,
+      CXIdxClientFilePtr,
       CXFilePtr,
       ref.refType(ref.types.uint32),
       ref.refType(ref.types.uint32),
