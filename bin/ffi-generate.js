@@ -136,7 +136,7 @@ const runGenerator = async () => {
 
 	if (generate.unmapped) {
 		// eslint-disable-next-line no-console
-		console.warn("----- UNMAPPED FUNCTIONS -----", generate.unmapped);
+		console.warn("----- UNMAPPED -----", generate.unmapped);
 	}
 };
 

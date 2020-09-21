@@ -30,7 +30,7 @@ const main = async () => {
 	});
 
 	if (result.unmapped.length > 0) {
-		console.warn("----- UNMAPPED FUNCTIONS -----", result.unmapped);
+		console.warn("----- UNMAPPED -----", result.unmapped);
 	}
 
 	// NOTE: write javascript output to disk.
