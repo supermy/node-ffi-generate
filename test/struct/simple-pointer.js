@@ -22,9 +22,13 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: fix typedef aliasing generating a pointer to the original type.
-	const expectedTypes = `const my_struct_t = Struct({
+	// TODO: fix typedef aliasing generating a pointer to a struct wrapper of the original type.
+	const expectedTypes = `const my_struct = Struct({
 		my_void: voidPtr,
+	  });
+	  const my_structPtr = ref.refType(my_struct);
+	  const my_struct_t = Struct({
+		my_struct: my_struct,
 	  });
 	  const my_struct_tPtr = ref.refType(my_struct_t);`;
 
