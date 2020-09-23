@@ -1,2 +1,3 @@
 dynamic-clang.js
-*.output.*
+test/**/*.expected.*
+test/**/*.output.*
