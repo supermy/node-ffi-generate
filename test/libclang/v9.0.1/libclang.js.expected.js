@@ -2,7 +2,7 @@
  * This file was automatically generated. It is better to run the generator again, than to manually edit.
  *
  * @ffi-packager/ffi-generate v
- * - git commit
+ * - git commit v
  * - clang version
  * https://github.com/node-ffi-packager/node-ffi-generate
  *
