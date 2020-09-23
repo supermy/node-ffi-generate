@@ -69,7 +69,9 @@
   },
   "ava": {
     "files": [
-      "test/**/*"
+      "test/**/*",
+      "!test/**/*.output.*",
+      "!test/helper/**/*"
     ]
   }
 }
