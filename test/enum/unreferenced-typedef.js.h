@@ -4,5 +4,3 @@ typedef enum my_enum
   SECOND = -1,
   LAST = 99
 } my_enum_t;
-
-void do_stuff(my_enum_t stuff);

@@ -15,14 +15,14 @@ test("lines", async (t) => {
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
-		library: "simple",
+		library: "does-not-matter",
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
-	// const expected = `simple: {
+	// const expected = `my_enum: {
 	//   FIRST: 0,
 	//   SECOND: -1,
 	//   LAST: 99,
@@ -31,6 +31,7 @@ test("lines", async (t) => {
 	//   99: "LAST",
 	// }`;
 
+	// TODO: generate constants.
 	const expected = "const constants = {};";
 
 	assertExpectedLines(t, expected, generated.serialized);

@@ -22,8 +22,15 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: generate types.
-	const expected = "const types = {};";
+	// TODO: fix typedef aliasing generating a pointer to the original type.
+	const expectedTypes = `const my_struct_t = Struct({
+		my_void: voidPtr,
+	  });
+	  const my_struct_tPtr = ref.refType(my_struct_t);`;
 
-	assertExpectedLines(t, expected, generated.serialized);
+	assertExpectedLines(t, expectedTypes, generated.serialized);
+
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct_tPtr]],";
+
+	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

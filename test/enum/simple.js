@@ -15,21 +15,32 @@ test("lines", async (t) => {
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
-		library: "simple",
+		library: "does-not-matter",
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
-	const expected = `simple: {
-	  FIRST: 0,
-	  SECOND: -1,
-	  LAST: 99,
-	  0: "FIRST",
-	  "-1": "SECOND",
-	  99: "LAST",
-	}`;
+	const expectedConstants = `const constants = {
+		my_enum: {
+		  FIRST: 0,
+		  SECOND: -1,
+		  LAST: 99,
+		  0: "FIRST",
+		  "-1": "SECOND",
+		  99: "LAST",
+		},
+	  };`;
 
-	assertExpectedLines(t, expected, generated.serialized);
+	assertExpectedLines(t, expectedConstants, generated.serialized);
+
+	const expectedTypes = "const types = {};";
+
+	assertExpectedLines(t, expectedTypes, generated.serialized);
+
+	// TODO: refer to my_enum_t instead if int32?
+	const expectedFunctions = "do_stuff: [ref.types.void, [ref.types.int32]],";
+
+	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

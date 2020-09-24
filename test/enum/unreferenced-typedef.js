@@ -22,8 +22,18 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: generate types.
-	const expected = "const types = {};";
+	// TODO: also check for my_enum_ty, in contants or types?
+	// const expected = `my_enum: {
+	//   FIRST: 0,
+	//   SECOND: -1,
+	//   LAST: 99,
+	//   0: "FIRST",
+	//   "-1": "SECOND",
+	//   99: "LAST",
+	// }`;
+
+	// TODO: generate constants.
+	const expected = "const constants = {};";
 
 	assertExpectedLines(t, expected, generated.serialized);
 });

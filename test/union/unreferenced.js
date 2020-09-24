@@ -15,23 +15,15 @@ test("lines", async (t) => {
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
-		library: "simple",
+		library: "does-not-matter",
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
-	// const expected = `simple: {
-	//   FIRST: 0,
-	//   SECOND: -1,
-	//   LAST: 99,
-	//   0: "FIRST",
-	//   "-1": "SECOND",
-	//   99: "LAST",
-	// }`;
-
-	const expected = "const constants = {};";
+	// TODO: generate types.
+	const expected = "const types = {};";
 
 	assertExpectedLines(t, expected, generated.serialized);
 });

@@ -15,19 +15,31 @@ test("lines", async (t) => {
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
-		library: "simple",
+		library: "does-not-matter",
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	// TODO: generate empty struct voidPtr?
+	t.deepEqual(
+		generated.unmapped,
+		[
+			{
+				arg: "Typedef",
+				displayname: "my_struct_t",
+				name: "do_stuff",
+				position: 0,
+			},
+		],
+	);
 
-	const expectedTypes = `const my_struct_t = voidPtr;
-	const my_struct_tPtr = ref.refType(my_struct_t);`;
+	// TODO: generate empty struct voidPtr?
+	const expectedTypes = "const types = {};";
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct_t]],";
+	// TODO: generate a function.
+	const expectedFunctions = "const functions = new FFI.Library(\"does-not-matter\", {});";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

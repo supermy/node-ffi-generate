@@ -20,16 +20,18 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
 	const expectedConstants = "const constants = {};";
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
+	// TODO: create opaque voidPtr for myobj type?
 	const expectedTypes = "const types = {};";
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
+	// TODO: fix myobj * being rendered as ref.refType(ref.types.int32)?
 	const expectedFunctions = `const functions = new FFI.Library("mylibrary", {
 		do_some_number_fudging: [
 			ref.types.double,

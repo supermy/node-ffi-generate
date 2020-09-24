@@ -22,8 +22,13 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: generate types.
-	const expected = "const types = {};";
+	const expectedTypes = `const my_struct_t = voidPtr;
+	const my_struct_tPtr = ref.refType(my_struct_t);`;
 
-	assertExpectedLines(t, expected, generated.serialized);
+	assertExpectedLines(t, expectedTypes, generated.serialized);
+
+	// TODO: argument should reference pointer type.
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct_t]],";
+
+	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

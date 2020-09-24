@@ -22,16 +22,28 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
-	const expectedTypes = `const my_union = Struct({
-		first: ref.types.int32,
-		second: ref.types.int32,
+	const expectedConstants = `const constants = {
+		my_enum: {
+		  FIRST: 0,
+		  SECOND: -1,
+		  LAST: 99,
+		  0: "FIRST",
+		  "-1": "SECOND",
+		  99: "LAST",
+		},
+	  };`;
+
+	assertExpectedLines(t, expectedConstants, generated.serialized);
+
+	// TODO: structs in the output? Fix enums.
+	const expectedTypes = `const my_enum_t = Struct({
+		my_enum: ref.types.int32,
 	  });
-	  const my_unionPtr = ref.refType(my_union);`;
+	  const my_enum_tPtr = ref.refType(my_enum_t);`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_union]],";
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_enum_tPtr]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

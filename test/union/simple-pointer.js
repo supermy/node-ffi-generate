@@ -22,16 +22,25 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
+	// TODO: structs in the output? Fix unions.
+	// TODO: fix typedef aliasing generating a pointer to the original type.
 	const expectedTypes = `const my_union = Struct({
 		first: ref.types.int32,
 		second: ref.types.int32,
 	  });
-	  const my_unionPtr = ref.refType(my_union);`;
+	  const my_unionPtr = ref.refType(my_union);
+	  const my_union_t = Struct({
+		my_union: Union({
+		  first: ref.types.int32,
+		  second: ref.types.int32,
+		}),
+		my_union: my_union,
+	  });
+	  const my_union_tPtr = ref.refType(my_union_t);`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_union]],";
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_union_tPtr]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

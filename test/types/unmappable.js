@@ -11,7 +11,7 @@ const writeFile = promisify(fs.writeFile);
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../lib/generateffi");
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
@@ -23,15 +23,15 @@ test("lines", async (t) => {
 	t.deepEqual(generated.unmapped, []);
 
 	// NOTE: not necessary to generate the pointer version?
-	const expectedTypes = `const my_union = Struct({
-		first: ref.types.int32,
-		second: ref.types.int32,
+	const expectedTypes = `const my_unmappable_types = Struct({
+		my_bool: ref.types.byte,
+		my_uint8_t: ref.types.uchar,
 	  });
-	  const my_unionPtr = ref.refType(my_union);`;
+	  const my_unmappable_typesPtr = ref.refType(my_unmappable_types);`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_union]],";
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_unmappable_types]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

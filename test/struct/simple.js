@@ -15,21 +15,22 @@ test("lines", async (t) => {
 
 	const generated = await generate({
 		filename: `${__filename}.h`,
-		library: "simple",
+		library: "does-not-matter",
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = `const my_struct_t = Struct({
+	// NOTE: not necessary to generate the pointer version?
+	const expectedTypes = `const my_struct = Struct({
 		my_void: voidPtr,
 	  });
-	  const my_struct_tPtr = ref.refType(my_struct_t);`;
+	  const my_structPtr = ref.refType(my_struct);`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct_tPtr]],";
+	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

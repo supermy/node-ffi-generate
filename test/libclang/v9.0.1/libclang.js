@@ -38,7 +38,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.is(generated.unmapped.length, 0);
+	t.deepEqual(generated.unmapped, []);
 
 	const expected = (await readFile(__filename + ".expected.js")).toString();
 
