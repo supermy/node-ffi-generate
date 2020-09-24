@@ -21,17 +21,19 @@ test("lines", async (t) => {
 	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const generated = await generate({
-		compilerArgs: [
+		// eslint-disable-next-line camelcase
+		compiler_args: [
 			"--include-directory",
 			llvmIncludeDir,
 		],
-		filepath: headerFilePath,
+		// eslint-disable-next-line camelcase
+		file_only: true,
+		filename: headerFilePath,
 		library: "libclang",
 		prefix: [
 			"clang_",
 			"CX",
 		],
-		singleFile: true,
 	});
 
 	await writeFile(__filename + ".output.js", generated.serialized);

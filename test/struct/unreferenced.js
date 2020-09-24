@@ -14,7 +14,7 @@ test("lines", async (t) => {
 	} = require("../..");
 
 	const generated = await generate({
-		filepath: `${__filename}.h`,
+		filename: `${__filename}.h`,
 		library: "unreferenced",
 	});
 
