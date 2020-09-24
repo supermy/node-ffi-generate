@@ -25,20 +25,23 @@
   },
   "dependencies": {
     "engine-check": "^1.0.1",
+    "execa": "^4.0.3",
     "hogan.js": ">= 2.0.0",
     "js-beautify": "",
     "libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
     "optimist": ""
   },
   "devDependencies": {
+    "ava": "^3.12.1",
+    "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^1.0.0",
     "ffi-napi": "^3.0.1",
     "husky": "^4.3.0",
-    "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^1.0.0",
     "prettier": "^2.0.5",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^2.1.2",
     "ref-struct-di": "^1.1.1",
     "ref-union-di": "^1.0.1",
+    "semver": "^7.3.2",
     "xo": "^0.33.0"
   },
   "peerDependencies": {
@@ -49,7 +52,8 @@
     "ref-union-di": "^1.0.1"
   },
   "scripts": {
-    "test": "npm run --silent lint",
+    "test": "npm run --silent test:ava && npm run --silent lint",
+    "test:ava": "ava",
     "lint": "npm run --silent lint:xo && npm run --silent lint:prettier",
     "lint:fix": "npm run --silent lint:xo:fix && npm run --silent lint:prettier:fix",
     "lint:prettier": "prettier --list-different \"**/*.json\" \"**/*.md\" || { echo \"Prettier needs to format the above files. Try 'npm run --silent lint:fix'.\" && exit 1; }",
@@ -63,5 +67,13 @@
       "pre-commit": "npm run --silent test",
       "pre-push": "npm run --silent test"
     }
+  },
+  "ava": {
+    "files": [
+      "test/**/*",
+      "!test/**/*.expected.*",
+      "!test/**/*.output.*",
+      "!test/helper/**/*"
+    ]
   }
 }

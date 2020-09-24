@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/node-ffi-packager/node-ffi-generate">README</a> &middot; <a href="./CHANGELOG.md">Changelog</a>
+  <a href="https://github.com/node-ffi-packager/node-ffi-generate">README</a> &middot; <a href="./CHANGELOG.md">Changelog</a> &middot; <a href="./DEVELOP.md">Development</a>
 </p>
 
 # [Forked version of `node-ffi-generate`](https://github.com/node-ffi-packager/node-ffi-generate)
