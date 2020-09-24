@@ -5,7 +5,7 @@ const {
 } = require("path");
 const {
 	generate,
-} = require("../../../lib/generateffi");
+} = require("../../..");
 
 const headerFilePath = join(__dirname, "mylibrary.h");
 

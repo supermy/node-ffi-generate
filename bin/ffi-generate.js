@@ -29,7 +29,7 @@ const optimist = require("optimist");
 
 const {
 	generate,
-} = require("../lib/generateffi");
+} = require("..");
 
 const runGenerator = async () => {
 	const {

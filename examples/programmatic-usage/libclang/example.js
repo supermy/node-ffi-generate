@@ -10,7 +10,7 @@ const {
 } = require("fs");
 const {
 	generate,
-} = require("../../../lib/generateffi");
+} = require("../../..");
 
 assert.strictEqual(typeof process.env.C_INCLUDE_PATH, "string");
 
