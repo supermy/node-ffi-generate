@@ -23,15 +23,19 @@ test("lines", async (t) => {
 	t.deepEqual(generated.unmapped, []);
 
 	// NOTE: not necessary to generate the pointer version?
-	const expectedTypes = `const my_unmappable_types = Struct({
-		my_bool: ref.types.byte,
-		my_uint8_t: ref.types.uchar,
-	  });
-	  const my_unmappable_typesPtr = ref.refType(my_unmappable_types);`;
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const js_byte = ref.types.byte;
+		const js_uchar = ref.types.uchar;
+		const my_unmappable_types = Struct({
+			my_bool: js_byte,
+			my_uint8_t: js_uchar,
+		});
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_unmappable_types]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_unmappable_types]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

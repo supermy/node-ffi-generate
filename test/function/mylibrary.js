@@ -26,25 +26,25 @@ test("lines", async (t) => {
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
-	// TODO: create opaque voidPtr for myobj type?
-	const expectedTypes = "const types = {};";
+	// TODO: create opaque void pointer type for myobj type?
+	const expectedTypes = `
+		const js_double = ref.types.double;
+		const js_int32 = ref.types.int32;
+		const js_int32Pointer = ref.refType(ref.types.int32);
+		const js_void = ref.types.void;
+		const js_CString = ref.types.CString;
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	// TODO: fix myobj * being rendered as ref.refType(ref.types.int32)?
-	const expectedFunctions = `const functions = new FFI.Library("mylibrary", {
-		create_object: [ref.refType(ref.types.int32), []],
-		delete_object: [ref.types.void, [ref.refType(ref.types.int32)]],
-		do_some_number_fudging: [
-			ref.types.double,
-			[ref.types.double, ref.types.int32],
-		],
-		do_stuff_with_object: [ref.types.double, [ref.refType(ref.types.int32)]],
-		use_string_with_object: [
-			ref.types.void,
-			[ref.refType(ref.types.int32), ref.types.CString],
-		],
-	});`;
+	// TODO: fix myobj * being rendered as an int32 pointer?
+	const expectedFunctions = `
+		create_object: [js_int32Pointer, []],
+		delete_object: [js_void, [js_int32Pointer]],
+		do_some_number_fudging: [js_double, [js_double, js_int32]],
+		do_stuff_with_object: [js_double, [js_int32Pointer]],
+		use_string_with_object: [js_void, [js_int32Pointer, js_CString]],
+	`;
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

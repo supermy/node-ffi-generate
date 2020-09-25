@@ -23,16 +23,18 @@ test("lines", async (t) => {
 	t.deepEqual(generated.unmapped, []);
 
 	// TODO: fix typedef aliasing generating a pointer to a struct wrapper of the original type.
-	const expectedTypes = `const my_struct = voidPtr;
-	const my_structPtr = ref.refType(my_struct);
-	const my_struct_t = Struct({
-	  my_struct: voidPtr,
-	});
-	const my_struct_tPtr = ref.refType(my_struct_t);`;
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const my_struct = js_voidPointer;
+		const my_struct_t = Struct({
+			my_struct: my_struct,
+		});
+		const my_struct_tPointer = ref.refType(my_struct_t);
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct_tPtr]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_struct_tPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

@@ -22,15 +22,23 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = `const __int128_t = voidPtr;
-	const __int128_tPtr = ref.refType(__int128_t);
-	const __uint128_t = voidPtr;
-	const __uint128_tPtr = ref.refType(__uint128_t);`;
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const __int128_t = js_voidPointer;
+		const __uint128_t = js_voidPointer;
+		const types = {
+			__int128_t,
+			__uint128_t,
+			js_void,
+		};
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = `do_stuff__int128_t: [ref.types.void, [__int128_t]],
-	do_stuff__uint128_t: [ref.types.void, [__uint128_t]],`;
+	const expectedFunctions = `
+		do_stuff__int128_t: [js_void, [__int128_t]],
+		do_stuff__uint128_t: [js_void, [__uint128_t]],
+	`;
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

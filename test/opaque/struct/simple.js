@@ -22,12 +22,15 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = `const my_struct = voidPtr;
-	const my_structPtr = ref.refType(my_struct);`;
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const my_struct = js_voidPointer;
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_struct]],";
+	// TODO: should the function reference my_struct_t?
+	const expectedFunctions = "do_stuff: [js_void, [my_struct]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

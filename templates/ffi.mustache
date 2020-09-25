@@ -23,8 +23,6 @@ const ArrayType = require("ref-array-di")(ref);
 const Struct = require("ref-struct-di")(ref);
 const Union = require("ref-union-di")(ref);
 
-const voidPtr = ref.refType(ref.types.void);
-
 const constants = {
 {{#sorted.enums}}
   "{{name}}": {
@@ -40,22 +38,20 @@ const constants = {
 
 // NOTE: defining individual types as "global" constants to be able to reference them without any prefix.
 {{#types}}
-const {{name}} = {{type}};
-const {{name}}Ptr = ref.refType({{name}});
+const {{typeReference}} = {{renderedType}};
 {{/types}}
 
 const types = {
 {{#sorted.types}}
-  {{name}},
-  {{name}}Ptr,
+  {{typeReference}},
 {{/sorted.types}}
 };
 
 const functions = new FFI.Library({{{library}}}, {
 {{#sorted.functions}}
-  {{name}}: [{{returnType}}, [
+  {{name}}: [{{returnType.typeReference}}, [
   {{#args}}
-    {{name}},
+    {{typeReference}},
   {{/args}}
   ]],
 {{/sorted.functions}}

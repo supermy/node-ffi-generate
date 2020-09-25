@@ -22,12 +22,14 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = `const my_union = voidPtr;
-	const my_unionPtr = ref.refType(my_union);`;
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const my_union = js_voidPointer;
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_union]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_union]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

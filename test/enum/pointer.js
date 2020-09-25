@@ -63,11 +63,15 @@ test("lines", async (t) => {
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
 	// TODO: generate pointer type to the enum.
-	const expectedTypes = "const types = {};";
+	const expectedTypes = `
+		const js_uchar = ref.types.uchar;
+		const js_void = ref.types.void;
+		const my_enum_tPointer = ref.refType(my_enum_t);
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_enum_tPtr]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_enum_tPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });
