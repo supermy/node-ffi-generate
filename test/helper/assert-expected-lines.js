@@ -25,7 +25,8 @@ const assertExpectedLines = (t, expected, serialized) => {
 	t.is(typeof serialized, "string");
 	t.assert(serialized.length > 0);
 
-	const expectedLines = expected.split("\n");
+	// NOTE: trimming to allow for linebreaks before/after the contents.
+	const expectedLines = expected.trim().split("\n");
 	const trimmedFirstLine = expectedLines[0].trim();
 
 	let nextExpectedLineNumber = findMatchingLineNumber(t, serialized, 0, trimmedFirstLine);
