@@ -24,13 +24,9 @@ test("lines", async (t) => {
 
 	const expectedTypes = `
 		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
 		const __int128_t = js_voidPointer;
 		const __uint128_t = js_voidPointer;
-		const types = {
-			__int128_t,
-			__uint128_t,
-			js_void,
-		};
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);

@@ -29,11 +29,12 @@ test("lines", async (t) => {
 			first: js_int32,
 			second: js_int32,
 		});
+		const my_union_t = my_union;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_union]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_union_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

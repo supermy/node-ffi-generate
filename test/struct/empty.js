@@ -24,12 +24,14 @@ test("lines", async (t) => {
 
 	const expectedTypes = `
 		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
 		const my_struct = js_voidPointer;
+		const my_struct_t = my_struct;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_struct]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_struct_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

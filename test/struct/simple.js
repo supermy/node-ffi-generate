@@ -25,15 +25,16 @@ test("lines", async (t) => {
 	// NOTE: not necessary to generate the pointer version?
 	const expectedTypes = `
 		const js_void = ref.types.void;
-		const js_voidPointer = ref.refType(ref.types.void);
+		const js_voidPointer = ref.refType(js_void);
 		const my_struct = Struct({
 			my_void: js_voidPointer,
 		});
+		const my_struct_t = my_struct;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_struct]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_struct_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

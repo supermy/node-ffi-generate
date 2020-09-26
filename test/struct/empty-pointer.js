@@ -25,10 +25,9 @@ test("lines", async (t) => {
 	// TODO: fix typedef aliasing generating a pointer to a struct wrapper of the original type.
 	const expectedTypes = `
 		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
 		const my_struct = js_voidPointer;
-		const my_struct_t = Struct({
-			my_struct: my_struct,
-		});
+		const my_struct_t = my_struct;
 		const my_struct_tPointer = ref.refType(my_struct_t);
 	`;
 

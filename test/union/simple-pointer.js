@@ -31,9 +31,7 @@ test("lines", async (t) => {
 			first: js_int32,
 			second: js_int32,
 		});
-		const my_union_t = Struct({
-			my_union: my_union,
-		});
+		const my_union_t = my_union;
 		const my_union_tPointer = ref.refType(my_union_t);
 	`;
 

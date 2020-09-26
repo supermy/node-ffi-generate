@@ -36,16 +36,17 @@ test("lines", async (t) => {
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
 	// TODO: where is uchar coming from?
+	// TODO: refer to constants.my_enum instead if int32?
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
 		const js_int32 = ref.types.int32;
+		const my_enum_t = js_int32;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	// TODO: refer to my_enum_t instead if int32?
-	const expectedFunctions = "do_stuff: [js_void, [js_int32]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_enum_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

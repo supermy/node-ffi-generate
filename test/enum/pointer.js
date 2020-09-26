@@ -20,34 +20,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	// TODO: map enum also as a type, or reference the enum from the type?
-	t.deepEqual(generated.unmapped, [
-		{
-			parent: {
-				kind: {
-					code: 20,
-					name: "CXCursor_TypedefDecl",
-				},
-				spelling: "my_enum_t",
-				type: {
-					kind: 107,
-					spelling: "Typedef",
-				},
-			},
-			reason: "Could not map inner type.",
-			self: {
-				kind: {
-					code: 5,
-					name: "CXCursor_EnumDecl",
-				},
-				spelling: "my_enum",
-				type: {
-					kind: 106,
-					spelling: "Enum",
-				},
-			},
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
 	const expectedConstants = `const constants = {
 		my_enum: {
@@ -62,10 +35,13 @@ test("lines", async (t) => {
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
-	// TODO: generate pointer type to the enum.
+	// TODO: where is uchar coming from?
+	// TODO: add enum type, or use contants.my_enum.
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
+		const js_int32 = ref.types.int32;
+		const my_enum_t = js_int32;
 		const my_enum_tPointer = ref.refType(my_enum_t);
 	`;
 

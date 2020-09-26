@@ -30,7 +30,7 @@ test("lines", async (t) => {
 	const expectedTypes = `
 		const js_double = ref.types.double;
 		const js_int32 = ref.types.int32;
-		const js_int32Pointer = ref.refType(ref.types.int32);
+		const js_int32Pointer = ref.refType(js_int32);
 		const js_void = ref.types.void;
 		const js_CString = ref.types.CString;
 	`;

@@ -27,15 +27,18 @@ test("lines", async (t) => {
 		const js_void = ref.types.void;
 		const js_byte = ref.types.byte;
 		const js_uchar = ref.types.uchar;
+		const __uint8_t = js_uchar;
+		const uint8_t = __uint8_t;
 		const my_unmappable_types = Struct({
 			my_bool: js_byte,
-			my_uint8_t: js_uchar,
+			my_uint8_t: uint8_t,
 		});
+		const my_unmappable_types_t = my_unmappable_types;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_unmappable_types]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_unmappable_types_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });
