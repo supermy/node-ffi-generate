@@ -1,0 +1,16 @@
+{
+  "all": true,
+  "branches": 70,
+  "check-coverage": true,
+  "functions": 85,
+  "include": ["index.js", "bin/**/*.js", "lib/**/*.js"],
+  "lines": 80,
+  "reporter": ["text", "lcov"],
+  "statements": 80,
+  "watermarks": {
+    "branches": [70, 95],
+    "functions": [85, 95],
+    "lines": [80, 95],
+    "statements": [80, 95]
+  }
+}
