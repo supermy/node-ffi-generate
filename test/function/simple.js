@@ -22,7 +22,7 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expected = "my_function: [ref.types.void, []]";
+	const expected = "my_function: [js_void, []]";
 
 	assertExpectedLines(t, expected, generated.serialized);
 });

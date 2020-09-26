@@ -23,8 +23,6 @@ const ArrayType = require("ref-array-di")(ref);
 const Struct = require("ref-struct-di")(ref);
 const Union = require("ref-union-di")(ref);
 
-const voidPtr = ref.refType(ref.types.void);
-
 const constants = {
   CXAvailabilityKind: {
     CXAvailability_Available: 0,
@@ -1431,1077 +1429,1015 @@ const constants = {
 };
 
 // NOTE: defining individual types as "global" constants to be able to reference them without any prefix.
+const js_uchar = ref.types.uchar;
+const js_CString = ref.types.CString;
+const js_void = ref.types.void;
+const js_voidPointer = ref.refType(js_void);
+const js_uint32 = ref.types.uint32;
 const CXString = Struct({
-  data: voidPtr,
-  private_flags: ref.types.uint32,
+  data: js_voidPointer,
+  private_flags: js_uint32,
 });
-const CXStringPtr = ref.refType(CXString);
+const CXStringPointer = ref.refType(CXString);
 const CXStringSet = Struct({
-  Strings: CXStringPtr,
-  Count: ref.types.uint32,
+  Strings: CXStringPointer,
+  Count: js_uint32,
 });
-const CXStringSetPtr = ref.refType(CXStringSet);
-const CXVirtualFileOverlay = voidPtr;
-const CXVirtualFileOverlayPtr = ref.refType(CXVirtualFileOverlay);
-const CXModuleMapDescriptor = voidPtr;
-const CXModuleMapDescriptorPtr = ref.refType(CXModuleMapDescriptor);
-const CXIndex = voidPtr;
-const CXIndexPtr = ref.refType(CXIndex);
-const CXFile = voidPtr;
-const CXFilePtr = ref.refType(CXFile);
+const CXStringSetPointer = ref.refType(CXStringSet);
+const js_ulonglong = ref.types.ulonglong;
+const CXVirtualFileOverlay = js_voidPointer;
+const js_int32 = ref.types.int32;
+const js_uint32Pointer = ref.refType(js_uint32);
+const CXModuleMapDescriptor = js_voidPointer;
+const CXIndex = js_voidPointer;
+const CXFile = js_voidPointer;
+const js_long = ref.types.long;
+const __time_t = js_long;
+const time_t = __time_t;
+const js_ulonglong_array_3 = ArrayType(js_ulonglong, 3);
 const CXFileUniqueID = Struct({
-  data: ArrayType(ref.types.ulonglong, 3),
+  data: js_ulonglong_array_3,
 });
-const CXFileUniqueIDPtr = ref.refType(CXFileUniqueID);
-const CXTranslationUnit = voidPtr;
-const CXTranslationUnitPtr = ref.refType(CXTranslationUnit);
-const size_t = voidPtr;
-const size_tPtr = ref.refType(size_t);
+const CXFileUniqueIDPointer = ref.refType(CXFileUniqueID);
+const CXTranslationUnit = js_voidPointer;
+const js_ulong = ref.types.ulong;
+const size_t = js_ulong;
+const size_tPointer = ref.refType(size_t);
+const js_voidPointer_array_2 = ArrayType(js_voidPointer, 2);
 const CXSourceLocation = Struct({
-  ptr_data: ArrayType(voidPtr, 2),
-  int_data: ref.types.uint32,
+  ptr_data: js_voidPointer_array_2,
+  int_data: js_uint32,
 });
-const CXSourceLocationPtr = ref.refType(CXSourceLocation);
 const CXSourceRange = Struct({
-  ptr_data: ArrayType(voidPtr, 2),
-  begin_int_data: ref.types.uint32,
-  end_int_data: ref.types.uint32,
+  ptr_data: js_voidPointer_array_2,
+  begin_int_data: js_uint32,
+  end_int_data: js_uint32,
 });
-const CXSourceRangePtr = ref.refType(CXSourceRange);
+const CXFilePointer = ref.refType(CXFile);
+const CXSourceRangePointer = ref.refType(CXSourceRange);
 const CXSourceRangeList = Struct({
-  count: ref.types.uint32,
-  ranges: CXSourceRangePtr,
+  count: js_uint32,
+  ranges: CXSourceRangePointer,
 });
-const CXSourceRangeListPtr = ref.refType(CXSourceRangeList);
-const CXDiagnosticSet = voidPtr;
-const CXDiagnosticSetPtr = ref.refType(CXDiagnosticSet);
-const CXDiagnostic = voidPtr;
-const CXDiagnosticPtr = ref.refType(CXDiagnostic);
+const CXSourceRangeListPointer = ref.refType(CXSourceRangeList);
+const CXDiagnosticSet = js_voidPointer;
+const CXDiagnostic = js_voidPointer;
+const CXTranslationUnitPointer = ref.refType(CXTranslationUnit);
 const CXTUResourceUsageEntry = Struct({
-  kind: ref.types.uint32,
-  amount: ref.types.ulong,
+  kind: js_uint32,
+  amount: js_ulong,
 });
-const CXTUResourceUsageEntryPtr = ref.refType(CXTUResourceUsageEntry);
+const CXTUResourceUsageEntryPointer = ref.refType(CXTUResourceUsageEntry);
 const CXTUResourceUsage = Struct({
-  data: voidPtr,
-  numEntries: ref.types.uint32,
-  entries: CXTUResourceUsageEntryPtr,
+  data: js_voidPointer,
+  numEntries: js_uint32,
+  entries: CXTUResourceUsageEntryPointer,
 });
-const CXTUResourceUsagePtr = ref.refType(CXTUResourceUsage);
-const CXTargetInfo = voidPtr;
-const CXTargetInfoPtr = ref.refType(CXTargetInfo);
+const CXTargetInfo = js_voidPointer;
+const js_voidPointer_array_3 = ArrayType(js_voidPointer, 3);
 const CXCursor = Struct({
-  kind: ref.types.uint32,
-  xdata: ref.types.int32,
-  data: ArrayType(voidPtr, 3),
+  kind: js_uint32,
+  xdata: js_int32,
+  data: js_voidPointer_array_3,
 });
-const CXCursorPtr = ref.refType(CXCursor);
+const js_int32Pointer = ref.refType(js_int32);
 const CXVersion = Struct({
-  Major: ref.types.int32,
-  Minor: ref.types.int32,
-  Subminor: ref.types.int32,
+  Major: js_int32,
+  Minor: js_int32,
+  Subminor: js_int32,
 });
-const CXVersionPtr = ref.refType(CXVersion);
 const CXPlatformAvailability = Struct({
   Platform: CXString,
   Introduced: CXVersion,
   Deprecated: CXVersion,
   Obsoleted: CXVersion,
-  Unavailable: ref.types.int32,
+  Unavailable: js_int32,
   Message: CXString,
 });
-const CXPlatformAvailabilityPtr = ref.refType(CXPlatformAvailability);
-const CXCursorSet = voidPtr;
-const CXCursorSetPtr = ref.refType(CXCursorSet);
+const CXPlatformAvailabilityPointer = ref.refType(CXPlatformAvailability);
+const CXCursorSet = js_voidPointer;
+const CXCursorPointer = ref.refType(CXCursor);
 const CXType = Struct({
-  kind: ref.types.uint32,
-  data: ArrayType(voidPtr, 2),
+  kind: js_uint32,
+  data: js_voidPointer_array_2,
 });
-const CXTypePtr = ref.refType(CXType);
+const js_longlong = ref.types.longlong;
 const CXCursorVisitor = FFI.Function(ref.types.uint32, [
   CXCursor,
   CXCursor,
-  voidPtr,
+  js_voidPointer,
 ]);
-const CXCursorVisitorPtr = ref.refType(CXCursorVisitor);
-const CXClientData = voidPtr;
-const CXClientDataPtr = ref.refType(CXClientData);
-const CXPrintingPolicy = voidPtr;
-const CXPrintingPolicyPtr = ref.refType(CXPrintingPolicy);
-const CXModule = voidPtr;
-const CXModulePtr = ref.refType(CXModule);
+const CXClientData = js_voidPointer;
+const CXPrintingPolicy = js_voidPointer;
+const CXModule = js_voidPointer;
+const js_uint32_array_4 = ArrayType(js_uint32, 4);
 const CXToken = Struct({
-  int_data: ArrayType(ref.types.uint32, 4),
-  ptr_data: voidPtr,
+  int_data: js_uint32_array_4,
+  ptr_data: js_voidPointer,
 });
-const CXTokenPtr = ref.refType(CXToken);
-const CXCompletionString = voidPtr;
-const CXCompletionStringPtr = ref.refType(CXCompletionString);
+const CXTokenPointer = ref.refType(CXToken);
+const CXTokenKind = js_uint32;
+const CXCompletionString = js_voidPointer;
 const CXCompletionResult = Struct({
-  CursorKind: ref.types.uint32,
+  CursorKind: js_uint32,
   CompletionString: CXCompletionString,
 });
-const CXCompletionResultPtr = ref.refType(CXCompletionResult);
+const CXCompletionResultPointer = ref.refType(CXCompletionResult);
 const CXCodeCompleteResults = Struct({
-  Results: CXCompletionResultPtr,
-  NumResults: ref.types.uint32,
+  Results: CXCompletionResultPointer,
+  NumResults: js_uint32,
 });
-const CXCodeCompleteResultsPtr = ref.refType(CXCodeCompleteResults);
+const CXCodeCompleteResultsPointer = ref.refType(CXCodeCompleteResults);
 const CXInclusionVisitor = FFI.Function(ref.types.void, [
-  voidPtr,
-  voidPtr,
-  ref.types.uint32,
-  voidPtr,
+  js_voidPointer,
+  js_voidPointer,
+  js_uint32,
+  js_voidPointer,
 ]);
-const CXInclusionVisitorPtr = ref.refType(CXInclusionVisitor);
-const CXEvalResult = voidPtr;
-const CXEvalResultPtr = ref.refType(CXEvalResult);
-const CXRemapping = voidPtr;
-const CXRemappingPtr = ref.refType(CXRemapping);
+const CXEvalResult = js_voidPointer;
+const CXEvalResultKind = js_uint32;
+const js_double = ref.types.double;
+const CXRemapping = js_voidPointer;
+const CXResult = js_uint32;
 const CXCursorAndRangeVisitor = Struct({
-  context: voidPtr,
-  visit: voidPtr,
+  context: js_voidPointer,
+  visit: js_voidPointer,
 });
-const CXCursorAndRangeVisitorPtr = ref.refType(CXCursorAndRangeVisitor);
+const CXIdxEntityKind = js_uint32;
+const CXIdxEntityCXXTemplateKind = js_uint32;
+const CXIdxEntityLanguage = js_uint32;
 const CXIdxEntityInfo = Struct({
-  kind: ref.types.uint32,
-  templateKind: ref.types.uint32,
-  lang: ref.types.uint32,
-  name: ref.types.CString,
-  USR: ref.types.CString,
+  kind: CXIdxEntityKind,
+  templateKind: CXIdxEntityCXXTemplateKind,
+  lang: CXIdxEntityLanguage,
+  name: js_CString,
+  USR: js_CString,
   cursor: CXCursor,
-  attributes: voidPtr,
-  numAttributes: ref.types.uint32,
+  attributes: js_voidPointer,
+  numAttributes: js_uint32,
 });
-const CXIdxEntityInfoPtr = ref.refType(CXIdxEntityInfo);
+const CXIdxEntityInfoPointer = ref.refType(CXIdxEntityInfo);
 const CXIdxLoc = Struct({
-  ptr_data: ArrayType(voidPtr, 2),
-  int_data: ref.types.uint32,
+  ptr_data: js_voidPointer_array_2,
+  int_data: js_uint32,
 });
-const CXIdxLocPtr = ref.refType(CXIdxLoc);
 const CXIdxContainerInfo = Struct({
   cursor: CXCursor,
 });
-const CXIdxContainerInfoPtr = ref.refType(CXIdxContainerInfo);
+const CXIdxContainerInfoPointer = ref.refType(CXIdxContainerInfo);
 const CXIdxDeclInfo = Struct({
-  entityInfo: CXIdxEntityInfoPtr,
+  entityInfo: CXIdxEntityInfoPointer,
   cursor: CXCursor,
   loc: CXIdxLoc,
-  semanticContainer: CXIdxContainerInfoPtr,
-  lexicalContainer: CXIdxContainerInfoPtr,
-  isRedeclaration: ref.types.int32,
-  isDefinition: ref.types.int32,
-  isContainer: ref.types.int32,
-  declAsContainer: CXIdxContainerInfoPtr,
-  isImplicit: ref.types.int32,
-  attributes: voidPtr,
-  numAttributes: ref.types.uint32,
-  flags: ref.types.uint32,
+  semanticContainer: CXIdxContainerInfoPointer,
+  lexicalContainer: CXIdxContainerInfoPointer,
+  isRedeclaration: js_int32,
+  isDefinition: js_int32,
+  isContainer: js_int32,
+  declAsContainer: CXIdxContainerInfoPointer,
+  isImplicit: js_int32,
+  attributes: js_voidPointer,
+  numAttributes: js_uint32,
+  flags: js_uint32,
 });
-const CXIdxDeclInfoPtr = ref.refType(CXIdxDeclInfo);
+const CXIdxDeclInfoPointer = ref.refType(CXIdxDeclInfo);
+const CXIdxObjCContainerKind = js_uint32;
 const CXIdxObjCContainerDeclInfo = Struct({
-  declInfo: CXIdxDeclInfoPtr,
-  kind: ref.types.uint32,
+  declInfo: CXIdxDeclInfoPointer,
+  kind: CXIdxObjCContainerKind,
 });
-const CXIdxObjCContainerDeclInfoPtr = ref.refType(CXIdxObjCContainerDeclInfo);
+const CXIdxObjCContainerDeclInfoPointer = ref.refType(
+  CXIdxObjCContainerDeclInfo
+);
 const CXIdxBaseClassInfo = Struct({
-  base: CXIdxEntityInfoPtr,
+  base: CXIdxEntityInfoPointer,
   cursor: CXCursor,
   loc: CXIdxLoc,
 });
-const CXIdxBaseClassInfoPtr = ref.refType(CXIdxBaseClassInfo);
+const CXIdxBaseClassInfoPointer = ref.refType(CXIdxBaseClassInfo);
 const CXIdxObjCProtocolRefListInfo = Struct({
-  protocols: voidPtr,
-  numProtocols: ref.types.uint32,
+  protocols: js_voidPointer,
+  numProtocols: js_uint32,
 });
-const CXIdxObjCProtocolRefListInfoPtr = ref.refType(
+const CXIdxObjCProtocolRefListInfoPointer = ref.refType(
   CXIdxObjCProtocolRefListInfo
 );
 const CXIdxObjCInterfaceDeclInfo = Struct({
-  containerInfo: CXIdxObjCContainerDeclInfoPtr,
-  superInfo: CXIdxBaseClassInfoPtr,
-  protocols: CXIdxObjCProtocolRefListInfoPtr,
+  containerInfo: CXIdxObjCContainerDeclInfoPointer,
+  superInfo: CXIdxBaseClassInfoPointer,
+  protocols: CXIdxObjCProtocolRefListInfoPointer,
 });
-const CXIdxObjCInterfaceDeclInfoPtr = ref.refType(CXIdxObjCInterfaceDeclInfo);
+const CXIdxObjCInterfaceDeclInfoPointer = ref.refType(
+  CXIdxObjCInterfaceDeclInfo
+);
 const CXIdxObjCCategoryDeclInfo = Struct({
-  containerInfo: CXIdxObjCContainerDeclInfoPtr,
-  objcClass: CXIdxEntityInfoPtr,
+  containerInfo: CXIdxObjCContainerDeclInfoPointer,
+  objcClass: CXIdxEntityInfoPointer,
   classCursor: CXCursor,
   classLoc: CXIdxLoc,
-  protocols: CXIdxObjCProtocolRefListInfoPtr,
+  protocols: CXIdxObjCProtocolRefListInfoPointer,
 });
-const CXIdxObjCCategoryDeclInfoPtr = ref.refType(CXIdxObjCCategoryDeclInfo);
+const CXIdxObjCCategoryDeclInfoPointer = ref.refType(CXIdxObjCCategoryDeclInfo);
 const CXIdxObjCPropertyDeclInfo = Struct({
-  declInfo: CXIdxDeclInfoPtr,
-  getter: CXIdxEntityInfoPtr,
-  setter: CXIdxEntityInfoPtr,
+  declInfo: CXIdxDeclInfoPointer,
+  getter: CXIdxEntityInfoPointer,
+  setter: CXIdxEntityInfoPointer,
 });
-const CXIdxObjCPropertyDeclInfoPtr = ref.refType(CXIdxObjCPropertyDeclInfo);
+const CXIdxObjCPropertyDeclInfoPointer = ref.refType(CXIdxObjCPropertyDeclInfo);
+const CXIdxAttrKind = js_uint32;
 const CXIdxAttrInfo = Struct({
-  kind: ref.types.uint32,
+  kind: CXIdxAttrKind,
   cursor: CXCursor,
   loc: CXIdxLoc,
 });
-const CXIdxAttrInfoPtr = ref.refType(CXIdxAttrInfo);
+const CXIdxAttrInfoPointer = ref.refType(CXIdxAttrInfo);
 const CXIdxIBOutletCollectionAttrInfo = Struct({
-  attrInfo: CXIdxAttrInfoPtr,
-  objcClass: CXIdxEntityInfoPtr,
+  attrInfo: CXIdxAttrInfoPointer,
+  objcClass: CXIdxEntityInfoPointer,
   classCursor: CXCursor,
   classLoc: CXIdxLoc,
 });
-const CXIdxIBOutletCollectionAttrInfoPtr = ref.refType(
+const CXIdxIBOutletCollectionAttrInfoPointer = ref.refType(
   CXIdxIBOutletCollectionAttrInfo
 );
 const CXIdxCXXClassDeclInfo = Struct({
-  declInfo: CXIdxDeclInfoPtr,
-  bases: voidPtr,
-  numBases: ref.types.uint32,
+  declInfo: CXIdxDeclInfoPointer,
+  bases: js_voidPointer,
+  numBases: js_uint32,
 });
-const CXIdxCXXClassDeclInfoPtr = ref.refType(CXIdxCXXClassDeclInfo);
-const CXIdxClientContainer = voidPtr;
-const CXIdxClientContainerPtr = ref.refType(CXIdxClientContainer);
-const CXIdxClientEntity = voidPtr;
-const CXIdxClientEntityPtr = ref.refType(CXIdxClientEntity);
-const CXIndexAction = voidPtr;
-const CXIndexActionPtr = ref.refType(CXIndexAction);
+const CXIdxCXXClassDeclInfoPointer = ref.refType(CXIdxCXXClassDeclInfo);
+const CXIdxClientContainer = js_voidPointer;
+const CXIdxClientEntity = js_voidPointer;
+const CXIndexAction = js_voidPointer;
 const IndexerCallbacks = Struct({
-  abortQuery: voidPtr,
-  diagnostic: voidPtr,
-  enteredMainFile: voidPtr,
-  ppIncludedFile: voidPtr,
-  importedASTFile: voidPtr,
-  startedTranslationUnit: voidPtr,
-  indexDeclaration: voidPtr,
-  indexEntityReference: voidPtr,
+  abortQuery: js_voidPointer,
+  diagnostic: js_voidPointer,
+  enteredMainFile: js_voidPointer,
+  ppIncludedFile: js_voidPointer,
+  importedASTFile: js_voidPointer,
+  startedTranslationUnit: js_voidPointer,
+  indexDeclaration: js_voidPointer,
+  indexEntityReference: js_voidPointer,
 });
-const IndexerCallbacksPtr = ref.refType(IndexerCallbacks);
-const CXIdxClientFile = voidPtr;
-const CXIdxClientFilePtr = ref.refType(CXIdxClientFile);
-const CXFieldVisitor = FFI.Function(ref.types.uint32, [CXCursor, voidPtr]);
-const CXFieldVisitorPtr = ref.refType(CXFieldVisitor);
-
+const IndexerCallbacksPointer = ref.refType(IndexerCallbacks);
+const CXIdxClientFile = js_voidPointer;
+const CXIdxClientFilePointer = ref.refType(CXIdxClientFile);
+const CXFieldVisitor = FFI.Function(ref.types.uint32, [
+  CXCursor,
+  js_voidPointer,
+]);
 const types = {
   CXClientData,
-  CXClientDataPtr,
   CXCodeCompleteResults,
-  CXCodeCompleteResultsPtr,
+  CXCodeCompleteResultsPointer,
   CXCompletionResult,
-  CXCompletionResultPtr,
+  CXCompletionResultPointer,
   CXCompletionString,
-  CXCompletionStringPtr,
   CXCursor,
-  CXCursorPtr,
   CXCursorAndRangeVisitor,
-  CXCursorAndRangeVisitorPtr,
+  CXCursorPointer,
   CXCursorSet,
-  CXCursorSetPtr,
   CXCursorVisitor,
-  CXCursorVisitorPtr,
   CXDiagnostic,
-  CXDiagnosticPtr,
   CXDiagnosticSet,
-  CXDiagnosticSetPtr,
   CXEvalResult,
-  CXEvalResultPtr,
+  CXEvalResultKind,
   CXFieldVisitor,
-  CXFieldVisitorPtr,
   CXFile,
-  CXFilePtr,
+  CXFilePointer,
   CXFileUniqueID,
-  CXFileUniqueIDPtr,
+  CXFileUniqueIDPointer,
   CXIdxAttrInfo,
-  CXIdxAttrInfoPtr,
+  CXIdxAttrInfoPointer,
+  CXIdxAttrKind,
   CXIdxBaseClassInfo,
-  CXIdxBaseClassInfoPtr,
+  CXIdxBaseClassInfoPointer,
   CXIdxCXXClassDeclInfo,
-  CXIdxCXXClassDeclInfoPtr,
+  CXIdxCXXClassDeclInfoPointer,
   CXIdxClientContainer,
-  CXIdxClientContainerPtr,
   CXIdxClientEntity,
-  CXIdxClientEntityPtr,
   CXIdxClientFile,
-  CXIdxClientFilePtr,
+  CXIdxClientFilePointer,
   CXIdxContainerInfo,
-  CXIdxContainerInfoPtr,
+  CXIdxContainerInfoPointer,
   CXIdxDeclInfo,
-  CXIdxDeclInfoPtr,
+  CXIdxDeclInfoPointer,
+  CXIdxEntityCXXTemplateKind,
   CXIdxEntityInfo,
-  CXIdxEntityInfoPtr,
+  CXIdxEntityInfoPointer,
+  CXIdxEntityKind,
+  CXIdxEntityLanguage,
   CXIdxIBOutletCollectionAttrInfo,
-  CXIdxIBOutletCollectionAttrInfoPtr,
+  CXIdxIBOutletCollectionAttrInfoPointer,
   CXIdxLoc,
-  CXIdxLocPtr,
   CXIdxObjCCategoryDeclInfo,
-  CXIdxObjCCategoryDeclInfoPtr,
+  CXIdxObjCCategoryDeclInfoPointer,
   CXIdxObjCContainerDeclInfo,
-  CXIdxObjCContainerDeclInfoPtr,
+  CXIdxObjCContainerDeclInfoPointer,
+  CXIdxObjCContainerKind,
   CXIdxObjCInterfaceDeclInfo,
-  CXIdxObjCInterfaceDeclInfoPtr,
+  CXIdxObjCInterfaceDeclInfoPointer,
   CXIdxObjCPropertyDeclInfo,
-  CXIdxObjCPropertyDeclInfoPtr,
+  CXIdxObjCPropertyDeclInfoPointer,
   CXIdxObjCProtocolRefListInfo,
-  CXIdxObjCProtocolRefListInfoPtr,
+  CXIdxObjCProtocolRefListInfoPointer,
   CXInclusionVisitor,
-  CXInclusionVisitorPtr,
   CXIndex,
-  CXIndexPtr,
   CXIndexAction,
-  CXIndexActionPtr,
   CXModule,
-  CXModulePtr,
   CXModuleMapDescriptor,
-  CXModuleMapDescriptorPtr,
   CXPlatformAvailability,
-  CXPlatformAvailabilityPtr,
+  CXPlatformAvailabilityPointer,
   CXPrintingPolicy,
-  CXPrintingPolicyPtr,
   CXRemapping,
-  CXRemappingPtr,
+  CXResult,
   CXSourceLocation,
-  CXSourceLocationPtr,
   CXSourceRange,
-  CXSourceRangePtr,
   CXSourceRangeList,
-  CXSourceRangeListPtr,
+  CXSourceRangeListPointer,
+  CXSourceRangePointer,
   CXString,
-  CXStringPtr,
+  CXStringPointer,
   CXStringSet,
-  CXStringSetPtr,
+  CXStringSetPointer,
   CXTUResourceUsage,
-  CXTUResourceUsagePtr,
   CXTUResourceUsageEntry,
-  CXTUResourceUsageEntryPtr,
+  CXTUResourceUsageEntryPointer,
   CXTargetInfo,
-  CXTargetInfoPtr,
   CXToken,
-  CXTokenPtr,
+  CXTokenKind,
+  CXTokenPointer,
   CXTranslationUnit,
-  CXTranslationUnitPtr,
+  CXTranslationUnitPointer,
   CXType,
-  CXTypePtr,
   CXVersion,
-  CXVersionPtr,
   CXVirtualFileOverlay,
-  CXVirtualFileOverlayPtr,
   IndexerCallbacks,
-  IndexerCallbacksPtr,
+  IndexerCallbacksPointer,
+  __time_t,
+  js_CString,
+  js_double,
+  js_int32,
+  js_int32Pointer,
+  js_long,
+  js_longlong,
+  js_uchar,
+  js_uint32,
+  js_uint32Pointer,
+  js_uint32_array_4,
+  js_ulong,
+  js_ulonglong,
+  js_ulonglong_array_3,
+  js_void,
+  js_voidPointer,
+  js_voidPointer_array_2,
+  js_voidPointer_array_3,
   size_t,
-  size_tPtr,
+  size_tPointer,
+  time_t,
 };
 
 const functions = new FFI.Library("libclang", {
-  clang_CXCursorSet_contains: [ref.types.uint32, [CXCursorSet, CXCursor]],
-  clang_CXCursorSet_insert: [ref.types.uint32, [CXCursorSet, CXCursor]],
-  clang_CXIndex_getGlobalOptions: [ref.types.uint32, [CXIndex]],
-  clang_CXIndex_setGlobalOptions: [ref.types.void, [CXIndex, ref.types.uint32]],
+  clang_CXCursorSet_contains: [js_uint32, [CXCursorSet, CXCursor]],
+  clang_CXCursorSet_insert: [js_uint32, [CXCursorSet, CXCursor]],
+  clang_CXIndex_getGlobalOptions: [js_uint32, [CXIndex]],
+  clang_CXIndex_setGlobalOptions: [js_void, [CXIndex, js_uint32]],
   clang_CXIndex_setInvocationEmissionPathOption: [
-    ref.types.void,
-    [CXIndex, ref.types.CString],
+    js_void,
+    [CXIndex, js_CString],
   ],
-  clang_CXXConstructor_isConvertingConstructor: [ref.types.uint32, [CXCursor]],
-  clang_CXXConstructor_isCopyConstructor: [ref.types.uint32, [CXCursor]],
-  clang_CXXConstructor_isDefaultConstructor: [ref.types.uint32, [CXCursor]],
-  clang_CXXConstructor_isMoveConstructor: [ref.types.uint32, [CXCursor]],
-  clang_CXXField_isMutable: [ref.types.uint32, [CXCursor]],
-  clang_CXXMethod_isConst: [ref.types.uint32, [CXCursor]],
-  clang_CXXMethod_isDefaulted: [ref.types.uint32, [CXCursor]],
-  clang_CXXMethod_isPureVirtual: [ref.types.uint32, [CXCursor]],
-  clang_CXXMethod_isStatic: [ref.types.uint32, [CXCursor]],
-  clang_CXXMethod_isVirtual: [ref.types.uint32, [CXCursor]],
-  clang_CXXRecord_isAbstract: [ref.types.uint32, [CXCursor]],
+  clang_CXXConstructor_isConvertingConstructor: [js_uint32, [CXCursor]],
+  clang_CXXConstructor_isCopyConstructor: [js_uint32, [CXCursor]],
+  clang_CXXConstructor_isDefaultConstructor: [js_uint32, [CXCursor]],
+  clang_CXXConstructor_isMoveConstructor: [js_uint32, [CXCursor]],
+  clang_CXXField_isMutable: [js_uint32, [CXCursor]],
+  clang_CXXMethod_isConst: [js_uint32, [CXCursor]],
+  clang_CXXMethod_isDefaulted: [js_uint32, [CXCursor]],
+  clang_CXXMethod_isPureVirtual: [js_uint32, [CXCursor]],
+  clang_CXXMethod_isStatic: [js_uint32, [CXCursor]],
+  clang_CXXMethod_isVirtual: [js_uint32, [CXCursor]],
+  clang_CXXRecord_isAbstract: [js_uint32, [CXCursor]],
   clang_Cursor_Evaluate: [CXEvalResult, [CXCursor]],
-  clang_Cursor_getArgument: [CXCursor, [CXCursor, ref.types.uint32]],
+  clang_Cursor_getArgument: [CXCursor, [CXCursor, js_uint32]],
   clang_Cursor_getBriefCommentText: [CXString, [CXCursor]],
-  clang_Cursor_getCXXManglings: [CXStringSetPtr, [CXCursor]],
+  clang_Cursor_getCXXManglings: [CXStringSetPointer, [CXCursor]],
   clang_Cursor_getCommentRange: [CXSourceRange, [CXCursor]],
   clang_Cursor_getMangling: [CXString, [CXCursor]],
   clang_Cursor_getModule: [CXModule, [CXCursor]],
-  clang_Cursor_getNumArguments: [ref.types.int32, [CXCursor]],
-  clang_Cursor_getNumTemplateArguments: [ref.types.int32, [CXCursor]],
-  clang_Cursor_getObjCDeclQualifiers: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_getObjCManglings: [CXStringSetPtr, [CXCursor]],
-  clang_Cursor_getObjCPropertyAttributes: [
-    ref.types.uint32,
-    [CXCursor, ref.types.uint32],
-  ],
+  clang_Cursor_getNumArguments: [js_int32, [CXCursor]],
+  clang_Cursor_getNumTemplateArguments: [js_int32, [CXCursor]],
+  clang_Cursor_getObjCDeclQualifiers: [js_uint32, [CXCursor]],
+  clang_Cursor_getObjCManglings: [CXStringSetPointer, [CXCursor]],
+  clang_Cursor_getObjCPropertyAttributes: [js_uint32, [CXCursor, js_uint32]],
   clang_Cursor_getObjCPropertyGetterName: [CXString, [CXCursor]],
   clang_Cursor_getObjCPropertySetterName: [CXString, [CXCursor]],
-  clang_Cursor_getObjCSelectorIndex: [ref.types.int32, [CXCursor]],
-  clang_Cursor_getOffsetOfField: [ref.types.longlong, [CXCursor]],
+  clang_Cursor_getObjCSelectorIndex: [js_int32, [CXCursor]],
+  clang_Cursor_getOffsetOfField: [js_longlong, [CXCursor]],
   clang_Cursor_getRawCommentText: [CXString, [CXCursor]],
   clang_Cursor_getReceiverType: [CXType, [CXCursor]],
   clang_Cursor_getSpellingNameRange: [
     CXSourceRange,
-    [CXCursor, ref.types.uint32, ref.types.uint32],
+    [CXCursor, js_uint32, js_uint32],
   ],
-  clang_Cursor_getStorageClass: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_getTemplateArgumentKind: [
-    ref.types.uint32,
-    [CXCursor, ref.types.uint32],
-  ],
-  clang_Cursor_getTemplateArgumentType: [CXType, [CXCursor, ref.types.uint32]],
+  clang_Cursor_getStorageClass: [js_uint32, [CXCursor]],
+  clang_Cursor_getTemplateArgumentKind: [js_uint32, [CXCursor, js_uint32]],
+  clang_Cursor_getTemplateArgumentType: [CXType, [CXCursor, js_uint32]],
   clang_Cursor_getTemplateArgumentUnsignedValue: [
-    ref.types.ulonglong,
-    [CXCursor, ref.types.uint32],
+    js_ulonglong,
+    [CXCursor, js_uint32],
   ],
-  clang_Cursor_getTemplateArgumentValue: [
-    ref.types.longlong,
-    [CXCursor, ref.types.uint32],
-  ],
+  clang_Cursor_getTemplateArgumentValue: [js_longlong, [CXCursor, js_uint32]],
   clang_Cursor_getTranslationUnit: [CXTranslationUnit, [CXCursor]],
-  clang_Cursor_hasAttrs: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isAnonymous: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isAnonymousRecordDecl: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isBitField: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isDynamicCall: [ref.types.int32, [CXCursor]],
+  clang_Cursor_hasAttrs: [js_uint32, [CXCursor]],
+  clang_Cursor_isAnonymous: [js_uint32, [CXCursor]],
+  clang_Cursor_isAnonymousRecordDecl: [js_uint32, [CXCursor]],
+  clang_Cursor_isBitField: [js_uint32, [CXCursor]],
+  clang_Cursor_isDynamicCall: [js_int32, [CXCursor]],
   clang_Cursor_isExternalSymbol: [
-    ref.types.uint32,
-    [CXCursor, CXStringPtr, CXStringPtr, ref.refType(ref.types.uint32)],
+    js_uint32,
+    [CXCursor, CXStringPointer, CXStringPointer, js_uint32Pointer],
   ],
-  clang_Cursor_isFunctionInlined: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isInlineNamespace: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isMacroBuiltin: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isMacroFunctionLike: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isNull: [ref.types.int32, [CXCursor]],
-  clang_Cursor_isObjCOptional: [ref.types.uint32, [CXCursor]],
-  clang_Cursor_isVariadic: [ref.types.uint32, [CXCursor]],
-  clang_EnumDecl_isScoped: [ref.types.uint32, [CXCursor]],
-  clang_EvalResult_dispose: [ref.types.void, [CXEvalResult]],
-  clang_EvalResult_getAsDouble: [ref.types.double, [CXEvalResult]],
-  clang_EvalResult_getAsInt: [ref.types.int32, [CXEvalResult]],
-  clang_EvalResult_getAsLongLong: [ref.types.longlong, [CXEvalResult]],
-  clang_EvalResult_getAsStr: [ref.types.CString, [CXEvalResult]],
-  clang_EvalResult_getAsUnsigned: [ref.types.ulonglong, [CXEvalResult]],
-  clang_EvalResult_getKind: [ref.types.uint32, [CXEvalResult]],
-  clang_EvalResult_isUnsignedInt: [ref.types.uint32, [CXEvalResult]],
-  clang_File_isEqual: [ref.types.int32, [CXFile, CXFile]],
+  clang_Cursor_isFunctionInlined: [js_uint32, [CXCursor]],
+  clang_Cursor_isInlineNamespace: [js_uint32, [CXCursor]],
+  clang_Cursor_isMacroBuiltin: [js_uint32, [CXCursor]],
+  clang_Cursor_isMacroFunctionLike: [js_uint32, [CXCursor]],
+  clang_Cursor_isNull: [js_int32, [CXCursor]],
+  clang_Cursor_isObjCOptional: [js_uint32, [CXCursor]],
+  clang_Cursor_isVariadic: [js_uint32, [CXCursor]],
+  clang_EnumDecl_isScoped: [js_uint32, [CXCursor]],
+  clang_EvalResult_dispose: [js_void, [CXEvalResult]],
+  clang_EvalResult_getAsDouble: [js_double, [CXEvalResult]],
+  clang_EvalResult_getAsInt: [js_int32, [CXEvalResult]],
+  clang_EvalResult_getAsLongLong: [js_longlong, [CXEvalResult]],
+  clang_EvalResult_getAsStr: [js_CString, [CXEvalResult]],
+  clang_EvalResult_getAsUnsigned: [js_ulonglong, [CXEvalResult]],
+  clang_EvalResult_getKind: [CXEvalResultKind, [CXEvalResult]],
+  clang_EvalResult_isUnsignedInt: [js_uint32, [CXEvalResult]],
+  clang_File_isEqual: [js_int32, [CXFile, CXFile]],
   clang_File_tryGetRealPathName: [CXString, [CXFile]],
   clang_IndexAction_create: [CXIndexAction, [CXIndex]],
-  clang_IndexAction_dispose: [ref.types.void, [CXIndexAction]],
-  clang_Location_isFromMainFile: [ref.types.int32, [CXSourceLocation]],
-  clang_Location_isInSystemHeader: [ref.types.int32, [CXSourceLocation]],
-  clang_ModuleMapDescriptor_create: [CXModuleMapDescriptor, [ref.types.uint32]],
-  clang_ModuleMapDescriptor_dispose: [ref.types.void, [CXModuleMapDescriptor]],
+  clang_IndexAction_dispose: [js_void, [CXIndexAction]],
+  clang_Location_isFromMainFile: [js_int32, [CXSourceLocation]],
+  clang_Location_isInSystemHeader: [js_int32, [CXSourceLocation]],
+  clang_ModuleMapDescriptor_create: [CXModuleMapDescriptor, [js_uint32]],
+  clang_ModuleMapDescriptor_dispose: [js_void, [CXModuleMapDescriptor]],
   clang_ModuleMapDescriptor_setFrameworkModuleName: [
-    ref.types.uint32,
-    [CXModuleMapDescriptor, ref.types.CString],
+    js_uint32,
+    [CXModuleMapDescriptor, js_CString],
   ],
   clang_ModuleMapDescriptor_setUmbrellaHeader: [
-    ref.types.uint32,
-    [CXModuleMapDescriptor, ref.types.CString],
+    js_uint32,
+    [CXModuleMapDescriptor, js_CString],
   ],
   clang_ModuleMapDescriptor_writeToBuffer: [
-    ref.types.uint32,
-    [
-      CXModuleMapDescriptor,
-      ref.types.uint32,
-      voidPtr,
-      ref.refType(ref.types.uint32),
-    ],
+    js_uint32,
+    [CXModuleMapDescriptor, js_uint32, js_voidPointer, js_uint32Pointer],
   ],
   clang_Module_getASTFile: [CXFile, [CXModule]],
   clang_Module_getFullName: [CXString, [CXModule]],
   clang_Module_getName: [CXString, [CXModule]],
   clang_Module_getNumTopLevelHeaders: [
-    ref.types.uint32,
+    js_uint32,
     [CXTranslationUnit, CXModule],
   ],
   clang_Module_getParent: [CXModule, [CXModule]],
   clang_Module_getTopLevelHeader: [
     CXFile,
-    [CXTranslationUnit, CXModule, ref.types.uint32],
+    [CXTranslationUnit, CXModule, js_uint32],
   ],
-  clang_Module_isSystem: [ref.types.int32, [CXModule]],
-  clang_PrintingPolicy_dispose: [ref.types.void, [CXPrintingPolicy]],
-  clang_PrintingPolicy_getProperty: [
-    ref.types.uint32,
-    [CXPrintingPolicy, ref.types.uint32],
-  ],
+  clang_Module_isSystem: [js_int32, [CXModule]],
+  clang_PrintingPolicy_dispose: [js_void, [CXPrintingPolicy]],
+  clang_PrintingPolicy_getProperty: [js_uint32, [CXPrintingPolicy, js_uint32]],
   clang_PrintingPolicy_setProperty: [
-    ref.types.void,
-    [CXPrintingPolicy, ref.types.uint32, ref.types.uint32],
+    js_void,
+    [CXPrintingPolicy, js_uint32, js_uint32],
   ],
-  clang_Range_isNull: [ref.types.int32, [CXSourceRange]],
-  clang_TargetInfo_dispose: [ref.types.void, [CXTargetInfo]],
-  clang_TargetInfo_getPointerWidth: [ref.types.int32, [CXTargetInfo]],
+  clang_Range_isNull: [js_int32, [CXSourceRange]],
+  clang_TargetInfo_dispose: [js_void, [CXTargetInfo]],
+  clang_TargetInfo_getPointerWidth: [js_int32, [CXTargetInfo]],
   clang_TargetInfo_getTriple: [CXString, [CXTargetInfo]],
-  clang_Type_getAlignOf: [ref.types.longlong, [CXType]],
-  clang_Type_getCXXRefQualifier: [ref.types.uint32, [CXType]],
+  clang_Type_getAlignOf: [js_longlong, [CXType]],
+  clang_Type_getCXXRefQualifier: [js_uint32, [CXType]],
   clang_Type_getClassType: [CXType, [CXType]],
   clang_Type_getModifiedType: [CXType, [CXType]],
   clang_Type_getNamedType: [CXType, [CXType]],
-  clang_Type_getNullability: [ref.types.uint32, [CXType]],
-  clang_Type_getNumObjCProtocolRefs: [ref.types.uint32, [CXType]],
-  clang_Type_getNumObjCTypeArgs: [ref.types.uint32, [CXType]],
-  clang_Type_getNumTemplateArguments: [ref.types.int32, [CXType]],
+  clang_Type_getNullability: [js_uint32, [CXType]],
+  clang_Type_getNumObjCProtocolRefs: [js_uint32, [CXType]],
+  clang_Type_getNumObjCTypeArgs: [js_uint32, [CXType]],
+  clang_Type_getNumTemplateArguments: [js_int32, [CXType]],
   clang_Type_getObjCEncoding: [CXString, [CXType]],
   clang_Type_getObjCObjectBaseType: [CXType, [CXType]],
-  clang_Type_getObjCProtocolDecl: [CXCursor, [CXType, ref.types.uint32]],
-  clang_Type_getObjCTypeArg: [CXType, [CXType, ref.types.uint32]],
-  clang_Type_getOffsetOf: [ref.types.longlong, [CXType, ref.types.CString]],
-  clang_Type_getSizeOf: [ref.types.longlong, [CXType]],
-  clang_Type_getTemplateArgumentAsType: [CXType, [CXType, ref.types.uint32]],
-  clang_Type_isTransparentTagTypedef: [ref.types.uint32, [CXType]],
-  clang_Type_visitFields: [
-    ref.types.uint32,
-    [CXType, CXFieldVisitor, CXClientData],
-  ],
+  clang_Type_getObjCProtocolDecl: [CXCursor, [CXType, js_uint32]],
+  clang_Type_getObjCTypeArg: [CXType, [CXType, js_uint32]],
+  clang_Type_getOffsetOf: [js_longlong, [CXType, js_CString]],
+  clang_Type_getSizeOf: [js_longlong, [CXType]],
+  clang_Type_getTemplateArgumentAsType: [CXType, [CXType, js_uint32]],
+  clang_Type_isTransparentTagTypedef: [js_uint32, [CXType]],
+  clang_Type_visitFields: [js_uint32, [CXType, CXFieldVisitor, CXClientData]],
   clang_VirtualFileOverlay_addFileMapping: [
-    ref.types.uint32,
-    [CXVirtualFileOverlay, ref.types.CString, ref.types.CString],
+    js_uint32,
+    [CXVirtualFileOverlay, js_CString, js_CString],
   ],
-  clang_VirtualFileOverlay_create: [CXVirtualFileOverlay, [ref.types.uint32]],
-  clang_VirtualFileOverlay_dispose: [ref.types.void, [CXVirtualFileOverlay]],
+  clang_VirtualFileOverlay_create: [CXVirtualFileOverlay, [js_uint32]],
+  clang_VirtualFileOverlay_dispose: [js_void, [CXVirtualFileOverlay]],
   clang_VirtualFileOverlay_setCaseSensitivity: [
-    ref.types.uint32,
-    [CXVirtualFileOverlay, ref.types.int32],
+    js_uint32,
+    [CXVirtualFileOverlay, js_int32],
   ],
   clang_VirtualFileOverlay_writeToBuffer: [
-    ref.types.uint32,
-    [
-      CXVirtualFileOverlay,
-      ref.types.uint32,
-      voidPtr,
-      ref.refType(ref.types.uint32),
-    ],
+    js_uint32,
+    [CXVirtualFileOverlay, js_uint32, js_voidPointer, js_uint32Pointer],
   ],
   clang_annotateTokens: [
-    ref.types.void,
-    [CXTranslationUnit, CXTokenPtr, ref.types.uint32, CXCursorPtr],
+    js_void,
+    [CXTranslationUnit, CXTokenPointer, js_uint32, CXCursorPointer],
   ],
   clang_codeCompleteAt: [
-    CXCodeCompleteResultsPtr,
+    CXCodeCompleteResultsPointer,
     [
       CXTranslationUnit,
-      ref.types.CString,
-      ref.types.uint32,
-      ref.types.uint32,
-      voidPtr,
-      ref.types.uint32,
-      ref.types.uint32,
+      js_CString,
+      js_uint32,
+      js_uint32,
+      js_voidPointer,
+      js_uint32,
+      js_uint32,
     ],
   ],
   clang_codeCompleteGetContainerKind: [
-    ref.types.uint32,
-    [CXCodeCompleteResultsPtr, ref.refType(ref.types.uint32)],
+    js_uint32,
+    [CXCodeCompleteResultsPointer, js_uint32Pointer],
   ],
-  clang_codeCompleteGetContainerUSR: [CXString, [CXCodeCompleteResultsPtr]],
-  clang_codeCompleteGetContexts: [
-    ref.types.ulonglong,
-    [CXCodeCompleteResultsPtr],
-  ],
+  clang_codeCompleteGetContainerUSR: [CXString, [CXCodeCompleteResultsPointer]],
+  clang_codeCompleteGetContexts: [js_ulonglong, [CXCodeCompleteResultsPointer]],
   clang_codeCompleteGetDiagnostic: [
     CXDiagnostic,
-    [CXCodeCompleteResultsPtr, ref.types.uint32],
+    [CXCodeCompleteResultsPointer, js_uint32],
   ],
   clang_codeCompleteGetNumDiagnostics: [
-    ref.types.uint32,
-    [CXCodeCompleteResultsPtr],
+    js_uint32,
+    [CXCodeCompleteResultsPointer],
   ],
-  clang_codeCompleteGetObjCSelector: [CXString, [CXCodeCompleteResultsPtr]],
-  clang_constructUSR_ObjCCategory: [
-    CXString,
-    [ref.types.CString, ref.types.CString],
-  ],
-  clang_constructUSR_ObjCClass: [CXString, [ref.types.CString]],
-  clang_constructUSR_ObjCIvar: [CXString, [ref.types.CString, CXString]],
-  clang_constructUSR_ObjCMethod: [
-    CXString,
-    [ref.types.CString, ref.types.uint32, CXString],
-  ],
-  clang_constructUSR_ObjCProperty: [CXString, [ref.types.CString, CXString]],
-  clang_constructUSR_ObjCProtocol: [CXString, [ref.types.CString]],
+  clang_codeCompleteGetObjCSelector: [CXString, [CXCodeCompleteResultsPointer]],
+  clang_constructUSR_ObjCCategory: [CXString, [js_CString, js_CString]],
+  clang_constructUSR_ObjCClass: [CXString, [js_CString]],
+  clang_constructUSR_ObjCIvar: [CXString, [js_CString, CXString]],
+  clang_constructUSR_ObjCMethod: [CXString, [js_CString, js_uint32, CXString]],
+  clang_constructUSR_ObjCProperty: [CXString, [js_CString, CXString]],
+  clang_constructUSR_ObjCProtocol: [CXString, [js_CString]],
   clang_createCXCursorSet: [CXCursorSet, []],
-  clang_createIndex: [CXIndex, [ref.types.int32, ref.types.int32]],
-  clang_createTranslationUnit: [
-    CXTranslationUnit,
-    [CXIndex, ref.types.CString],
-  ],
+  clang_createIndex: [CXIndex, [js_int32, js_int32]],
+  clang_createTranslationUnit: [CXTranslationUnit, [CXIndex, js_CString]],
   clang_createTranslationUnit2: [
-    ref.types.uint32,
-    [CXIndex, ref.types.CString, CXTranslationUnitPtr],
+    js_uint32,
+    [CXIndex, js_CString, CXTranslationUnitPointer],
   ],
   clang_createTranslationUnitFromSourceFile: [
     CXTranslationUnit,
-    [
-      CXIndex,
-      ref.types.CString,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      voidPtr,
-    ],
+    [CXIndex, js_CString, js_int32, js_voidPointer, js_uint32, js_voidPointer],
   ],
-  clang_defaultCodeCompleteOptions: [ref.types.uint32, []],
-  clang_defaultDiagnosticDisplayOptions: [ref.types.uint32, []],
-  clang_defaultEditingTranslationUnitOptions: [ref.types.uint32, []],
-  clang_defaultReparseOptions: [ref.types.uint32, [CXTranslationUnit]],
-  clang_defaultSaveOptions: [ref.types.uint32, [CXTranslationUnit]],
-  clang_disposeCXCursorSet: [ref.types.void, [CXCursorSet]],
+  clang_defaultCodeCompleteOptions: [js_uint32, []],
+  clang_defaultDiagnosticDisplayOptions: [js_uint32, []],
+  clang_defaultEditingTranslationUnitOptions: [js_uint32, []],
+  clang_defaultReparseOptions: [js_uint32, [CXTranslationUnit]],
+  clang_defaultSaveOptions: [js_uint32, [CXTranslationUnit]],
+  clang_disposeCXCursorSet: [js_void, [CXCursorSet]],
   clang_disposeCXPlatformAvailability: [
-    ref.types.void,
-    [CXPlatformAvailabilityPtr],
+    js_void,
+    [CXPlatformAvailabilityPointer],
   ],
-  clang_disposeCXTUResourceUsage: [ref.types.void, [CXTUResourceUsage]],
-  clang_disposeCodeCompleteResults: [
-    ref.types.void,
-    [CXCodeCompleteResultsPtr],
-  ],
-  clang_disposeDiagnostic: [ref.types.void, [CXDiagnostic]],
-  clang_disposeDiagnosticSet: [ref.types.void, [CXDiagnosticSet]],
-  clang_disposeIndex: [ref.types.void, [CXIndex]],
-  clang_disposeOverriddenCursors: [ref.types.void, [CXCursorPtr]],
-  clang_disposeSourceRangeList: [ref.types.void, [CXSourceRangeListPtr]],
-  clang_disposeString: [ref.types.void, [CXString]],
-  clang_disposeStringSet: [ref.types.void, [CXStringSetPtr]],
+  clang_disposeCXTUResourceUsage: [js_void, [CXTUResourceUsage]],
+  clang_disposeCodeCompleteResults: [js_void, [CXCodeCompleteResultsPointer]],
+  clang_disposeDiagnostic: [js_void, [CXDiagnostic]],
+  clang_disposeDiagnosticSet: [js_void, [CXDiagnosticSet]],
+  clang_disposeIndex: [js_void, [CXIndex]],
+  clang_disposeOverriddenCursors: [js_void, [CXCursorPointer]],
+  clang_disposeSourceRangeList: [js_void, [CXSourceRangeListPointer]],
+  clang_disposeString: [js_void, [CXString]],
+  clang_disposeStringSet: [js_void, [CXStringSetPointer]],
   clang_disposeTokens: [
-    ref.types.void,
-    [CXTranslationUnit, CXTokenPtr, ref.types.uint32],
+    js_void,
+    [CXTranslationUnit, CXTokenPointer, js_uint32],
   ],
-  clang_disposeTranslationUnit: [ref.types.void, [CXTranslationUnit]],
-  clang_enableStackTraces: [ref.types.void, []],
-  clang_equalCursors: [ref.types.uint32, [CXCursor, CXCursor]],
-  clang_equalLocations: [
-    ref.types.uint32,
-    [CXSourceLocation, CXSourceLocation],
-  ],
-  clang_equalRanges: [ref.types.uint32, [CXSourceRange, CXSourceRange]],
-  clang_equalTypes: [ref.types.uint32, [CXType, CXType]],
-  clang_executeOnThread: [ref.types.void, [voidPtr, voidPtr, ref.types.uint32]],
+  clang_disposeTranslationUnit: [js_void, [CXTranslationUnit]],
+  clang_enableStackTraces: [js_void, []],
+  clang_equalCursors: [js_uint32, [CXCursor, CXCursor]],
+  clang_equalLocations: [js_uint32, [CXSourceLocation, CXSourceLocation]],
+  clang_equalRanges: [js_uint32, [CXSourceRange, CXSourceRange]],
+  clang_equalTypes: [js_uint32, [CXType, CXType]],
+  clang_executeOnThread: [js_void, [js_voidPointer, js_voidPointer, js_uint32]],
   clang_findIncludesInFile: [
-    ref.types.uint32,
+    CXResult,
     [CXTranslationUnit, CXFile, CXCursorAndRangeVisitor],
   ],
   clang_findReferencesInFile: [
-    ref.types.uint32,
+    CXResult,
     [CXCursor, CXFile, CXCursorAndRangeVisitor],
   ],
-  clang_formatDiagnostic: [CXString, [CXDiagnostic, ref.types.uint32]],
-  clang_free: [ref.types.void, [voidPtr]],
-  clang_getAddressSpace: [ref.types.uint32, [CXType]],
-  clang_getAllSkippedRanges: [CXSourceRangeListPtr, [CXTranslationUnit]],
-  clang_getArgType: [CXType, [CXType, ref.types.uint32]],
+  clang_formatDiagnostic: [CXString, [CXDiagnostic, js_uint32]],
+  clang_free: [js_void, [js_voidPointer]],
+  clang_getAddressSpace: [js_uint32, [CXType]],
+  clang_getAllSkippedRanges: [CXSourceRangeListPointer, [CXTranslationUnit]],
+  clang_getArgType: [CXType, [CXType, js_uint32]],
   clang_getArrayElementType: [CXType, [CXType]],
-  clang_getArraySize: [ref.types.longlong, [CXType]],
-  clang_getBuildSessionTimestamp: [ref.types.ulonglong, []],
-  clang_getCString: [ref.types.CString, [CXString]],
+  clang_getArraySize: [js_longlong, [CXType]],
+  clang_getBuildSessionTimestamp: [js_ulonglong, []],
+  clang_getCString: [js_CString, [CXString]],
   clang_getCXTUResourceUsage: [CXTUResourceUsage, [CXTranslationUnit]],
-  clang_getCXXAccessSpecifier: [ref.types.uint32, [CXCursor]],
+  clang_getCXXAccessSpecifier: [js_uint32, [CXCursor]],
   clang_getCanonicalCursor: [CXCursor, [CXCursor]],
   clang_getCanonicalType: [CXType, [CXType]],
   clang_getChildDiagnostics: [CXDiagnosticSet, [CXDiagnostic]],
   clang_getClangVersion: [CXString, []],
-  clang_getCompletionAnnotation: [
-    CXString,
-    [CXCompletionString, ref.types.uint32],
-  ],
-  clang_getCompletionAvailability: [ref.types.uint32, [CXCompletionString]],
+  clang_getCompletionAnnotation: [CXString, [CXCompletionString, js_uint32]],
+  clang_getCompletionAvailability: [js_uint32, [CXCompletionString]],
   clang_getCompletionBriefComment: [CXString, [CXCompletionString]],
   clang_getCompletionChunkCompletionString: [
     CXCompletionString,
-    [CXCompletionString, ref.types.uint32],
+    [CXCompletionString, js_uint32],
   ],
-  clang_getCompletionChunkKind: [
-    ref.types.uint32,
-    [CXCompletionString, ref.types.uint32],
-  ],
-  clang_getCompletionChunkText: [
-    CXString,
-    [CXCompletionString, ref.types.uint32],
-  ],
+  clang_getCompletionChunkKind: [js_uint32, [CXCompletionString, js_uint32]],
+  clang_getCompletionChunkText: [CXString, [CXCompletionString, js_uint32]],
   clang_getCompletionFixIt: [
     CXString,
-    [
-      CXCodeCompleteResultsPtr,
-      ref.types.uint32,
-      ref.types.uint32,
-      CXSourceRangePtr,
-    ],
+    [CXCodeCompleteResultsPointer, js_uint32, js_uint32, CXSourceRangePointer],
   ],
-  clang_getCompletionNumAnnotations: [ref.types.uint32, [CXCompletionString]],
+  clang_getCompletionNumAnnotations: [js_uint32, [CXCompletionString]],
   clang_getCompletionNumFixIts: [
-    ref.types.uint32,
-    [CXCodeCompleteResultsPtr, ref.types.uint32],
+    js_uint32,
+    [CXCodeCompleteResultsPointer, js_uint32],
   ],
-  clang_getCompletionParent: [CXString, [CXCompletionString, voidPtr]],
-  clang_getCompletionPriority: [ref.types.uint32, [CXCompletionString]],
+  clang_getCompletionParent: [CXString, [CXCompletionString, js_voidPointer]],
+  clang_getCompletionPriority: [js_uint32, [CXCompletionString]],
   clang_getCursor: [CXCursor, [CXTranslationUnit, CXSourceLocation]],
-  clang_getCursorAvailability: [ref.types.uint32, [CXCursor]],
+  clang_getCursorAvailability: [js_uint32, [CXCursor]],
   clang_getCursorCompletionString: [CXCompletionString, [CXCursor]],
   clang_getCursorDefinition: [CXCursor, [CXCursor]],
   clang_getCursorDisplayName: [CXString, [CXCursor]],
-  clang_getCursorExceptionSpecificationType: [ref.types.int32, [CXCursor]],
+  clang_getCursorExceptionSpecificationType: [js_int32, [CXCursor]],
   clang_getCursorExtent: [CXSourceRange, [CXCursor]],
-  clang_getCursorKind: [ref.types.uint32, [CXCursor]],
-  clang_getCursorKindSpelling: [CXString, [ref.types.uint32]],
-  clang_getCursorLanguage: [ref.types.uint32, [CXCursor]],
+  clang_getCursorKind: [js_uint32, [CXCursor]],
+  clang_getCursorKindSpelling: [CXString, [js_uint32]],
+  clang_getCursorLanguage: [js_uint32, [CXCursor]],
   clang_getCursorLexicalParent: [CXCursor, [CXCursor]],
-  clang_getCursorLinkage: [ref.types.uint32, [CXCursor]],
+  clang_getCursorLinkage: [js_uint32, [CXCursor]],
   clang_getCursorLocation: [CXSourceLocation, [CXCursor]],
   clang_getCursorPlatformAvailability: [
-    ref.types.int32,
+    js_int32,
     [
       CXCursor,
-      ref.refType(ref.types.int32),
-      CXStringPtr,
-      ref.refType(ref.types.int32),
-      CXStringPtr,
-      CXPlatformAvailabilityPtr,
-      ref.types.int32,
+      js_int32Pointer,
+      CXStringPointer,
+      js_int32Pointer,
+      CXStringPointer,
+      CXPlatformAvailabilityPointer,
+      js_int32,
     ],
   ],
   clang_getCursorPrettyPrinted: [CXString, [CXCursor, CXPrintingPolicy]],
   clang_getCursorPrintingPolicy: [CXPrintingPolicy, [CXCursor]],
   clang_getCursorReferenceNameRange: [
     CXSourceRange,
-    [CXCursor, ref.types.uint32, ref.types.uint32],
+    [CXCursor, js_uint32, js_uint32],
   ],
   clang_getCursorReferenced: [CXCursor, [CXCursor]],
   clang_getCursorResultType: [CXType, [CXCursor]],
   clang_getCursorSemanticParent: [CXCursor, [CXCursor]],
   clang_getCursorSpelling: [CXString, [CXCursor]],
-  clang_getCursorTLSKind: [ref.types.uint32, [CXCursor]],
+  clang_getCursorTLSKind: [js_uint32, [CXCursor]],
   clang_getCursorType: [CXType, [CXCursor]],
   clang_getCursorUSR: [CXString, [CXCursor]],
-  clang_getCursorVisibility: [ref.types.uint32, [CXCursor]],
+  clang_getCursorVisibility: [js_uint32, [CXCursor]],
   clang_getDeclObjCTypeEncoding: [CXString, [CXCursor]],
   clang_getDefinitionSpellingAndExtent: [
-    ref.types.void,
+    js_void,
     [
       CXCursor,
-      voidPtr,
-      voidPtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      js_voidPointer,
+      js_voidPointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
-  clang_getDiagnostic: [CXDiagnostic, [CXTranslationUnit, ref.types.uint32]],
-  clang_getDiagnosticCategory: [ref.types.uint32, [CXDiagnostic]],
-  clang_getDiagnosticCategoryName: [CXString, [ref.types.uint32]],
+  clang_getDiagnostic: [CXDiagnostic, [CXTranslationUnit, js_uint32]],
+  clang_getDiagnosticCategory: [js_uint32, [CXDiagnostic]],
+  clang_getDiagnosticCategoryName: [CXString, [js_uint32]],
   clang_getDiagnosticCategoryText: [CXString, [CXDiagnostic]],
   clang_getDiagnosticFixIt: [
     CXString,
-    [CXDiagnostic, ref.types.uint32, CXSourceRangePtr],
+    [CXDiagnostic, js_uint32, CXSourceRangePointer],
   ],
-  clang_getDiagnosticInSet: [CXDiagnostic, [CXDiagnosticSet, ref.types.uint32]],
+  clang_getDiagnosticInSet: [CXDiagnostic, [CXDiagnosticSet, js_uint32]],
   clang_getDiagnosticLocation: [CXSourceLocation, [CXDiagnostic]],
-  clang_getDiagnosticNumFixIts: [ref.types.uint32, [CXDiagnostic]],
-  clang_getDiagnosticNumRanges: [ref.types.uint32, [CXDiagnostic]],
-  clang_getDiagnosticOption: [CXString, [CXDiagnostic, CXStringPtr]],
-  clang_getDiagnosticRange: [CXSourceRange, [CXDiagnostic, ref.types.uint32]],
+  clang_getDiagnosticNumFixIts: [js_uint32, [CXDiagnostic]],
+  clang_getDiagnosticNumRanges: [js_uint32, [CXDiagnostic]],
+  clang_getDiagnosticOption: [CXString, [CXDiagnostic, CXStringPointer]],
+  clang_getDiagnosticRange: [CXSourceRange, [CXDiagnostic, js_uint32]],
   clang_getDiagnosticSetFromTU: [CXDiagnosticSet, [CXTranslationUnit]],
-  clang_getDiagnosticSeverity: [ref.types.uint32, [CXDiagnostic]],
+  clang_getDiagnosticSeverity: [js_uint32, [CXDiagnostic]],
   clang_getDiagnosticSpelling: [CXString, [CXDiagnostic]],
   clang_getElementType: [CXType, [CXType]],
-  clang_getEnumConstantDeclUnsignedValue: [ref.types.ulonglong, [CXCursor]],
-  clang_getEnumConstantDeclValue: [ref.types.longlong, [CXCursor]],
+  clang_getEnumConstantDeclUnsignedValue: [js_ulonglong, [CXCursor]],
+  clang_getEnumConstantDeclValue: [js_longlong, [CXCursor]],
   clang_getEnumDeclIntegerType: [CXType, [CXCursor]],
-  clang_getExceptionSpecificationType: [ref.types.int32, [CXType]],
+  clang_getExceptionSpecificationType: [js_int32, [CXType]],
   clang_getExpansionLocation: [
-    ref.types.void,
+    js_void,
     [
       CXSourceLocation,
-      CXFilePtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      CXFilePointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
-  clang_getFieldDeclBitWidth: [ref.types.int32, [CXCursor]],
-  clang_getFile: [CXFile, [CXTranslationUnit, ref.types.CString]],
+  clang_getFieldDeclBitWidth: [js_int32, [CXCursor]],
+  clang_getFile: [CXFile, [CXTranslationUnit, js_CString]],
   clang_getFileContents: [
-    ref.types.CString,
-    [CXTranslationUnit, CXFile, size_t],
+    js_CString,
+    [CXTranslationUnit, CXFile, size_tPointer],
   ],
   clang_getFileLocation: [
-    ref.types.void,
+    js_void,
     [
       CXSourceLocation,
-      CXFilePtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      CXFilePointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
   clang_getFileName: [CXString, [CXFile]],
-  clang_getFileTime: [ref.types.long, [CXFile]],
-  clang_getFileUniqueID: [ref.types.int32, [CXFile, CXFileUniqueIDPtr]],
-  clang_getFunctionTypeCallingConv: [ref.types.uint32, [CXType]],
+  clang_getFileTime: [time_t, [CXFile]],
+  clang_getFileUniqueID: [js_int32, [CXFile, CXFileUniqueIDPointer]],
+  clang_getFunctionTypeCallingConv: [js_uint32, [CXType]],
   clang_getIBOutletCollectionType: [CXType, [CXCursor]],
   clang_getIncludedFile: [CXFile, [CXCursor]],
   clang_getInclusions: [
-    ref.types.void,
+    js_void,
     [CXTranslationUnit, CXInclusionVisitor, CXClientData],
   ],
   clang_getInstantiationLocation: [
-    ref.types.void,
+    js_void,
     [
       CXSourceLocation,
-      CXFilePtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      CXFilePointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
   clang_getLocation: [
     CXSourceLocation,
-    [CXTranslationUnit, CXFile, ref.types.uint32, ref.types.uint32],
+    [CXTranslationUnit, CXFile, js_uint32, js_uint32],
   ],
   clang_getLocationForOffset: [
     CXSourceLocation,
-    [CXTranslationUnit, CXFile, ref.types.uint32],
+    [CXTranslationUnit, CXFile, js_uint32],
   ],
   clang_getModuleForFile: [CXModule, [CXTranslationUnit, CXFile]],
   clang_getNullCursor: [CXCursor, []],
   clang_getNullLocation: [CXSourceLocation, []],
   clang_getNullRange: [CXSourceRange, []],
-  clang_getNumArgTypes: [ref.types.int32, [CXType]],
-  clang_getNumCompletionChunks: [ref.types.uint32, [CXCompletionString]],
-  clang_getNumDiagnostics: [ref.types.uint32, [CXTranslationUnit]],
-  clang_getNumDiagnosticsInSet: [ref.types.uint32, [CXDiagnosticSet]],
-  clang_getNumElements: [ref.types.longlong, [CXType]],
-  clang_getNumOverloadedDecls: [ref.types.uint32, [CXCursor]],
-  clang_getOverloadedDecl: [CXCursor, [CXCursor, ref.types.uint32]],
+  clang_getNumArgTypes: [js_int32, [CXType]],
+  clang_getNumCompletionChunks: [js_uint32, [CXCompletionString]],
+  clang_getNumDiagnostics: [js_uint32, [CXTranslationUnit]],
+  clang_getNumDiagnosticsInSet: [js_uint32, [CXDiagnosticSet]],
+  clang_getNumElements: [js_longlong, [CXType]],
+  clang_getNumOverloadedDecls: [js_uint32, [CXCursor]],
+  clang_getOverloadedDecl: [CXCursor, [CXCursor, js_uint32]],
   clang_getOverriddenCursors: [
-    ref.types.void,
-    [CXCursor, voidPtr, ref.refType(ref.types.uint32)],
+    js_void,
+    [CXCursor, js_voidPointer, js_uint32Pointer],
   ],
   clang_getPointeeType: [CXType, [CXType]],
   clang_getPresumedLocation: [
-    ref.types.void,
-    [
-      CXSourceLocation,
-      CXStringPtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-    ],
+    js_void,
+    [CXSourceLocation, CXStringPointer, js_uint32Pointer, js_uint32Pointer],
   ],
   clang_getRange: [CXSourceRange, [CXSourceLocation, CXSourceLocation]],
   clang_getRangeEnd: [CXSourceLocation, [CXSourceRange]],
   clang_getRangeStart: [CXSourceLocation, [CXSourceRange]],
-  clang_getRemappings: [CXRemapping, [ref.types.CString]],
-  clang_getRemappingsFromFileList: [CXRemapping, [voidPtr, ref.types.uint32]],
+  clang_getRemappings: [CXRemapping, [js_CString]],
+  clang_getRemappingsFromFileList: [CXRemapping, [js_voidPointer, js_uint32]],
   clang_getResultType: [CXType, [CXType]],
-  clang_getSkippedRanges: [CXSourceRangeListPtr, [CXTranslationUnit, CXFile]],
+  clang_getSkippedRanges: [
+    CXSourceRangeListPointer,
+    [CXTranslationUnit, CXFile],
+  ],
   clang_getSpecializedCursorTemplate: [CXCursor, [CXCursor]],
   clang_getSpellingLocation: [
-    ref.types.void,
+    js_void,
     [
       CXSourceLocation,
-      CXFilePtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      CXFilePointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
-  clang_getTUResourceUsageName: [ref.types.CString, [ref.types.uint32]],
-  clang_getTemplateCursorKind: [ref.types.uint32, [CXCursor]],
-  clang_getToken: [CXTokenPtr, [CXTranslationUnit, CXSourceLocation]],
+  clang_getTUResourceUsageName: [js_CString, [js_uint32]],
+  clang_getTemplateCursorKind: [js_uint32, [CXCursor]],
+  clang_getToken: [CXTokenPointer, [CXTranslationUnit, CXSourceLocation]],
   clang_getTokenExtent: [CXSourceRange, [CXTranslationUnit, CXToken]],
-  clang_getTokenKind: [ref.types.uint32, [CXToken]],
+  clang_getTokenKind: [CXTokenKind, [CXToken]],
   clang_getTokenLocation: [CXSourceLocation, [CXTranslationUnit, CXToken]],
   clang_getTokenSpelling: [CXString, [CXTranslationUnit, CXToken]],
   clang_getTranslationUnitCursor: [CXCursor, [CXTranslationUnit]],
   clang_getTranslationUnitSpelling: [CXString, [CXTranslationUnit]],
   clang_getTranslationUnitTargetInfo: [CXTargetInfo, [CXTranslationUnit]],
   clang_getTypeDeclaration: [CXCursor, [CXType]],
-  clang_getTypeKindSpelling: [CXString, [ref.types.uint32]],
+  clang_getTypeKindSpelling: [CXString, [js_uint32]],
   clang_getTypeSpelling: [CXString, [CXType]],
   clang_getTypedefDeclUnderlyingType: [CXType, [CXCursor]],
   clang_getTypedefName: [CXString, [CXType]],
-  clang_hashCursor: [ref.types.uint32, [CXCursor]],
+  clang_hashCursor: [js_uint32, [CXCursor]],
   clang_indexLoc_getCXSourceLocation: [CXSourceLocation, [CXIdxLoc]],
   clang_indexLoc_getFileLocation: [
-    ref.types.void,
+    js_void,
     [
       CXIdxLoc,
-      CXIdxClientFile,
-      CXFilePtr,
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
-      ref.refType(ref.types.uint32),
+      CXIdxClientFilePointer,
+      CXFilePointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
+      js_uint32Pointer,
     ],
   ],
   clang_indexSourceFile: [
-    ref.types.int32,
+    js_int32,
     [
       CXIndexAction,
       CXClientData,
-      IndexerCallbacksPtr,
-      ref.types.uint32,
-      ref.types.uint32,
-      ref.types.CString,
-      voidPtr,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      CXTranslationUnitPtr,
-      ref.types.uint32,
+      IndexerCallbacksPointer,
+      js_uint32,
+      js_uint32,
+      js_CString,
+      js_voidPointer,
+      js_int32,
+      js_voidPointer,
+      js_uint32,
+      CXTranslationUnitPointer,
+      js_uint32,
     ],
   ],
   clang_indexSourceFileFullArgv: [
-    ref.types.int32,
+    js_int32,
     [
       CXIndexAction,
       CXClientData,
-      IndexerCallbacksPtr,
-      ref.types.uint32,
-      ref.types.uint32,
-      ref.types.CString,
-      voidPtr,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      CXTranslationUnitPtr,
-      ref.types.uint32,
+      IndexerCallbacksPointer,
+      js_uint32,
+      js_uint32,
+      js_CString,
+      js_voidPointer,
+      js_int32,
+      js_voidPointer,
+      js_uint32,
+      CXTranslationUnitPointer,
+      js_uint32,
     ],
   ],
   clang_indexTranslationUnit: [
-    ref.types.int32,
+    js_int32,
     [
       CXIndexAction,
       CXClientData,
-      IndexerCallbacksPtr,
-      ref.types.uint32,
-      ref.types.uint32,
+      IndexerCallbacksPointer,
+      js_uint32,
+      js_uint32,
       CXTranslationUnit,
     ],
   ],
   clang_index_getCXXClassDeclInfo: [
-    CXIdxCXXClassDeclInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxCXXClassDeclInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
   clang_index_getClientContainer: [
     CXIdxClientContainer,
-    [CXIdxContainerInfoPtr],
+    [CXIdxContainerInfoPointer],
   ],
-  clang_index_getClientEntity: [CXIdxClientEntity, [CXIdxEntityInfoPtr]],
+  clang_index_getClientEntity: [CXIdxClientEntity, [CXIdxEntityInfoPointer]],
   clang_index_getIBOutletCollectionAttrInfo: [
-    CXIdxIBOutletCollectionAttrInfoPtr,
-    [CXIdxAttrInfoPtr],
+    CXIdxIBOutletCollectionAttrInfoPointer,
+    [CXIdxAttrInfoPointer],
   ],
   clang_index_getObjCCategoryDeclInfo: [
-    CXIdxObjCCategoryDeclInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxObjCCategoryDeclInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
   clang_index_getObjCContainerDeclInfo: [
-    CXIdxObjCContainerDeclInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxObjCContainerDeclInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
   clang_index_getObjCInterfaceDeclInfo: [
-    CXIdxObjCInterfaceDeclInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxObjCInterfaceDeclInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
   clang_index_getObjCPropertyDeclInfo: [
-    CXIdxObjCPropertyDeclInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxObjCPropertyDeclInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
   clang_index_getObjCProtocolRefListInfo: [
-    CXIdxObjCProtocolRefListInfoPtr,
-    [CXIdxDeclInfoPtr],
+    CXIdxObjCProtocolRefListInfoPointer,
+    [CXIdxDeclInfoPointer],
   ],
-  clang_index_isEntityObjCContainerKind: [ref.types.int32, [ref.types.uint32]],
+  clang_index_isEntityObjCContainerKind: [js_int32, [CXIdxEntityKind]],
   clang_index_setClientContainer: [
-    ref.types.void,
-    [CXIdxContainerInfoPtr, CXIdxClientContainer],
+    js_void,
+    [CXIdxContainerInfoPointer, CXIdxClientContainer],
   ],
   clang_index_setClientEntity: [
-    ref.types.void,
-    [CXIdxEntityInfoPtr, CXIdxClientEntity],
+    js_void,
+    [CXIdxEntityInfoPointer, CXIdxClientEntity],
   ],
-  clang_isAttribute: [ref.types.uint32, [ref.types.uint32]],
-  clang_isConstQualifiedType: [ref.types.uint32, [CXType]],
-  clang_isCursorDefinition: [ref.types.uint32, [CXCursor]],
-  clang_isDeclaration: [ref.types.uint32, [ref.types.uint32]],
-  clang_isExpression: [ref.types.uint32, [ref.types.uint32]],
-  clang_isFileMultipleIncludeGuarded: [
-    ref.types.uint32,
-    [CXTranslationUnit, CXFile],
-  ],
-  clang_isFunctionTypeVariadic: [ref.types.uint32, [CXType]],
-  clang_isInvalid: [ref.types.uint32, [ref.types.uint32]],
-  clang_isInvalidDeclaration: [ref.types.uint32, [CXCursor]],
-  clang_isPODType: [ref.types.uint32, [CXType]],
-  clang_isPreprocessing: [ref.types.uint32, [ref.types.uint32]],
-  clang_isReference: [ref.types.uint32, [ref.types.uint32]],
-  clang_isRestrictQualifiedType: [ref.types.uint32, [CXType]],
-  clang_isStatement: [ref.types.uint32, [ref.types.uint32]],
-  clang_isTranslationUnit: [ref.types.uint32, [ref.types.uint32]],
-  clang_isUnexposed: [ref.types.uint32, [ref.types.uint32]],
-  clang_isVirtualBase: [ref.types.uint32, [CXCursor]],
-  clang_isVolatileQualifiedType: [ref.types.uint32, [CXType]],
+  clang_isAttribute: [js_uint32, [js_uint32]],
+  clang_isConstQualifiedType: [js_uint32, [CXType]],
+  clang_isCursorDefinition: [js_uint32, [CXCursor]],
+  clang_isDeclaration: [js_uint32, [js_uint32]],
+  clang_isExpression: [js_uint32, [js_uint32]],
+  clang_isFileMultipleIncludeGuarded: [js_uint32, [CXTranslationUnit, CXFile]],
+  clang_isFunctionTypeVariadic: [js_uint32, [CXType]],
+  clang_isInvalid: [js_uint32, [js_uint32]],
+  clang_isInvalidDeclaration: [js_uint32, [CXCursor]],
+  clang_isPODType: [js_uint32, [CXType]],
+  clang_isPreprocessing: [js_uint32, [js_uint32]],
+  clang_isReference: [js_uint32, [js_uint32]],
+  clang_isRestrictQualifiedType: [js_uint32, [CXType]],
+  clang_isStatement: [js_uint32, [js_uint32]],
+  clang_isTranslationUnit: [js_uint32, [js_uint32]],
+  clang_isUnexposed: [js_uint32, [js_uint32]],
+  clang_isVirtualBase: [js_uint32, [CXCursor]],
+  clang_isVolatileQualifiedType: [js_uint32, [CXType]],
   clang_loadDiagnostics: [
     CXDiagnosticSet,
-    [ref.types.CString, voidPtr, CXStringPtr],
+    [js_CString, js_voidPointer, CXStringPointer],
   ],
   clang_parseTranslationUnit: [
     CXTranslationUnit,
     [
       CXIndex,
-      ref.types.CString,
-      voidPtr,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      ref.types.uint32,
+      js_CString,
+      js_voidPointer,
+      js_int32,
+      js_voidPointer,
+      js_uint32,
+      js_uint32,
     ],
   ],
   clang_parseTranslationUnit2: [
-    ref.types.uint32,
+    js_uint32,
     [
       CXIndex,
-      ref.types.CString,
-      voidPtr,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      ref.types.uint32,
-      CXTranslationUnitPtr,
+      js_CString,
+      js_voidPointer,
+      js_int32,
+      js_voidPointer,
+      js_uint32,
+      js_uint32,
+      CXTranslationUnitPointer,
     ],
   ],
   clang_parseTranslationUnit2FullArgv: [
-    ref.types.uint32,
+    js_uint32,
     [
       CXIndex,
-      ref.types.CString,
-      voidPtr,
-      ref.types.int32,
-      voidPtr,
-      ref.types.uint32,
-      ref.types.uint32,
-      CXTranslationUnitPtr,
+      js_CString,
+      js_voidPointer,
+      js_int32,
+      js_voidPointer,
+      js_uint32,
+      js_uint32,
+      CXTranslationUnitPointer,
     ],
   ],
-  clang_remap_dispose: [ref.types.void, [CXRemapping]],
+  clang_remap_dispose: [js_void, [CXRemapping]],
   clang_remap_getFilenames: [
-    ref.types.void,
-    [CXRemapping, ref.types.uint32, CXStringPtr, CXStringPtr],
+    js_void,
+    [CXRemapping, js_uint32, CXStringPointer, CXStringPointer],
   ],
-  clang_remap_getNumFiles: [ref.types.uint32, [CXRemapping]],
+  clang_remap_getNumFiles: [js_uint32, [CXRemapping]],
   clang_reparseTranslationUnit: [
-    ref.types.int32,
-    [CXTranslationUnit, ref.types.uint32, voidPtr, ref.types.uint32],
+    js_int32,
+    [CXTranslationUnit, js_uint32, js_voidPointer, js_uint32],
   ],
   clang_saveTranslationUnit: [
-    ref.types.int32,
-    [CXTranslationUnit, ref.types.CString, ref.types.uint32],
+    js_int32,
+    [CXTranslationUnit, js_CString, js_uint32],
   ],
   clang_sortCodeCompletionResults: [
-    ref.types.void,
-    [CXCompletionResultPtr, ref.types.uint32],
+    js_void,
+    [CXCompletionResultPointer, js_uint32],
   ],
-  clang_suspendTranslationUnit: [ref.types.uint32, [CXTranslationUnit]],
-  clang_toggleCrashRecovery: [ref.types.void, [ref.types.uint32]],
+  clang_suspendTranslationUnit: [js_uint32, [CXTranslationUnit]],
+  clang_toggleCrashRecovery: [js_void, [js_uint32]],
   clang_tokenize: [
-    ref.types.void,
-    [CXTranslationUnit, CXSourceRange, voidPtr, ref.refType(ref.types.uint32)],
+    js_void,
+    [CXTranslationUnit, CXSourceRange, js_voidPointer, js_uint32Pointer],
   ],
-  clang_visitChildren: [
-    ref.types.uint32,
-    [CXCursor, CXCursorVisitor, CXClientData],
-  ],
+  clang_visitChildren: [js_uint32, [CXCursor, CXCursorVisitor, CXClientData]],
 });
 
 module.exports = {

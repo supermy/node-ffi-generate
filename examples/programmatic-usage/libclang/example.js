@@ -21,12 +21,15 @@ const main = async () => {
 	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const generated = await generate({
-		filepath: headerFilePath,
-		includes: [
+		compilerArgs: [
+			"--include-directory",
 			llvmIncludeDir,
 		],
+		filepath: headerFilePath,
 		library: "libclang",
-		prefix: "clang_",
+		prefixes: [
+			"clang_",
+		],
 	});
 
 	if (generated.unmapped.length > 0) {

@@ -35,15 +35,19 @@ test("lines", async (t) => {
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
-	// TODO: structs in the output? Fix enums.
-	const expectedTypes = `const my_enum_t = Struct({
-		my_enum: ref.types.int32,
-	  });
-	  const my_enum_tPtr = ref.refType(my_enum_t);`;
+	// TODO: where is uchar coming from?
+	// TODO: add enum type, or use contants.my_enum.
+	const expectedTypes = `
+		const js_uchar = ref.types.uchar;
+		const js_void = ref.types.void;
+		const js_int32 = ref.types.int32;
+		const my_enum_t = js_int32;
+		const my_enum_tPointer = ref.refType(my_enum_t);
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [ref.types.void, [my_enum_tPtr]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_enum_tPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

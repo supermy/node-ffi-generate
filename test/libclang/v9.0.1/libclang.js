@@ -27,7 +27,7 @@ test("lines", async (t) => {
 		],
 		filepath: headerFilePath,
 		library: "libclang",
-		prefix: [
+		prefixes: [
 			"clang_",
 			"CX",
 		],

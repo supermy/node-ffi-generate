@@ -127,7 +127,7 @@ const runGenerator = async () => {
 		compilerArgs: argv._,
 		filepath: argv.f,
 		library: argv.l,
-		prefix: argv.p,
+		prefixes: [].concat(argv.p),
 		singleFile: argv.x,
 	});
 

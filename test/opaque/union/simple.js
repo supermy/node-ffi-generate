@@ -20,21 +20,18 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	// TODO: fix unmapped type.
-	t.deepEqual(generated.unmapped, [
-		{
-			arg: "Typedef",
-			displayname: "my_union_t",
-			name: "do_stuff",
-			position: 0,
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = "const types = {};";
+	const expectedTypes = `
+		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
+		const my_union = js_voidPointer;
+		const my_union_t = my_union;
+	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "const functions = new FFI.Library(\"does-not-matter\", {});";
+	const expectedFunctions = "do_stuff: [js_void, [my_union_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

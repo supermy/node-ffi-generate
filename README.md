@@ -85,6 +85,14 @@ Setting `LD_LIBRARY_PATH` (or `DYLD_LIBRARY_PATH` on macOS) might be necessary f
 LD_LIBRARY_PATH="$(llvm-config --libdir)" node my-generator-code.js
 ```
 
+## Debugging
+
+Get additional [`debug` messages](https://github.com/visionmedia/debug) by setting the `DEBUG` environment variable.
+
+```shell
+ DEBUG='ffi-generate:*' ffi-generate <other arguments as usual>
+```
+
 ---
 
 `node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), 2020 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
