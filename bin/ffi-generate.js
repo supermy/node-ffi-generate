@@ -45,6 +45,7 @@ const tryRetryLoadLibclang = async () => {
 				throw new Error(`Could not load the libclang library (check ${libraryPathEnvironmentVariableName}). ${JSON.stringify(pick(
 					process.env,
 					[
+						"FFI_GENERATE_RETRY",
 						libraryPathEnvironmentVariableName,
 					],
 				))}`);
@@ -79,11 +80,14 @@ const tryRetryLoadLibclang = async () => {
 					process.argv.slice(2),
 					{
 						env: {
-							...process.env,
 							FFI_GENERATE_RETRY: process.pid,
 							[libraryPathEnvironmentVariableName]: [
 								llvmConfigLibDir.stdout,
-							].concat((process.env[libraryPathEnvironmentVariableName] || "").split(":")).join(":"),
+							].concat(
+								process.env[libraryPathEnvironmentVariableName]
+									? process.env[libraryPathEnvironmentVariableName].split(":")
+									: [],
+							).join(":"),
 						},
 					},
 				);
@@ -127,7 +131,7 @@ const runGenerator = async () => {
 		compilerArgs: argv._,
 		filepath: argv.f,
 		library: argv.l,
-		prefixes: [].concat(argv.p),
+		prefixes: argv.p ? [].concat(argv.p) : undefined,
 		singleFile: argv.x,
 	});
 
