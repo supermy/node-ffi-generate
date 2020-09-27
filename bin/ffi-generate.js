@@ -79,11 +79,14 @@ const tryRetryLoadLibclang = async () => {
 					process.argv.slice(2),
 					{
 						env: {
-							...process.env,
 							FFI_GENERATE_RETRY: process.pid,
 							[libraryPathEnvironmentVariableName]: [
 								llvmConfigLibDir.stdout,
-							].concat((process.env[libraryPathEnvironmentVariableName] || "").split(":")).join(":"),
+							].concat(
+								process.env[libraryPathEnvironmentVariableName]
+									? process.env[libraryPathEnvironmentVariableName].split(":")
+									: [],
+							).join(":"),
 						},
 					},
 				);
