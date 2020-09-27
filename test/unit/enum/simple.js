@@ -4,14 +4,14 @@ const {
 	promisify,
 } = require("util");
 
-const assertExpectedLines = require("../helper/assert-expected-lines");
+const assertExpectedLines = require("../../helper/assert-expected-lines");
 
 const writeFile = promisify(fs.writeFile);
 
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../..");
 
 	const generated = await generate({
 		filepath: `${__filename}.h`,
@@ -22,18 +22,31 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: fix typedef aliasing generating a pointer to a struct wrapper of the original type.
+	const expectedConstants = `const constants = {
+		my_enum: {
+		  FIRST: 0,
+		  SECOND: -1,
+		  LAST: 99,
+		  0: "FIRST",
+		  "-1": "SECOND",
+		  99: "LAST",
+		},
+	  };`;
+
+	assertExpectedLines(t, expectedConstants, generated.serialized);
+
+	// TODO: where is uchar coming from?
+	// TODO: refer to constants.my_enum instead if int32?
 	const expectedTypes = `
+		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
-		const js_voidPointer = ref.refType(js_void);
-		const my_struct = js_voidPointer;
-		const my_struct_t = my_struct;
-		const my_struct_tPointer = ref.refType(my_struct_t);
+		const js_int32 = ref.types.int32;
+		const my_enum_t = js_int32;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_struct_tPointer]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_enum_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

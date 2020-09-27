@@ -4,14 +4,14 @@ const {
 	promisify,
 } = require("util");
 
-const assertExpectedLines = require("../helper/assert-expected-lines");
+const assertExpectedLines = require("../../helper/assert-expected-lines");
 
 const writeFile = promisify(fs.writeFile);
 
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../..");
 
 	const generated = await generate({
 		filepath: `${__filename}.h`,
@@ -22,31 +22,23 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expectedConstants = `const constants = {
-		my_enum: {
-		  FIRST: 0,
-		  SECOND: -1,
-		  LAST: 99,
-		  0: "FIRST",
-		  "-1": "SECOND",
-		  99: "LAST",
-		},
-	  };`;
-
-	assertExpectedLines(t, expectedConstants, generated.serialized);
-
-	// TODO: where is uchar coming from?
-	// TODO: refer to constants.my_enum instead if int32?
+	// NOTE: not necessary to generate the pointer version?
 	const expectedTypes = `
-		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
-		const js_int32 = ref.types.int32;
-		const my_enum_t = js_int32;
+		const js_byte = ref.types.byte;
+		const js_uchar = ref.types.uchar;
+		const __uint8_t = js_uchar;
+		const uint8_t = __uint8_t;
+		const my_unmappable_types = Struct({
+			my_bool: js_byte,
+			my_uint8_t: uint8_t,
+		});
+		const my_unmappable_types_t = my_unmappable_types;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_enum_t]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_unmappable_types_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

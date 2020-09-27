@@ -4,14 +4,14 @@ const {
 	promisify,
 } = require("util");
 
-const assertExpectedLines = require("../helper/assert-expected-lines");
+const assertExpectedLines = require("../../helper/assert-expected-lines");
 
 const writeFile = promisify(fs.writeFile);
 
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../..");
 
 	const generated = await generate({
 		filepath: `${__filename}.h`,
@@ -22,16 +22,22 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
+	// TODO: structs in the output? Fix unions.
+	// TODO: fix typedef aliasing generating a pointer to the original type.
 	const expectedTypes = `
 		const js_void = ref.types.void;
-		const js_voidPointer = ref.refType(js_void);
-		const my_struct = js_voidPointer;
-		const my_struct_t = my_struct;
+		const js_int32 = ref.types.int32;
+		const my_union = Union({
+			first: js_int32,
+			second: js_int32,
+		});
+		const my_union_t = my_union;
+		const my_union_tPointer = ref.refType(my_union_t);
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_struct_t]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_union_tPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

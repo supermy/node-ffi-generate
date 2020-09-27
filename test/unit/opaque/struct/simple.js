@@ -4,14 +4,14 @@ const {
 	promisify,
 } = require("util");
 
-const assertExpectedLines = require("../helper/assert-expected-lines");
+const assertExpectedLines = require("../../../helper/assert-expected-lines");
 
 const writeFile = promisify(fs.writeFile);
 
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../../..");
 
 	const generated = await generate({
 		filepath: `${__filename}.h`,
@@ -22,13 +22,10 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_voidPointer = ref.refType(js_void);
-		const my_struct = Struct({
-			my_void: js_voidPointer,
-		});
+		const my_struct = js_voidPointer;
 		const my_struct_t = my_struct;
 	`;
 

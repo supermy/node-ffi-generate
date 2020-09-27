@@ -4,14 +4,14 @@ const {
 	promisify,
 } = require("util");
 
-const assertExpectedLines = require("../helper/assert-expected-lines");
+const assertExpectedLines = require("../../helper/assert-expected-lines");
 
 const writeFile = promisify(fs.writeFile);
 
 test("lines", async (t) => {
 	const {
 		generate,
-	} = require("../..");
+	} = require("../../..");
 
 	const generated = await generate({
 		filepath: `${__filename}.h`,
@@ -22,19 +22,18 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
+	// TODO: fix typedef aliasing generating a pointer to a struct wrapper of the original type.
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_voidPointer = ref.refType(js_void);
-		const __int128_t = js_voidPointer;
-		const __uint128_t = js_voidPointer;
+		const my_struct = js_voidPointer;
+		const my_struct_t = my_struct;
+		const my_struct_tPointer = ref.refType(my_struct_t);
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = `
-		do_stuff__int128_t: [js_void, [__int128_t]],
-		do_stuff__uint128_t: [js_void, [__uint128_t]],
-	`;
+	const expectedFunctions = "do_stuff: [js_void, [my_struct_tPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });
