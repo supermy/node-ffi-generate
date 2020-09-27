@@ -45,6 +45,7 @@ const tryRetryLoadLibclang = async () => {
 				throw new Error(`Could not load the libclang library (check ${libraryPathEnvironmentVariableName}). ${JSON.stringify(pick(
 					process.env,
 					[
+						"FFI_GENERATE_RETRY",
 						libraryPathEnvironmentVariableName,
 					],
 				))}`);
