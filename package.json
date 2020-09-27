@@ -41,6 +41,7 @@
     "ava": "^3.12.1",
     "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^1.0.0",
     "ffi-napi": "^3.0.1",
+    "get-bin-path": "^5.1.0",
     "husky": "^4.3.0",
     "nyc": "^15.1.0",
     "ref-array-di": "^1.2.2",
