@@ -32,7 +32,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated);
 
-	t.assert(!generated.includes("UNMAPPED"));
+	t.assert(!result.stderr.includes("UNMAPPED"));
 
 	t.assert(generated.includes("git commit (no git describe) on branch (no git branch)"));
 });
