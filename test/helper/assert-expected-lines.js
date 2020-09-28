@@ -36,9 +36,20 @@ const assertExpectedLines = (t, expected, serialized) => {
 	expectedLines.forEach((expectedLine) => {
 		const trimmedExpectedLine = expectedLine.trim();
 		const matchingLineNumber = findMatchingLineNumber(t, serialized, nextExpectedLineNumber, trimmedExpectedLine);
+		const unexpectedLine = serialized.split("\n")[nextExpectedLineNumber];
+		const trimmedUnexpectedLine = typeof unexpectedLine === "string" ? unexpectedLine.trim() : unexpectedLine;
 
-		// NOTE: expects consecutive lines.
-		t.is(matchingLineNumber, nextExpectedLineNumber, `The expected line was not found on serialized line number ${nextExpectedLineNumber}, instead it was found on ${matchingLineNumber}: ${JSON.stringify(trimmedExpectedLine)}`);
+		if (matchingLineNumber !== nextExpectedLineNumber) {
+			const message = `The expected line was not found on serialized line number ${nextExpectedLineNumber}, `
+			+ (
+				matchingLineNumber === -1
+					? "nor on any line after that."
+					: `instead it was found on ${matchingLineNumber}.`
+			);
+
+			// NOTE: expects consecutive lines.
+			t.is(trimmedExpectedLine, trimmedUnexpectedLine, message);
+		}
 
 		nextExpectedLineNumber = matchingLineNumber + 1;
 	});
