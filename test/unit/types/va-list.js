@@ -27,7 +27,12 @@ test("lines", async (t) => {
 		const js_void = ref.types.void;
 		const js_uint32 = ref.types.uint32;
 		const js_voidPointer = ref.refType(js_void);
-		const __va_list_tag = js_voidPointer;
+		const __va_list_tag = Struct({
+			gp_offset: js_uint32,
+			fp_offset: js_uint32,
+			overflow_arg_area: js_voidPointer,
+			reg_save_area: js_voidPointer,
+		});
 		const __va_list_tag_array_1 = ArrayType(__va_list_tag, 1);
 		const __builtin_va_list = __va_list_tag_array_1;
 		const va_list = __builtin_va_list;
