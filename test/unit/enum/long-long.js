@@ -36,7 +36,7 @@ test("lines", async (t) => {
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
 	// TODO: where is uchar coming from?
-	// TODO: refer to constants.my_enum instead if longlong?
+	// TODO: refer to constants.my_enum instead of a number type?
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;

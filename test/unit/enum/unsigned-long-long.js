@@ -22,22 +22,21 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: fix 18446744073709551615 becoming -1.
 	const expectedConstants = `const constants = {
 		my_enum: {
 		  FIRST: 0,
 		  SECOND: 1,
-		  LAST: -1,
+		  LAST: 18446744073709551615,
 		  0: "FIRST",
 		  1: "SECOND",
-		  "-1": "LAST",
+		  "18446744073709551615": "LAST",
 		},
 	  };`;
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
 	// TODO: where is uchar coming from?
-	// TODO: refer to constants.my_enum instead if ulonglong?
+	// TODO: refer to constants.my_enum instead of a number type?
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;

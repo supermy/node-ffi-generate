@@ -26,10 +26,10 @@ test("lines", async (t) => {
 		my_enum: {
 		  FIRST: 0,
 		  SECOND: 1,
-		  LAST: 99,
+		  LAST: 18446744073709551615,
 		  0: "FIRST",
 		  1: "SECOND",
-		  99: "LAST",
+		  "18446744073709551615": "LAST",
 		},
 	  };`;
 
@@ -40,8 +40,8 @@ test("lines", async (t) => {
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
-		const js_uint32 = ref.types.uint32;
-		const my_enum_t = js_uint32;
+		const js_ulong = ref.types.ulong;
+		const my_enum_t = js_ulong;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
