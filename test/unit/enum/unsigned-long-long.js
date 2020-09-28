@@ -24,14 +24,15 @@ test("lines", async (t) => {
 
 	const expectedConstants = `const constants = {
 		my_enum: {
-		  FIRST: 0,
-		  SECOND: 1,
-		  LAST: 18446744073709551615,
-		  0: "FIRST",
-		  1: "SECOND",
-		  "18446744073709551615": "LAST",
+			FIRST: 0,
+			SECOND: 1,
+			LAST: "18446744073709551615",
+			0: "FIRST",
+			1: "SECOND",
+			"18446744073709551615": "LAST",
 		},
-	  };`;
+	  };
+	  `;
 
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 

@@ -25,8 +25,8 @@ test("lines", async (t) => {
 	const expectedConstants = `const constants = {
 		my_enum: {
 		  FIRST: 0,
-		  SECOND: 9223372036854775807,
-		  LAST: -9223372036854775807,
+		  SECOND: "9223372036854775807",
+		  LAST: "-9223372036854775807",
 		  0: "FIRST",
 		  "9223372036854775807": "SECOND",
 		  "-9223372036854775807": "LAST",
