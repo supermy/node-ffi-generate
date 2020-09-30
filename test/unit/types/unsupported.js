@@ -20,7 +20,22 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.deepEqual(generated.unmapped, []);
+	t.deepEqual(generated.unmapped, [
+		{
+			reason: "Could not map unexpected/unhandled type kind.",
+			self: {
+				kind: 20,
+				spelling: "Int128",
+			},
+		},
+		{
+			reason: "Could not map unexpected/unhandled type kind.",
+			self: {
+				kind: 12,
+				spelling: "UInt128",
+			},
+		},
+	]);
 
 	const expectedTypes = `
 		const js_void = ref.types.void;
