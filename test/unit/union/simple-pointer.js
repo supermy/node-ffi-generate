@@ -22,8 +22,6 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: structs in the output? Fix unions.
-	// TODO: fix typedef aliasing generating a pointer to the original type.
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_int32 = ref.types.int32;
