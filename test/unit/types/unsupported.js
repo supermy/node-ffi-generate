@@ -22,14 +22,14 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, [
 		{
-			reason: "Could not map unexpected/unhandled type kind.",
+			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
 			self: {
 				kind: 20,
 				spelling: "Int128",
 			},
 		},
 		{
-			reason: "Could not map unexpected/unhandled type kind.",
+			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
 			self: {
 				kind: 12,
 				spelling: "UInt128",
