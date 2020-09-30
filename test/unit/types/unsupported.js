@@ -20,22 +20,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	// TODO: don't record each unmapped type more than once.
 	t.deepEqual(generated.unmapped, [
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 20,
-				spelling: "Int128",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 12,
-				spelling: "UInt128",
-			},
-		},
 		{
 			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
 			self: {
