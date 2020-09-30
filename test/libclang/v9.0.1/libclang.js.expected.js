@@ -868,6 +868,12 @@ const constants = {
     3: "CXIdxEntityLang_CXX",
     4: "CXIdxEntityLang_Swift",
   },
+  CXIdxEntityRefKind: {
+    CXIdxEntityRef_Direct: 1,
+    CXIdxEntityRef_Implicit: 2,
+    1: "CXIdxEntityRef_Direct",
+    2: "CXIdxEntityRef_Implicit",
+  },
   CXIdxObjCContainerKind: {
     CXIdxObjCContainer_ForwardRef: 0,
     CXIdxObjCContainer_Interface: 1,
@@ -1005,6 +1011,28 @@ const constants = {
   CXSaveTranslationUnit_Flags: {
     CXSaveTranslationUnit_None: 0,
     0: "CXSaveTranslationUnit_None",
+  },
+  CXSymbolRole: {
+    CXSymbolRole_None: 0,
+    CXSymbolRole_Declaration: 1,
+    CXSymbolRole_Definition: 2,
+    CXSymbolRole_Reference: 4,
+    CXSymbolRole_Read: 8,
+    CXSymbolRole_Write: 16,
+    CXSymbolRole_Call: 32,
+    CXSymbolRole_Dynamic: 64,
+    CXSymbolRole_AddressOf: 128,
+    CXSymbolRole_Implicit: 256,
+    0: "CXSymbolRole_None",
+    1: "CXSymbolRole_Declaration",
+    2: "CXSymbolRole_Definition",
+    4: "CXSymbolRole_Reference",
+    8: "CXSymbolRole_Read",
+    16: "CXSymbolRole_Write",
+    32: "CXSymbolRole_Call",
+    64: "CXSymbolRole_Dynamic",
+    128: "CXSymbolRole_AddressOf",
+    256: "CXSymbolRole_Implicit",
   },
   CXTLSKind: {
     CXTLS_None: 0,
@@ -1547,6 +1575,7 @@ const CXToken = Struct({
 });
 const CXTokenPointer = ref.refType(CXToken);
 const CXTokenKind = js_uint32;
+const FunctionProto_0 = FFI.Function(ref.types.void, [js_voidPointer]);
 const CXCompletionString = js_voidPointer;
 const CXCompletionResult = Struct({
   CursorKind: js_uint32,
@@ -1569,9 +1598,14 @@ const CXEvalResultKind = js_uint32;
 const js_double = ref.types.double;
 const CXRemapping = js_voidPointer;
 const CXResult = js_uint32;
+const FunctionProto_1 = FFI.Function(ref.types.uint32, [
+  js_voidPointer,
+  CXCursor,
+  CXSourceRange,
+]);
 const CXCursorAndRangeVisitor = Struct({
   context: js_voidPointer,
-  visit: js_voidPointer,
+  visit: FunctionProto_1,
 });
 const CXIdxEntityKind = js_uint32;
 const CXIdxEntityCXXTemplateKind = js_uint32;
@@ -1685,18 +1719,81 @@ const CXIdxCXXClassDeclInfoPointer = ref.refType(CXIdxCXXClassDeclInfo);
 const CXIdxClientContainer = js_voidPointer;
 const CXIdxClientEntity = js_voidPointer;
 const CXIndexAction = js_voidPointer;
+const FunctionProto_2 = FFI.Function(ref.types.int32, [
+  CXClientData,
+  js_voidPointer,
+]);
+const FunctionProto_3 = FFI.Function(ref.types.void, [
+  CXClientData,
+  CXDiagnosticSet,
+  js_voidPointer,
+]);
+const CXIdxClientFile = js_voidPointer;
+const FunctionProto_4 = FFI.Function(js_voidPointer, [
+  CXClientData,
+  CXFile,
+  js_voidPointer,
+]);
+const CXIdxIncludedFileInfo = Struct({
+  hashLoc: CXIdxLoc,
+  filename: js_CString,
+  file: CXFile,
+  isImport: js_int32,
+  isAngled: js_int32,
+  isModuleImport: js_int32,
+});
+const CXIdxIncludedFileInfoPointer = ref.refType(CXIdxIncludedFileInfo);
+const FunctionProto_5 = FFI.Function(js_voidPointer, [
+  CXClientData,
+  CXIdxIncludedFileInfoPointer,
+]);
+const CXIdxClientASTFile = js_voidPointer;
+const CXIdxImportedASTFileInfo = Struct({
+  file: CXFile,
+  module: CXModule,
+  loc: CXIdxLoc,
+  isImplicit: js_int32,
+});
+const CXIdxImportedASTFileInfoPointer = ref.refType(CXIdxImportedASTFileInfo);
+const FunctionProto_6 = FFI.Function(js_voidPointer, [
+  CXClientData,
+  CXIdxImportedASTFileInfoPointer,
+]);
+const FunctionProto_7 = FFI.Function(js_voidPointer, [
+  CXClientData,
+  js_voidPointer,
+]);
+const FunctionProto_8 = FFI.Function(ref.types.void, [
+  CXClientData,
+  CXIdxDeclInfoPointer,
+]);
+const CXIdxEntityRefKind = js_uint32;
+const CXSymbolRole = js_uint32;
+const CXIdxEntityRefInfo = Struct({
+  kind: CXIdxEntityRefKind,
+  cursor: CXCursor,
+  loc: CXIdxLoc,
+  referencedEntity: CXIdxEntityInfoPointer,
+  parentEntity: CXIdxEntityInfoPointer,
+  container: CXIdxContainerInfoPointer,
+  role: CXSymbolRole,
+});
+const CXIdxEntityRefInfoPointer = ref.refType(CXIdxEntityRefInfo);
+const FunctionProto_9 = FFI.Function(ref.types.void, [
+  CXClientData,
+  CXIdxEntityRefInfoPointer,
+]);
 const IndexerCallbacks = Struct({
-  abortQuery: js_voidPointer,
-  diagnostic: js_voidPointer,
-  enteredMainFile: js_voidPointer,
-  ppIncludedFile: js_voidPointer,
-  importedASTFile: js_voidPointer,
-  startedTranslationUnit: js_voidPointer,
-  indexDeclaration: js_voidPointer,
-  indexEntityReference: js_voidPointer,
+  abortQuery: FunctionProto_2,
+  diagnostic: FunctionProto_3,
+  enteredMainFile: FunctionProto_4,
+  ppIncludedFile: FunctionProto_5,
+  importedASTFile: FunctionProto_6,
+  startedTranslationUnit: FunctionProto_7,
+  indexDeclaration: FunctionProto_8,
+  indexEntityReference: FunctionProto_9,
 });
 const IndexerCallbacksPointer = ref.refType(IndexerCallbacks);
-const CXIdxClientFile = js_voidPointer;
 const CXIdxClientFilePointer = ref.refType(CXIdxClientFile);
 const CXFieldVisitor = FFI.Function(ref.types.uint32, [
   CXCursor,
@@ -1731,6 +1828,7 @@ const types = {
   CXIdxBaseClassInfoPointer,
   CXIdxCXXClassDeclInfo,
   CXIdxCXXClassDeclInfoPointer,
+  CXIdxClientASTFile,
   CXIdxClientContainer,
   CXIdxClientEntity,
   CXIdxClientFile,
@@ -1744,8 +1842,15 @@ const types = {
   CXIdxEntityInfoPointer,
   CXIdxEntityKind,
   CXIdxEntityLanguage,
+  CXIdxEntityRefInfo,
+  CXIdxEntityRefInfoPointer,
+  CXIdxEntityRefKind,
   CXIdxIBOutletCollectionAttrInfo,
   CXIdxIBOutletCollectionAttrInfoPointer,
+  CXIdxImportedASTFileInfo,
+  CXIdxImportedASTFileInfoPointer,
+  CXIdxIncludedFileInfo,
+  CXIdxIncludedFileInfoPointer,
   CXIdxLoc,
   CXIdxObjCCategoryDeclInfo,
   CXIdxObjCCategoryDeclInfoPointer,
@@ -1780,6 +1885,7 @@ const types = {
   CXStringPointer,
   CXStringSet,
   CXStringSetPointer,
+  CXSymbolRole,
   CXTUResourceUsage,
   CXTUResourceUsageEntry,
   CXTUResourceUsageEntryPointer,
@@ -1796,6 +1902,16 @@ const types = {
   CXVersion,
   CXVirtualFileOverlay,
   CXVirtualFileOverlayImpl,
+  FunctionProto_0,
+  FunctionProto_1,
+  FunctionProto_2,
+  FunctionProto_3,
+  FunctionProto_4,
+  FunctionProto_5,
+  FunctionProto_6,
+  FunctionProto_7,
+  FunctionProto_8,
+  FunctionProto_9,
   IndexerCallbacks,
   IndexerCallbacksPointer,
   __time_t,
@@ -2049,7 +2165,10 @@ const functions = new FFI.Library("libclang", {
   clang_equalLocations: [js_uint32, [CXSourceLocation, CXSourceLocation]],
   clang_equalRanges: [js_uint32, [CXSourceRange, CXSourceRange]],
   clang_equalTypes: [js_uint32, [CXType, CXType]],
-  clang_executeOnThread: [js_void, [js_voidPointer, js_voidPointer, js_uint32]],
+  clang_executeOnThread: [
+    js_void,
+    [FunctionProto_0, js_voidPointer, js_uint32],
+  ],
   clang_findIncludesInFile: [
     CXResult,
     [CXTranslationUnit, CXFile, CXCursorAndRangeVisitor],

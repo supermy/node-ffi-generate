@@ -35,78 +35,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.deepEqual(generated.unmapped, [
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 111,
-				spelling: "FunctionProto",
-			},
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
 	const expected = (await readFile(__filename + ".expected.js")).toString();
 
