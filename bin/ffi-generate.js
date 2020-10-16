@@ -31,6 +31,9 @@ const {
 } = require("lodash");
 const optimist = require("optimist");
 const SegfaultHandler = require("segfault-handler");
+const {
+	delay,
+} = require("bluebird");
 
 const tryRetryLoadLibclang = async () => {
 	try {
@@ -142,6 +145,12 @@ const runGenerator = async () => {
 		// eslint-disable-next-line no-console
 		console.warn("----- UNMAPPED -----", JSON.stringify(generated.unmapped, null, 2));
 	}
+
+	// NOTE: sleep to allow for (async) cleanup; otherwise there's a race condition segfault.
+	// NOTE: segfault is (usually) not noticeable when running debuggers etcetera; do they slow down the process enough for cleanup to finish?
+	// TODO: verify that the delay helps, and that it's not too short/long for (testable) usage.
+	// TODO: don't delay.
+	await delay(50);
 };
 
 const loadAndGenerate = async () => {
