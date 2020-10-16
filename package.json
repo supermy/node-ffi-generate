@@ -43,6 +43,7 @@
     "ffi-napi": "^3.0.1",
     "get-bin-path": "^5.1.0",
     "husky": "^4.3.0",
+    "ndb": "^1.1.5",
     "nyc": "^15.1.0",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^2.1.2",
@@ -59,6 +60,8 @@
     "ref-union-di": "^1.0.1"
   },
   "scripts": {
+    "generate": "node bin/ffi-generate.js",
+    "generate:debug": "ndb npm run --silent generate --",
     "test": "npm run --silent test:ava && npm run --silent lint && npm run --silent test:nyc",
     "test:watch": "npm run --silent test:ava:watch",
     "test:ava": "ava",
