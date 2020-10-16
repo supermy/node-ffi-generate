@@ -20,36 +20,34 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.deepEqual(generated.unmapped, [
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 20,
-				spelling: "Int128",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 12,
-				spelling: "UInt128",
-			},
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
+	const expectedConstants = `const constants = {
+		my_enum: {
+			FIRST: 0,
+			SECOND: 1,
+			LAST: "18446744073709551615",
+			0: "FIRST",
+			1: "SECOND",
+			"18446744073709551615": "LAST",
+		},
+	  };
+	  `;
+
+	assertExpectedLines(t, expectedConstants, generated.serialized);
+
+	// TODO: where is uchar coming from?
+	// TODO: refer to constants.my_enum instead of a number type?
 	const expectedTypes = `
+		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
-		const js_voidPointer = ref.refType(js_void);
-		const __int128_t = js_voidPointer;
-		const __uint128_t = js_voidPointer;
+		const js_ulonglong = ref.types.ulonglong;
+		const my_enum_t = js_ulonglong;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = `
-		do_stuff__int128_t: [js_void, [__int128_t]],
-		do_stuff__uint128_t: [js_void, [__uint128_t]],
-	`;
+	const expectedFunctions = "do_stuff: [js_void, [my_enum_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

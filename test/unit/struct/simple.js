@@ -22,7 +22,6 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: not necessary to generate the pointer version?
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_voidPointer = ref.refType(js_void);

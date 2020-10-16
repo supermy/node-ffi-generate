@@ -22,7 +22,7 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// TODO: also check for my_enum_ty, in contants or types?
+	// TODO: also check for my_enum_ty, in constants or types?
 	const expected = `my_enum: {
 	  FIRST: 0,
 	  SECOND: -1,

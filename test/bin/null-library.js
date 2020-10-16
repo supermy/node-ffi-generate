@@ -19,9 +19,7 @@ test("lines", async (t) => {
 		"--file",
 		`${__filename}.h`,
 		"--library",
-		"does-not-matter",
-		"--prefix",
-		"good",
+		"null",
 	]);
 	const generated = result.stdout;
 
@@ -41,10 +39,10 @@ test("lines", async (t) => {
 	assertExpectedLines(t, expectedTypes, generated);
 
 	const expectedFunctions = `
-		const functions = new FFI.Library("does-not-matter", {
-			good_stuff: [js_void, [my_struct_t]],
+		const functions = new FFI.Library(null, {
+			do_stuff: [js_void, [my_struct_t]],
 		});
-	`;
+	  `;
 
 	assertExpectedLines(t, expectedFunctions, generated);
 });

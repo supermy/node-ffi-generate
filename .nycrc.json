@@ -6,7 +6,7 @@
   "include": ["index.js", "bin/**/*.js", "lib/**/*.js"],
   "lines": 90,
   "reporter": ["text", "lcov"],
-  "statements": 90,
+  "statements": 95,
   "watermarks": {
     "branches": [80, 95],
     "functions": [95, 100],

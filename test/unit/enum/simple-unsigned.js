@@ -25,10 +25,10 @@ test("lines", async (t) => {
 	const expectedConstants = `const constants = {
 		my_enum: {
 		  FIRST: 0,
-		  SECOND: -1,
+		  SECOND: 1,
 		  LAST: 99,
 		  0: "FIRST",
-		  "-1": "SECOND",
+		  1: "SECOND",
 		  99: "LAST",
 		},
 	  };`;
@@ -36,12 +36,12 @@ test("lines", async (t) => {
 	assertExpectedLines(t, expectedConstants, generated.serialized);
 
 	// TODO: where is uchar coming from?
-	// TODO: refer to constants.my_enum instead if int32?
+	// TODO: refer to constants.my_enum instead of a number type?
 	const expectedTypes = `
 		const js_uchar = ref.types.uchar;
 		const js_void = ref.types.void;
-		const js_int32 = ref.types.int32;
-		const my_enum_t = js_int32;
+		const js_uint32 = ref.types.uint32;
+		const my_enum_t = js_uint32;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);

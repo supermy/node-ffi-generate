@@ -22,17 +22,12 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	const expectedTypes = `
-		const js_void = ref.types.void;
-		const js_voidPointer = ref.refType(js_void);
-		const my_struct = js_voidPointer;
-		const my_struct_t = my_struct;
-		const my_struct_tPointer = ref.refType(my_struct_t);
-	`;
+	// NOTE: ignoring the inline function.
+	const expected = `
+		const functions = new FFI.Library("does-not-matter", {
+			my_function: [js_void, []],
+		});
+	  `;
 
-	assertExpectedLines(t, expectedTypes, generated.serialized);
-
-	const expectedFunctions = "do_stuff: [js_void, [my_struct_tPointer]],";
-
-	assertExpectedLines(t, expectedFunctions, generated.serialized);
+	assertExpectedLines(t, expected, generated.serialized);
 });

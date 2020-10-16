@@ -20,36 +20,30 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated.serialized);
 
-	t.deepEqual(generated.unmapped, [
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 20,
-				spelling: "Int128",
-			},
-		},
-		{
-			reason: "Could not map unexpected/unhandled type kind, falling back to void pointer.",
-			self: {
-				kind: 12,
-				spelling: "UInt128",
-			},
-		},
-	]);
+	t.deepEqual(generated.unmapped, []);
 
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_voidPointer = ref.refType(js_void);
-		const __int128_t = js_voidPointer;
-		const __uint128_t = js_voidPointer;
+		const my_inner_union = Union({
+			my_a: js_voidPointer,
+			my_b: js_voidPointer,
+		});
+		const my_inner_struct = Struct({
+			my_c: js_voidPointer,
+			my_d: js_voidPointer,
+		});
+		const my_struct = Struct({
+			my_void: js_voidPointer,
+			my_inner_union: my_inner_union,
+			my_inner_struct: my_inner_struct,
+		});
+		const my_struct_t = my_struct;
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = `
-		do_stuff__int128_t: [js_void, [__int128_t]],
-		do_stuff__uint128_t: [js_void, [__uint128_t]],
-	`;
+	const expectedFunctions = "do_stuff: [js_void, [my_struct_t]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });

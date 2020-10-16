@@ -27,10 +27,10 @@ const constants = {
 {{#sorted.enums}}
   "{{name}}": {
     {{#values}}
-      {{name}}: {{value}},
+      {{name}}: {{{value.renderedType}}},
     {{/values}}
     {{#values}}
-      "{{value}}": "{{name}}",
+      "{{value.typeReference}}": "{{name}}",
     {{/values}}
   },
 {{/sorted.enums}}

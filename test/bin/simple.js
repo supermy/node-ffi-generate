@@ -25,7 +25,7 @@ test("lines", async (t) => {
 
 	await writeFile(__filename + ".output.js", generated);
 
-	t.assert(!generated.includes("UNMAPPED"));
+	t.assert(!result.stderr.includes("UNMAPPED"));
 
 	const expectedTypes = `
 		const js_void = ref.types.void;
