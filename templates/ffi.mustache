@@ -36,16 +36,16 @@ const constants = {
 {{/sorted.enums}}
 };
 
-// NOTE: defining individual types as "global" constants to be able to reference them without any prefix.
+// NOTE: defining individual types as "global" constants to be able to reference them without any prefix, but also under the "types" object to be able to reference them recursively.
+const types = {};
+
 {{#types}}
 const {{typeReference}} = {{renderedType}};
 {{/types}}
 
-const types = {
 {{#sorted.types}}
-  {{typeReference}},
+types.["{{typeReference}}"] = {{typeReference}};
 {{/sorted.types}}
-};
 
 const functions = new FFI.Library({{{library}}}, {
 {{#sorted.functions}}

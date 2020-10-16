@@ -22,41 +22,18 @@ test("lines", async (t) => {
 
 	t.deepEqual(generated.unmapped, []);
 
-	// NOTE: the anonymous counter depends on the visited order.
 	const expectedTypes = `
 		const js_void = ref.types.void;
 		const js_voidPointer = ref.refType(js_void);
-		const my_struct___Ua_0 = Union({
-			my_a: js_voidPointer,
-			my_b: js_voidPointer,
-		});
-		const my_struct___Ua_1 = Union({
-			my_x: js_voidPointer,
-			my_y: js_voidPointer,
-			my_z: js_voidPointer,
-		});
-		const my_struct___Sa_2 = Struct({
-			my_c: js_voidPointer,
-			my_d: js_voidPointer,
-		});
-		const my_struct___Sa_3 = Struct({
-			my_t: js_voidPointer,
-			my_u: js_voidPointer,
-			my_v: js_voidPointer,
-		});
-		const my_struct = Struct({
+		const my_union = Union({
 			my_void: js_voidPointer,
-			anonymous_0: my_struct___Ua_0,
-			anonymous_1: my_struct___Ua_1,
-			anonymous_2: my_struct___Sa_2,
-			anonymous_3: my_struct___Sa_3,
 		});
-		const my_struct_t = my_struct;
+		const my_unionPointer = ref.refType(my_union);
 	`;
 
 	assertExpectedLines(t, expectedTypes, generated.serialized);
 
-	const expectedFunctions = "do_stuff: [js_void, [my_struct_t]],";
+	const expectedFunctions = "do_stuff: [js_void, [my_unionPointer]],";
 
 	assertExpectedLines(t, expectedFunctions, generated.serialized);
 });
