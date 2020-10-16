@@ -14,12 +14,16 @@ Change summaries and notable excerpts from the commit log.
 
 ### ⚠ Breaking changes
 
+- Target Node.js v12, v14, v16.
+  - Execution on v14, v16 may fail with `Check failed: result.second` due to bug [#96 in `ffi-napi`](https://github.com/node-ffi-napi/node-ffi-napi/issues/96).
+    - One workaround is to ensure there is only a single copy of `ffi-napi` in the `node_modules` tree.
+    - Inspect with `npm ls ffi-napi`.
 - The package name is now `@ffi-packager/ffi-generate`.
 - Switched to `async`/`await`, in particular for the exported `async generate(...)` function.
 - Exports in the generated code have changed.
   - The `CONSTANTS` property was renamed to `constants`.
   - Exported functions under `{{module}}` property (defaulted to the value of `library`) was renamed to `functions`.
-  - All types were moved from the top-level scope to a `types` property.
+  - All exported types were moved from the top-level scope to a `types` property.
 - Changed options for `generate(...)` and command line arguments for `ffi-generate`.
   - The `module` (`-m`, `--module`) option was removed.
     - Instead, the hardcoded property name `functions` is used.
@@ -30,6 +34,17 @@ Change summaries and notable excerpts from the commit log.
     - It should be autodetected by `ffi-generate` by calling the `llvm-config` tool (make sure it's on your `PATH`).
     - Can also be set using the `LD_LIBRARY_PATH` (or `DYLD_LIBRARY_PATH` on macOS) environment variable.
   - The `filename` option was renamed to `filepath`.
+- Enum numbers larger than the largest "safe" max/min integer number handleable by javascript are output as strings.
+  - Note that the determined "safe" range differs between [`ffi-napi`'s min/max](https://github.com/node-ffi-napi/ref-napi/blob/b0809c25e5d9e4efa82ee6c323e1f961044b65e0/src/binding.cc#L66-L70) and [javascript's `Number.*_SAFE_INTEGER`](https://tc39.es/ecma262/2020/#sec-number.max_safe_integer) with a [difference of +/- 1](https://stackoverflow.com/questions/26380364/why-is-number-max-safe-integer-9-007-199-254-740-991-and-not-9-007-199-254-740-9).
+- Generated `typedef` output was simplified to be a javascript alias/variable reassignment.
+- The `union` support was fixed.
+  - Now `union` is handled in a similar way to `struct`.
+  - Output may differ from v1.0.0.
+- Naming changes.
+  - Naming of anonymous types, functions, and properties changed.
+  - Base types and typedefs are recursed, with intermediate types output and aliased.
+  - "Javascript types" from `ref-napi` are now (directly) referenced only once, in variables prefixed with `js_`.
+- See also changes in the expected test output in `test/` files.
 
 ### Features
 
@@ -40,16 +55,25 @@ Change summaries and notable excerpts from the commit log.
 - The generated code is partially sorted (constants, types, functions) to help with diffing between versions.
 - Added a generated file header with some metadata.
 - Improved documentation, example usage.
+  - Added [`DEVELOP.md`](./DEVELOP.md).
+  - Moved examples to the `examples/` directory.
+- Reduced console output for non-debug situations.
+  - Debug output can easily be enabled; see [`DEVELOP.md`](./DEVELOP.md).
 - Generated code is formatted using [`prettier`](https://prettier.io/).
-- Output warnings for unmapped types.
-  - While it might be the case, it does not necessarily mean that the output is incorrect.
-  - It is also likely the generator performs some type unnecessary type mapping, performs checks in the wrong order, or has some hack to take care of it some other way.
-  - If there are discrepancies between the header file and the generated javascript, please report the issue and possibly try to investigate/fix it.
-- Internal code has been reformatted, cleaned up, partially split up to files and functions.
 
-### Changes
+### Other changes
 
-- TODO
+- Internal code improvements.
+  - Code has been reformatted, cleaned up, modernized.
+  - Code partially split up to files and functions.
+  - Uses `class` statements rather than class-like functions.
+- Added tests with a code coverage of 90% for branches, 95%+ for statements and lines, 100% for functions.
+  - Reports are generated when running code coverage tests, both on the command line and in the `coverage/` directory.
+- Tests, linting, and code coverage are checked with commit hooks.
+- Regenerated the `ffi` layer in `node-libclang`.
+  - To avoid a circular dependency, the `dynamic-clang.js` file in `node-liblang` is statically included in that package.
+  - See [`examples/libclang/`](./examples/libclang/) and [`test/libclang/`](./test/libclang/).
+- Workaround for `va_list` was both added and removed, as it is now handled by recursing deeper into base types.
 
 ## v1.0.0
 
