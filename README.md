@@ -25,13 +25,13 @@ For command line usage.
 
 ```shell
 # NOTE: global installation is not necessary, but convenient for command line usage.
-npm install --global github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0
+npm install --global github:node-ffi-packager/node-ffi-generate#semver:^v2.0.1
 ```
 
 For programmatic usage.
 
 ```shell
-npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0
+npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.1
 ```
 
 ## Requirements
@@ -95,4 +95,4 @@ Get additional [`debug` messages](https://github.com/visionmedia/debug) by setti
 
 ---
 
-`node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), 2020 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
+`node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), &copy; 2020, 2021 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
