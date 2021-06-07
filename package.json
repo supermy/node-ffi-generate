@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "ava": "^3.15.0",
-    "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^1.0.0",
+    "eslint-config-joelpurra": "github:joelpurra/eslint-config-joelpurra#semver:^5.1.1",
     "ffi-napi": "^3.1.0",
     "get-bin-path": "^5.1.0",
     "husky": "^4.3.8",
@@ -50,7 +50,7 @@
     "ref-struct-di": "^1.1.1",
     "ref-union-di": "^1.0.1",
     "semver": "^7.3.5",
-    "xo": "^0.33.1"
+    "xo": "^0.39.1"
   },
   "peerDependencies": {
     "ffi-napi": "^3.0.1",
