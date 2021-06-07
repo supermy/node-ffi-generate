@@ -4,9 +4,7 @@ const fs = require("fs");
 const {
 	getBinPath,
 } = require("get-bin-path");
-const {
-	join,
-} = require("path");
+const path = require("path");
 const {
 	promisify,
 } = require("util");
@@ -25,7 +23,7 @@ test("lines", async (t) => {
 		"good",
 	], {
 		env: {
-			PATH: `${join(__dirname, "failing-git")}:${process.env.PATH}`,
+			PATH: `${path.join(__dirname, "failing-git")}:${process.env.PATH}`,
 		},
 	});
 	const generated = result.stdout;

@@ -2,9 +2,7 @@
 /* eslint-disable no-console */
 const childProcess = require("child_process");
 const fs = require("fs");
-const {
-	join,
-} = require("path");
+const path = require("path");
 const {
 	promisify,
 } = require("util");
@@ -18,7 +16,7 @@ const writeFile = promisify(fs.writeFile);
 const main = async () => {
 	// NOTE: dynamically detecting LLVM's include directory.
 	const llvmIncludeDir = (await exec("llvm-config --includedir", {})).stdout.trim();
-	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
+	const headerFilePath = path.join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const generated = await generate({
 		compilerArgs: [

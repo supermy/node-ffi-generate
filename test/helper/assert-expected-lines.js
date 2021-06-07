@@ -33,7 +33,7 @@ const assertExpectedLines = (t, expected, serialized) => {
 
 	t.assert(nextExpectedLineNumber >= 0, `First line was not found: ${JSON.stringify(trimmedFirstLine)}`);
 
-	expectedLines.forEach((expectedLine) => {
+	for (const expectedLine of expectedLines) {
 		const trimmedExpectedLine = expectedLine.trim();
 		const matchingLineNumber = findMatchingLineNumber(t, serialized, nextExpectedLineNumber, trimmedExpectedLine);
 		const unexpectedLine = serialized.split("\n")[nextExpectedLineNumber];
@@ -52,7 +52,7 @@ const assertExpectedLines = (t, expected, serialized) => {
 		}
 
 		nextExpectedLineNumber = matchingLineNumber + 1;
-	});
+	}
 };
 
 module.exports = assertExpectedLines;

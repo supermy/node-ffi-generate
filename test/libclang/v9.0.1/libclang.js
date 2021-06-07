@@ -1,8 +1,6 @@
 const test = require("ava");
 const fs = require("fs");
-const {
-	join,
-} = require("path");
+const path = require("path");
 const {
 	promisify,
 } = require("util");
@@ -17,8 +15,8 @@ test("lines", async (t) => {
 		generate,
 	} = require("../../..");
 
-	const llvmIncludeDir = join(__dirname, "include");
-	const headerFilePath = join(llvmIncludeDir, "clang-c", "Index.h");
+	const llvmIncludeDir = path.join(__dirname, "include");
+	const headerFilePath = path.join(llvmIncludeDir, "clang-c", "Index.h");
 
 	const generated = await generate({
 		compilerArgs: [

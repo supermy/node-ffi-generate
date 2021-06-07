@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require("assert");
-const { join } = require("path");
+const path = require("path");
 const { argv } = require("process");
 
 assert.strictEqual(process.argv.length, 3);
@@ -25,6 +25,6 @@ switch (firstFlag) {
     );
 }
 
-const fakeDirectoryPath = join(__dirname, fakeDirectoryName);
+const fakeDirectoryPath = path.join(__dirname, fakeDirectoryName);
 
 console.log(fakeDirectoryPath);

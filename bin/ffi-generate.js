@@ -21,9 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE
 
-const {
-	join,
-} = require("path");
+const path = require("path");
 const engineCheck = require("engine-check");
 const execa = require("execa");
 const {
@@ -86,11 +84,12 @@ const tryRetryLoadLibclang = async () => {
 							FFI_GENERATE_RETRY: process.pid,
 							[libraryPathEnvironmentVariableName]: [
 								llvmConfigLibDir.stdout,
-							].concat(
-								process.env[libraryPathEnvironmentVariableName]
-									? process.env[libraryPathEnvironmentVariableName].split(":")
-									: [],
-							).join(":"),
+								...(
+									process.env[libraryPathEnvironmentVariableName]
+										? process.env[libraryPathEnvironmentVariableName].split(":")
+										: []
+								),
+							].join(":"),
 						},
 					},
 				);
@@ -134,6 +133,7 @@ const runGenerator = async () => {
 		compilerArgs: argv._,
 		filepath: argv.f,
 		library: argv.l,
+		// eslint-disable-next-line unicorn/prefer-spread
 		prefixes: argv.p ? [].concat(argv.p) : undefined,
 		singleFile: argv.x,
 	});
@@ -176,7 +176,7 @@ const mainAsync = async () => {
 const main = () => {
 	try {
 		engineCheck({
-			searchRoot: join(__dirname, ".."),
+			searchRoot: path.join(__dirname, ".."),
 		});
 
 		const segfaultHandlerLogName = `ffi-generate.segfault.${new Date().toISOString().replace(/:/g, "").toLowerCase()}.${process.pid}.log`;

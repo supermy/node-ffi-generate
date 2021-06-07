@@ -4,9 +4,7 @@ const fs = require("fs");
 const {
 	getBinPath,
 } = require("get-bin-path");
-const {
-	join,
-} = require("path");
+const path = require("path");
 const {
 	promisify,
 } = require("util");
@@ -28,7 +26,7 @@ test("lines", async (t) => {
 				env: {
 					DYLD_LIBRARY_PATH: undefined,
 					LD_LIBRARY_PATH: undefined,
-					PATH: `${join(__dirname, "fake-llvm-config")}:${process.env.PATH}`,
+					PATH: `${path.join(__dirname, "fake-llvm-config")}:${process.env.PATH}`,
 				},
 			},
 		);

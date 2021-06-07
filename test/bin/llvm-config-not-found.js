@@ -4,10 +4,7 @@ const fs = require("fs");
 const {
 	getBinPath,
 } = require("get-bin-path");
-const {
-	dirname,
-	join,
-} = require("path");
+const path = require("path");
 const {
 	promisify,
 } = require("util");
@@ -18,14 +15,14 @@ test("lines", async (t) => {
 	const ffiGenerate = await getBinPath();
 	let generated;
 
-	const nodeDirectoryPath = dirname(process.argv0);
+	const nodeDirectoryPath = path.dirname(process.argv0);
 
 	let llvmConfigFound;
 
 	try {
 		// NOTE: can't easily test if llvm-config is in the same directory as the node executable.
 		// NOTE: probably not very windows-compatible.
-		const llvmConfigPath = join(nodeDirectoryPath, "llvm-config");
+		const llvmConfigPath = path.join(nodeDirectoryPath, "llvm-config");
 
 		await execa(llvmConfigPath);
 
