@@ -14,7 +14,7 @@
  * - Library: "libclang"
  * - Single file: false
  * - Prefixes: ["clang_","CX"]
- * - Compiler arguments: ["--include-directory","
+ * - Compiler arguments: ["--include-directory",
  */
 
 const FFI = require("ffi-napi");
@@ -1847,9 +1847,8 @@ types["CXIdxEntityRefInfo"] = CXIdxEntityRefInfo;
 types["CXIdxEntityRefInfoPointer"] = CXIdxEntityRefInfoPointer;
 types["CXIdxEntityRefKind"] = CXIdxEntityRefKind;
 types["CXIdxIBOutletCollectionAttrInfo"] = CXIdxIBOutletCollectionAttrInfo;
-types[
-  "CXIdxIBOutletCollectionAttrInfoPointer"
-] = CXIdxIBOutletCollectionAttrInfoPointer;
+types["CXIdxIBOutletCollectionAttrInfoPointer"] =
+  CXIdxIBOutletCollectionAttrInfoPointer;
 types["CXIdxImportedASTFileInfo"] = CXIdxImportedASTFileInfo;
 types["CXIdxImportedASTFileInfoPointer"] = CXIdxImportedASTFileInfoPointer;
 types["CXIdxIncludedFileInfo"] = CXIdxIncludedFileInfo;
@@ -1867,9 +1866,8 @@ types["CXIdxObjCPropertyDeclInfoPointer"] = CXIdxObjCPropertyDeclInfoPointer;
 types["CXIdxObjCProtocolRefInfo"] = CXIdxObjCProtocolRefInfo;
 types["CXIdxObjCProtocolRefInfoPointer"] = CXIdxObjCProtocolRefInfoPointer;
 types["CXIdxObjCProtocolRefListInfo"] = CXIdxObjCProtocolRefListInfo;
-types[
-  "CXIdxObjCProtocolRefListInfoPointer"
-] = CXIdxObjCProtocolRefListInfoPointer;
+types["CXIdxObjCProtocolRefListInfoPointer"] =
+  CXIdxObjCProtocolRefListInfoPointer;
 types["CXInclusionVisitor"] = CXInclusionVisitor;
 types["CXIndex"] = CXIndex;
 types["CXIndexAction"] = CXIndexAction;
