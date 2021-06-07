@@ -27,7 +27,7 @@ const execa = require("execa");
 const {
 	pick,
 } = require("lodash");
-const optimist = require("optimist");
+const yargs = require("yargs");
 const SegfaultHandler = require("segfault-handler");
 const {
 	delay,
@@ -122,7 +122,7 @@ const runGenerator = async () => {
 
 	const {
 		argv,
-	} = optimist
+	} = yargs
 		.usage("Generate node-ffi-napi javascript bindings for a given C/C++ header file")
 		.demand("f").alias("f", "file").describe("f", "The header file to parse")
 		.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen. Set to null to use functions in the current process.")
