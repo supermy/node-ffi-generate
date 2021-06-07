@@ -25,7 +25,7 @@
     "ffi-generate": "bin/ffi-generate.js"
   },
   "dependencies": {
-    "@ffi-packager/libclang": "github:node-ffi-packager/node-libclang#semver:^v1.0.0",
+    "@ffi-packager/libclang": "github:node-ffi-packager/node-libclang#semver:^v2.0.0",
     "bluebird": "^3.7.2",
     "debug": "^4.3.1",
     "engine-check": "^1.0.1",
