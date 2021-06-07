@@ -21,88 +21,175 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE
 
-var jsb = require('js-beautify');
-var argv = require('optimist')
-  .usage('Generate node-ffi bindings for a given header file\nUsage: $0')
-  .demand('f').alias('f', 'file').describe('f', 'The header file to parse')
-  .demand('l').alias('l', 'library').describe('l', 'The name of the library to dlopen')
-  .alias('m', 'module').describe('m', 'The name of module the bindings will be exported as')
-  .boolean('x').alias('x', 'file_only').describe('x', 'Only export functions found in this file')
-  .alias('p', 'prefix').describe('p', 'Only import functions whose name start with prefix')
-  .boolean('s').alias('s', 'strict').describe('s', 'Use StrictType (experimental)')
-  .alias('L', 'libclang').describe('L', 'Path to directory where libclang.{so,dylib} is located')
-  .argv
+const path = require("path");
+const engineCheck = require("engine-check");
+const execa = require("execa");
+const {
+	pick,
+} = require("lodash");
+const yargs = require("yargs");
+const SegfaultHandler = require("segfault-handler");
+const {
+	delay,
+} = require("bluebird");
 
-function tryClang(cb) {
-  var libclang;
+const tryRetryLoadLibclang = async () => {
+	try {
+		// NOTE: if this succeeds, the libclang library could be loaded by dlopen().
+		// eslint-disable-next-line import/no-unassigned-import
+		require("@ffi-packager/libclang");
+	} catch (libclangLoadError) {
+		if (libclangLoadError.code === "ENOENT") {
+			const libraryPathEnvironmentVariableName = process.platform === "darwin" ? "DYLD_LIBRARY_PATH" : "LD_LIBRARY_PATH";
 
-  try {
-    libclang = require('libclang');
-  } catch (e) {
-    libclang = false;
-  }
+			if (process.env.FFI_GENERATE_RETRY) {
+				throw new Error(`Could not load the libclang library (check ${libraryPathEnvironmentVariableName}). ${JSON.stringify(pick(
+					process.env,
+					[
+						"FFI_GENERATE_RETRY",
+						libraryPathEnvironmentVariableName,
+					],
+				))}`);
+			}
 
-  if (libclang) return cb(true);
+			let llvmConfigLibDir;
 
-  if (process.env.FFI_GENERATE_CHILD) return cb(false);
+			try {
+				llvmConfigLibDir = await execa("llvm-config", [
+					"--libdir",
+				]);
+			} catch (llvmConfigExecaError) {
+				// https://github.com/sindresorhus/execa/blob/1ac56eac5f6e993fd2a2a3ad308fd5c18deb25a9/test/test.js#L10
+				const ENOENT_REGEXP = process.platform === "win32" ? /failed with exit code 1/ : /spawn.* ENOENT/;
 
-  require('child_process').exec('llvm-config --libdir', function (err, stdout, stderr) {
-    if (stdout.trim()) {
-      cb(stdout.trim());
-    } else {
-      cb(err.code);
-    }
-  });
-}
+				if (ENOENT_REGEXP.test(llvmConfigExecaError)) {
+					throw new Error(`Could not find llvm-config (check PATH). ${JSON.stringify(pick(
+						process.env,
+						[
+							"PATH",
+						],
+					))}`);
+				}
 
-function generate() {
-  var generate = require('../lib/generateffi').generate;
+				throw llvmConfigExecaError;
+			}
 
-  var ret = generate({
-    filename: argv.f,
-    library: argv.l,
-    module: argv.m,
-    prefix: argv.p,
-    compiler_args: argv._,
-    strict_type: argv.s,
-    single_file: argv.x,
-  });
+			try {
+				// NOTE: re-execute this javascript file with added environment variables.
+				const reexecute = execa.node(
+					__filename,
+					process.argv.slice(2),
+					{
+						env: {
+							FFI_GENERATE_RETRY: process.pid,
+							[libraryPathEnvironmentVariableName]: [
+								llvmConfigLibDir.stdout,
+								...(
+									process.env[libraryPathEnvironmentVariableName]
+										? process.env[libraryPathEnvironmentVariableName].split(":")
+										: []
+								),
+							].join(":"),
+						},
+					},
+				);
+				reexecute.stdout.pipe(process.stdout);
+				reexecute.stderr.pipe(process.stderr);
 
-  //console.log(jsb.js_beautify(ret.serialized));
-  console.log(ret.serialized);
+				await reexecute;
+			} catch (reexecuteError) {
+				const ffiGenerateMissingArguments = /Missing required arguments/;
 
-  if (generate.unmapped) {
-    process.stderr.write("-------Unmapped-------\r\n");
-    process.stderr.write(generate.unmapped + '\r\n');
-  }
-}
+				// NOTE: ignore output with missing arguments message from own code -- that's a "good" result.
+				if (!ffiGenerateMissingArguments.test(reexecuteError)) {
+					throw reexecuteError;
+				}
+			}
 
-tryClang(function (ret) {
-  var library;
+			return false;
+		}
 
-  if (isNaN(ret)) library = ret;
-  if (argv.L) library = argv.L;
+		throw libclangLoadError;
+	}
 
-  if (ret === true) {
-    generate();
-  } else if (library && ret !== false) {
-    var env = process.env;
-    env.FFI_GENERATE_CHILD = '1';
-    switch (process.platform) {
-      case 'darwin':
-        env.DYLD_LIBRARY_PATH = library + ':' + (env.DYLD_LIBRARY_PATH || '');
-        break;
-      default:
-        env.LD_LIBRARY_PATH = library + ':' + (env.LD_LIBRARY_PATH || '');
-        break;
-    }
-    var c = require('child_process').spawn(process.execPath, process.argv.slice(1), {env:env});
-    c.stdout.pipe(process.stdout);
-    c.stderr.pipe(process.stderr);
-    c.on('exit', function (code) {
-      process.exit(code);
-    });
-  } else {
-    console.error('Unable to load libclang, make sure you have 3.2 installed, either specify -L or have llvm-config in your path');
-  }
-});
+	return true;
+};
+
+const runGenerator = async () => {
+	const {
+		generate,
+	} = require("..");
+
+	const {
+		argv,
+	} = yargs
+		.usage("Generate node-ffi-napi javascript bindings for a given C/C++ header file")
+		.demand("f").alias("f", "file").describe("f", "The header file to parse")
+		.demand("l").alias("l", "library").describe("l", "The name of the library to dlopen. Set to null to use functions in the current process.")
+		.boolean("x").alias("x", "single-file").describe("x", "Only export functions found in this file")
+		.alias("p", "prefix").describe("p", "Only import functions whose name start with prefix. Can be specified multiple times.");
+
+	const generated = await generate({
+		compilerArgs: argv._,
+		filepath: argv.f,
+		library: argv.l,
+		// eslint-disable-next-line unicorn/prefer-spread
+		prefixes: argv.p ? [].concat(argv.p) : undefined,
+		singleFile: argv.x,
+	});
+
+	// eslint-disable-next-line no-console
+	console.log(generated.serialized);
+
+	if (generated.unmapped.length > 0) {
+		// eslint-disable-next-line no-console
+		console.warn("----- UNMAPPED -----", JSON.stringify(generated.unmapped, null, 2));
+	}
+
+	// NOTE: sleep to allow for (async) cleanup; otherwise there's a race condition segfault.
+	// NOTE: segfault is (usually) not noticeable when running debuggers etcetera; do they slow down the process enough for cleanup to finish?
+	// TODO: verify that the delay helps, and that it's not too short/long for (testable) usage.
+	// TODO: don't delay.
+	await delay(50);
+};
+
+const loadAndGenerate = async () => {
+	const succeeded = await tryRetryLoadLibclang();
+
+	if (succeeded) {
+		await runGenerator();
+	}
+};
+
+const mainAsync = async () => {
+	try {
+		await loadAndGenerate();
+	} catch (error) {
+		// NOTE: root error handler for asynchronous errors.
+		// eslint-disable-next-line no-console
+		console.error(error);
+
+		process.exitCode = 1;
+	}
+};
+
+const main = () => {
+	try {
+		engineCheck({
+			searchRoot: path.join(__dirname, ".."),
+		});
+
+		const segfaultHandlerLogName = `ffi-generate.segfault.${new Date().toISOString().replace(/:/g, "").toLowerCase()}.${process.pid}.log`;
+		SegfaultHandler.registerHandler(segfaultHandlerLogName);
+
+		mainAsync();
+	} catch (error) {
+		// NOTE: root error handler for synchronous errors.
+		// eslint-disable-next-line no-console
+		console.error(error);
+
+		process.exitCode = 1;
+	}
+};
+
+main();

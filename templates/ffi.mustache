@@ -1,0 +1,64 @@
+/*
+ * This file was automatically generated. It is better to run the generator again, than to manually edit.
+ *
+ * {{metadata.generator.name}} v{{metadata.generator.version}}
+ * - git commit {{metadata.generator.git.describe}} on branch {{metadata.generator.git.branch}}
+ * - {{metadata.libclang.version}}
+ * {{metadata.generator.homepage}}
+ *
+ * File:
+ * - Name: {{{metadata.file.name}}}
+ * - SHA256: {{{metadata.file.sha256}}}
+ *
+ * Generator options:
+ * - Library: {{{metadata.options.library}}}
+ * - Single file: {{metadata.options.singleFile}}
+ * - Prefixes: {{{metadata.options.prefixes}}}
+ * - Compiler arguments: {{{metadata.options.compilerArgs}}}
+ */
+
+const FFI = require("ffi-napi");
+const ref = require("ref-napi");
+const ArrayType = require("ref-array-di")(ref);
+const Struct = require("ref-struct-di")(ref);
+const Union = require("ref-union-di")(ref);
+
+const constants = {
+{{#sorted.enums}}
+  "{{name}}": {
+    {{#values}}
+      {{name}}: {{{value.renderedType}}},
+    {{/values}}
+    {{#values}}
+      "{{value.typeReference}}": "{{name}}",
+    {{/values}}
+  },
+{{/sorted.enums}}
+};
+
+// NOTE: defining individual types as "global" constants to be able to reference them without any prefix, but also under the "types" object to be able to reference them recursively.
+const types = {};
+
+{{#types}}
+const {{typeReference}} = {{renderedType}};
+{{/types}}
+
+{{#sorted.types}}
+types.["{{typeReference}}"] = {{typeReference}};
+{{/sorted.types}}
+
+const functions = new FFI.Library({{{library}}}, {
+{{#sorted.functions}}
+  {{name}}: [{{returnType.typeReference}}, [
+  {{#args}}
+    {{typeReference}},
+  {{/args}}
+  ]],
+{{/sorted.functions}}
+});
+
+module.exports = {
+  constants,
+  types,
+  functions,
+};

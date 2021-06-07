@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const assert = require("assert");
+const path = require("path");
+const { argv } = require("process");
+
+assert.strictEqual(process.argv.length, 3);
+
+const firstFlag = process.argv[2];
+
+let fakeDirectoryName;
+
+switch (firstFlag) {
+  case "--libdir":
+    fakeDirectoryName = "lib";
+    break;
+
+  case "--includedir":
+    fakeDirectoryName = "include";
+    break;
+
+  default:
+    throw new Error(
+      `Unknown flag for fake llvm-config: ${JSON.stringify(firstFlag)}`
+    );
+}
+
+const fakeDirectoryPath = path.join(__dirname, fakeDirectoryName);
+
+console.log(fakeDirectoryPath);
