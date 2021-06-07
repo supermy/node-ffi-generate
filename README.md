@@ -25,13 +25,13 @@ For command line usage.
 
 ```shell
 # NOTE: global installation is not necessary, but convenient for command line usage.
-npm install --global github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0-alpha.1
+npm install --global github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0
 ```
 
 For programmatic usage.
 
 ```shell
-npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0-alpha.1
+npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.0
 ```
 
 ## Requirements
