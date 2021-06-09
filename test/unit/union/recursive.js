@@ -26,12 +26,14 @@ test("lines", async (t) => {
 		const types = {};
 
 		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
 		const my_union = Union({
-			my_recursive_union: types.my_union,
+			my_recursive_union: js_voidPointer,
 		});
 		const my_union_t = my_union;
 
 		types["js_void"] = js_void;
+		types["js_voidPointer"] = js_voidPointer;
 		types["my_union"] = my_union;
 		types["my_union_t"] = my_union_t;
 	`;
