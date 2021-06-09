@@ -26,12 +26,14 @@ test("lines", async (t) => {
 		const types = {};
 
 		const js_void = ref.types.void;
+		const js_voidPointer = ref.refType(js_void);
 		const my_struct = Struct({
-			my_recursive_struct: types.my_struct,
+			my_recursive_struct: js_voidPointer,
 		});
 		const my_struct_t = my_struct;
 
 		types["js_void"] = js_void;
+		types["js_voidPointer"] = js_voidPointer;
 		types["my_struct"] = my_struct;
 		types["my_struct_t"] = my_struct_t;
 	`;

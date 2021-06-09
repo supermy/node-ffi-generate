@@ -10,6 +10,10 @@
 
 Change summaries and notable excerpts from the commit log.
 
+## v2.0.2
+
+- e375b03 Revert to void pointers for recursive type definitions
+
 ## v2.0.1
 
 - 2e5beae Do not register type js_voidPointer before js_void

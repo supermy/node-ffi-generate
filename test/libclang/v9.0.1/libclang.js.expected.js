@@ -1456,7 +1456,7 @@ const constants = {
   },
 };
 
-// NOTE: defining individual types as "global" constants to be able to reference them without any prefix, but also under the "types" object to be able to reference them recursively.
+// NOTE: defining individual types as "global" constants to be able to reference them without any prefix.
 const types = {};
 
 const js_uchar = ref.types.uchar;
