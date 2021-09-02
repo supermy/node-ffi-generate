@@ -21,6 +21,9 @@ A tool to generate [Node.js](https://nodejs.org/en/) [Foreign Function Interface
 
 ## Installation
 
+首先需要 `cnpm i semver`;
+然后安装 `npm install --save github:node-ffi-packager/node-libclang#semver:^v2.0.2`
+
 For command line usage.
 
 ```shell

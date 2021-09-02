@@ -5,7 +5,7 @@ const {
 } = require("../../..");
 
 const main = async () => {
-	const headerFilePath = "mylibrary.h";
+	const headerFilePath = "./examples/programmatic-usage/simple/mylibrary.h";
 
 	const result = await generate({
 		filepath: headerFilePath,

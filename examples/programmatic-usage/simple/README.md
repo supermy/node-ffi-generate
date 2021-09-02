@@ -11,15 +11,31 @@ This example shows how to programmatically generate bindings for a simple header
 - It would be easier to use the `ffi-generate` command line interface (CLI) tool instead.
 
 ```shell
+cnpm i engine-check --save
+cnpm i prettier --save
+cnpm i debug --save
+cnpm i execa --save
+cnpm i hasha --save
+cnpm i semver --save
+npm install --save github:node-ffi-packager/node-libclang#semver:^v2.0.2
+
 # NOTE: setting LD_LIBRARY_PATH might be required to find libclang.
 LD_LIBRARY_PATH="$(llvm-config --libdir)" node example.js
+LD_LIBRARY_PATH="$(llvm-config --libdir)" node ./examples/programmatic-usage/simple/example.js 
+
+```
+## Result javascript
+
 ```
 
+
+```
 ## CLI version
 
 ```shell
 ffi-generate --file 'mylibrary.h' --library 'mylibrary'
 ```
+
 
 ---
 
