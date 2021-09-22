@@ -21,9 +21,6 @@ A tool to generate [Node.js](https://nodejs.org/en/) [Foreign Function Interface
 
 ## Installation
 
-首先需要 `cnpm i semver`;
-然后安装 `npm install --save github:node-ffi-packager/node-libclang#semver:^v2.0.2`
-
 For command line usage.
 
 ```shell
@@ -40,12 +37,13 @@ npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.2
 ## Requirements
 
 - Selected parts of the [The LLVM Compiler Infrastructure](https://llvm.org/).
-  - The [`llvm-config`](https://llvm.org/) tool.
+  - The [`llvm-config`](https://llvm.org/) tool. llvm@9 & llvm@12 版本测试通过 
     - Used to automatically look up the location of `libclang`, but it can be manually configured.
     - Try symlinking versioned executables (such as `llvm-config-9`) to `llvm-config` in your `PATH`.
   - The [`libclang`](https://clang.llvm.org/) library.
     - Indirectly required by [node-libclang](https://github.com/node-ffi-packager/node-libclang).
   - Installing using a package manager is strongly recommended.
+  - node12版本测试通过，node10 & node14 & node16 版本测试错误
 
 ## CLI usage
 
@@ -53,6 +51,7 @@ Parse the given header file and print the rendered javascript to standard. Fast 
 
 ```shell
 ffi-generate --file '/path/to/myLibrary/header.h' --library 'libmyLibrary'
+
 ```
 
 ### Usage
@@ -73,6 +72,13 @@ It may be necessary to pass additional flags/arguments to libclang so it can bet
 
 ```shell
 ffi-generate --file '/usr/include/ImageMagick/wand/MagickWand.h' --library 'libMagickWand' --prefix 'Magick' -- $(Magick-config --cflags)
+
+生成 FFI-clang
+node bin/ffi-generate.js --prefix 'clang' --prefix 'CX' --file "$(llvm-config --includedir)/clang-c/Index.h" --library 'libclang' -- $(llvm-config --cflags) 
+
+生成 FFI-RocksDb
+node bin/ffi-generate.js --file "/usr/local//Cellar/rocksdb/6.20.3/include/rocksdb/c.h" --library 'librocksdb' -- -I/usr/local//Cellar/rocksdb/6.20.3/include/>dynamic-rocksdb.js
+
 ```
 
 ## Programmatic usage
@@ -86,6 +92,11 @@ Setting `LD_LIBRARY_PATH` (or `DYLD_LIBRARY_PATH` on macOS) might be necessary f
 
 ```shell
 LD_LIBRARY_PATH="$(llvm-config --libdir)" node my-generator-code.js
+
+测试 OK
+
+LD_LIBRARY_PATH="$(llvm-config --libdir)" /usr/local/bin/node examples/programmatic-usage/libclang/example.js 
+
 ```
 
 ## Debugging
@@ -96,6 +107,12 @@ Get additional [`debug` messages](https://github.com/visionmedia/debug) by setti
  DEBUG='ffi-generate:*' ffi-generate <other arguments as usual>
 ```
 
+```prettier 代码格式报错，注销掉。
+	const formatted = prettier.format(rendered, {
+		semi: true,
+		parser: "babel",
+	});
+```
 ---
 
 `node-ffi-generate` Copyright &copy; 2011, 2012, 2013, 2014 [Timothy J Fontaine](https://github.com/tjfontaine), &copy; 2020, 2021 [Joel Purra](https://joelpurra.com/). Released under [MIT License](https://opensource.org/licenses/MIT).
