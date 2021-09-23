@@ -44,6 +44,9 @@ npm install --save github:node-ffi-packager/node-ffi-generate#semver:^v2.0.2
     - Indirectly required by [node-libclang](https://github.com/node-ffi-packager/node-libclang).
   - Installing using a package manager is strongly recommended.
   - node12版本测试通过，node10 & node14 & node16 版本测试错误
+  - 建立动态库的软连接：ln -s /usr/local/Cellar/llvm/12.0.0_1/lib/libclang.dylib /usr/local/lib/libclang.dylib
+
+
 
 ## CLI usage
 
