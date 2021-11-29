@@ -2,7 +2,7 @@
  * This file was automatically generated. It is better to run the generator again, than to manually edit.
  *
  * @ffi-packager/ffi-generate v2.0.2
- * - git commit v2.0.2-7-g5f8c609-dirty on branch (no git branch)
+ * - git commit v2.0.2-8-g883bd93-dirty on branch (no git branch)
  * - Homebrew clang version 12.0.0
  * https://github.com/node-ffi-packager/node-ffi-generate
  *
@@ -14,7 +14,7 @@
  * - Library: "librocksdb"
  * - Single file: false
  * - Prefixes: []
- * - Compiler arguments: ["-I/usr/local//Cellar/rocksdb/6.20.3/include/"]
+ * - Compiler arguments: ["-I/usr/local//Cellar/rocksdb/6.20.3/include/","-I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/"]
  */
 
 const FFI = require("ffi-napi");
@@ -270,8 +270,7 @@ const rocksdb_column_family_handle_t = js_voidPointer;
 const rocksdb_column_family_handle_tPointer = ref.refType(rocksdb_column_family_handle_t);
 const js_int32Pointer = ref.refType(js_int32);
 const js_ulong = ref.types.ulong;
-const __darwin_size_t = js_ulong;
-const size_t = __darwin_size_t;
+const size_t = js_ulong;
 const size_tPointer = ref.refType(size_t);
 const rocksdb_writeoptions_t = js_voidPointer;
 const rocksdb_writeoptions_tPointer = ref.refType(rocksdb_writeoptions_t);
@@ -556,7 +555,6 @@ types["FunctionProto_6"] = FunctionProto_6;
 types["FunctionProto_7"] = FunctionProto_7;
 types["FunctionProto_8"] = FunctionProto_8;
 types["FunctionProto_9"] = FunctionProto_9;
-types["__darwin_size_t"] = __darwin_size_t;
 types["int32_t"] = int32_t;
 types["int64_t"] = int64_t;
 types["js_CString"] = js_CString;

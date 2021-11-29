@@ -27,12 +27,14 @@ Change summaries and notable excerpts from the commit log.
           列出所有可用版本： n  ls-remote
 
       生成 FFI-RocksDb
-      node bin/ffi-generate.js --file "/usr/local//Cellar/rocksdb/6.20.3/include/rocksdb/c.h" --library 'librocksdb' -- -I/usr/local//Cellar/rocksdb/6.20.3/include/>dynamic-rocksdb.js
+      node bin/ffi-generate.js --file "/usr/local//Cellar/rocksdb/6.20.3/include/rocksdb/c.h" --library 'librocksdb' -- -I/usr/local//Cellar/rocksdb/6.20.3/include/ -I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/>dynamic-rocksdb.js
 
       有两处需要更改
-        替换:   types.[  -> types[
+        <!-- 替换:   types.[  -> types[ -->
         注销：  rocksdb_writebatch_wi_create_from
 
+      生成 FFI-CRoaring
+      node bin/ffi-generate.js --file "/usr/local/Cellar/croaring/0.3.2/include/roaring/roaring.h" --library 'librocksdb' -- -I/usr/local/Cellar/croaring/0.3.2/include/ -I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/>dynamic-croaring.js
 
 
 ## v2.0.2
