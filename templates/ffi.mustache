@@ -44,7 +44,7 @@ const {{typeReference}} = {{renderedType}};
 {{/types}}
 
 {{#sorted.types}}
-types.["{{typeReference}}"] = {{typeReference}};
+types["{{typeReference}}"] = {{typeReference}};
 {{/sorted.types}}
 
 const functions = new FFI.Library({{{library}}}, {

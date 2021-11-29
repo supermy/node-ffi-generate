@@ -2,8 +2,8 @@
  * This file was automatically generated. It is better to run the generator again, than to manually edit.
  *
  * @ffi-packager/ffi-generate v2.0.2
- * - git commit v2.0.2-2-g218a42f-dirty on branch (no git branch)
- * - clang version 9.0.1
+ * - git commit v2.0.2-7-g5f8c609-dirty on branch (no git branch)
+ * - Homebrew clang version 12.0.0
  * https://github.com/node-ffi-packager/node-ffi-generate
  *
  * File:

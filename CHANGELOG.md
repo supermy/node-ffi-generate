@@ -10,6 +10,31 @@
 
 Change summaries and notable excerpts from the commit log.
 
+## 20211129
+  
+  整理：
+
+      ffi-generate --file '/usr/include/ImageMagick/wand/MagickWand.h' --library 'libMagickWand' --prefix 'Magick' -- $(Magick-config --cflags)
+
+      生成 FFI-clang
+      node bin/ffi-generate.js --prefix 'clang' --prefix 'CX' --file "$(llvm-config --includedir)/clang-c/Index.h" --library 'libclang' -- $(llvm-config --cflags) 
+
+
+
+      与 emcc 环境冲突，可先在 bash_profile 中注销 emcc 的环境
+      npm 切换版本: n 12.22.6
+          列出版本: n ls
+          列出所有可用版本： n  ls-remote
+
+      生成 FFI-RocksDb
+      node bin/ffi-generate.js --file "/usr/local//Cellar/rocksdb/6.20.3/include/rocksdb/c.h" --library 'librocksdb' -- -I/usr/local//Cellar/rocksdb/6.20.3/include/>dynamic-rocksdb.js
+
+      有两处需要更改
+        替换:   types.[  -> types[
+        注销：  rocksdb_writebatch_wi_create_from
+
+
+
 ## v2.0.2
 
 - e375b03 Revert to void pointers for recursive type definitions
