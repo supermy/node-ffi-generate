@@ -2,19 +2,19 @@
  * This file was automatically generated. It is better to run the generator again, than to manually edit.
  *
  * @ffi-packager/ffi-generate v2.0.2
- * - git commit v2.0.2-8-g883bd93-dirty on branch (no git branch)
+ * - git commit v2.0.2-9-g071369d-dirty on branch (no git branch)
  * - Homebrew clang version 12.0.0
  * https://github.com/node-ffi-packager/node-ffi-generate
  *
  * File:
  * - Name: "roaring.h"
- * - SHA256: ebb1a6686c6f8b0f01375542358ab675ac3b8ee9d0fe054969c52290c2220fbf
+ * - SHA256: 4c093ddf2ef684250325f822701dff4420f546662f9ce3bd2195807f611a86fe
  *
  * Generator options:
- * - Library: "librocksdb"
+ * - Library: "libroaring"
  * - Single file: false
  * - Prefixes: []
- * - Compiler arguments: ["-I/usr/local/Cellar/croaring/0.3.2/include/","-I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/"]
+ * - Compiler arguments: ["-I/Users/moyong/project/CRoaring/include/","-I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/"]
  */
 
 const FFI = require("ffi-napi");
@@ -26,11 +26,11 @@ const Union = require("ref-union-di")(ref);
 const constants = {
   "ROARING_VERSION_MAJOR": {
       ROARING_VERSION_MAJOR: 0,
-      ROARING_VERSION_MINOR: 3,
-      ROARING_VERSION_REVISION: 2,
+      ROARING_VERSION_MINOR: 4,
+      ROARING_VERSION_REVISION: 0,
       "0": "ROARING_VERSION_MAJOR",
-      "3": "ROARING_VERSION_MINOR",
-      "2": "ROARING_VERSION_REVISION",
+      "4": "ROARING_VERSION_MINOR",
+      "0": "ROARING_VERSION_REVISION",
   },
 };
 
@@ -151,7 +151,7 @@ types["uint64_t"] = uint64_t;
 types["uint8_t"] = uint8_t;
 types["uint8_tPointer"] = uint8_tPointer;
 
-const functions = new FFI.Library("librocksdb", {
+const functions = new FFI.Library("libroaring", {
   roaring_advance_uint32_iterator: [js_byte, [
     roaring_uint32_iterator_tPointer,
   ]],

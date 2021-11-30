@@ -2,7 +2,7 @@
  * This file was automatically generated. It is better to run the generator again, than to manually edit.
  *
  * @ffi-packager/ffi-generate v2.0.2
- * - git commit v2.0.2-8-g883bd93-dirty on branch (no git branch)
+ * - git commit v2.0.2-9-g071369d-dirty on branch (no git branch)
  * - Homebrew clang version 12.0.0
  * https://github.com/node-ffi-packager/node-ffi-generate
  *
@@ -3367,10 +3367,10 @@ const functions = new FFI.Library("librocksdb", {
     size_t,
     js_uchar,
   ]],
-  // rocksdb_writebatch_wi_create_from: [rocksdb_writebatch_wi_tPointer, [
-  //   js_CString,
-  //   size_t,
-  // ]],
+  rocksdb_writebatch_wi_create_from: [rocksdb_writebatch_wi_tPointer, [
+    js_CString,
+    size_t,
+  ]],
   rocksdb_writebatch_wi_create_iterator_with_base: [rocksdb_iterator_tPointer, [
     rocksdb_writebatch_wi_tPointer,
     rocksdb_iterator_tPointer,

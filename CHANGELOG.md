@@ -33,9 +33,32 @@ Change summaries and notable excerpts from the commit log.
         <!-- 替换:   types.[  -> types[ -->
         注销：  rocksdb_writebatch_wi_create_from
 
-      生成 FFI-CRoaring
-      node bin/ffi-generate.js --file "/usr/local/Cellar/croaring/0.3.2/include/roaring/roaring.h" --library 'librocksdb' -- -I/usr/local/Cellar/croaring/0.3.2/include/ -I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/>dynamic-croaring.js
+      生成 FFI-CRoaring Roaring64Map
+          git clone https://github.com/CRoaring
+          ./amalgamation.sh
+          cc -march=native -O3 -std=c11 -shared -o libroaring.dylib -fPIC roaring.c
 
+              The interface is found in the file 'include/roaring/roaring.h'.
+              For C, try:
+              cc -march=native -O3 -std=c11  -o amalgamation_demo amalgamation_demo.c  && ./amalgamation_demo 
+
+              For C++, try:
+              c++ -march=native -O3 -std=c++11 -o amalgamation_demo amalgamation_demo.cpp  && ./amalgamation_demo 
+
+              You can build a shared library with the following command:
+              cc -march=native -O3 -std=c11 -shared -o libroaring.dylib -fPIC roaring.c
+
+          cp libroaring.dylib /usr/local/lib/
+
+          node bin/ffi-generate.js --file "/Users/moyong/project/CRoaring/roaring.h" --library 'libroaring' -- -I/Users/moyong/project/CRoaring/include/ -I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/>dynamic-croaring.js
+
+
+      node bin/ffi-generate.js --file "/Users/moyong/project/CRoaring/roaring.hh" --library 'libroaring' -- -I/Users/moyong/project/CRoaring/include/ -I/usr/local//Cellar/gcc/11.1.0_1/lib/gcc/11/gcc/x86_64-apple-darwin20/11.1.0/include/ -I/usr/local//include/c++/11.1.0/ -I/usr/local//include/c++/11.1.0/x86_64-apple-darwin20/>dynamic-croaring64.js
+
+      效果好些;为未能尽如人意；手动写吧。
+      node bin/ffi-generate.js --file "/Users/moyong/project/CRoaring//cpp/roaring64map.hh" --library 'libroaring' -- -I/Users/moyong/project/CRoaring/include/ -I/usr/local/Cellar/llvm/12.0.0_1/include/c++/v1/ -I/usr/local//Cellar/llvm/12.0.0_1/lib/clang/12.0.0/include/>dynamic-croaring64.js
+
+      
 
 ## v2.0.2
 
